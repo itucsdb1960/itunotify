@@ -1,0 +1,25 @@
+INSERT INTO user (name, department, studentno, grade) VALUES(
+	"alp", "computer", "15", 3
+);
+
+INSERT INTO user (name, department, studentno, grade) VALUES(
+	"eren", "electronic", "20", 2
+);
+
+INSERT INTO item (name) VALUES(
+	"pen"
+);
+
+INSERT INTO item (name) VALUES(
+	"fridge"
+);
+
+INSERT INTO message (body) VALUES(
+	"sadfasg"
+);
+
+INSERT INTO message (body) VALUES(
+	"jkhlgþhkjhk"
+);
+
+

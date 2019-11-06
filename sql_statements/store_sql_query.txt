@@ -1,0 +1,28 @@
+// #questions for all sellings
+
+SELECT selling.sellid, count(question.questionid)
+FROM selling, question
+WHERE (selling.sellid = question.sellid)
+GROUP BY selling.sellid;
+
+// -----------------------------------------
+
+// #answers for all sellings
+
+SELECT selling.sellid, count(answer.answerid)
+FROM selling, answer
+WHERE (selling.sellid = answer.sellid)
+GROUP BY selling.sellid;
+
+// -----------------------------------------
+
+// create web table
+
+SELECT item.name, selling.shortD, selling.price, user.name, image.image
+FROM selling, user, item, image
+WHERE (selling.itemid = item.itemid
+		AND selling.seller = user.userid
+		AND selling.imageid = image.imageid
+		[OTHER CONSTRAINTS]);
+
+// -----------------------------------------
