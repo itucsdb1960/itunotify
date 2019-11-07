@@ -1,0 +1,9 @@
+INSERT INTO lostfound (title, description, location, userid, imageid, LF)
+	VALUES("Black Watch", "black analog watch", "MED", 3, 7, TRUE)
+
+INSERT INTO lostfound (title, description, location, userid, imageid, LF)
+	VALUES("MAT 210E notebook", "I have lost my mathematics notebook in vicinity of med", "MED", 9, NULL, FALSE)
+
+INSERT INTO lostfound (title, description, location, userid, imageid, LF)
+	VALUES("USB Cable", "found a USB - microusb cable in D103 classroom in KMB", "KMB", 21, NULL, TRUE)
+

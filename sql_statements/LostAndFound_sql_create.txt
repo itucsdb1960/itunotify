@@ -5,5 +5,13 @@ CREATE TABLE lostfound (
 	location VARCHAR(32),
 	userid INTEGER references user,
 	imageid INTEGER references image,
-	lf boolean NOT NULL
-)
+	LF boolean NOT NULL
+);
+
+CREATE TABLE responses (
+	respid SERIAL primary key,
+	postid INTEGER references lostfound,
+	response VARCHAR(512) NOT NULL,
+	userid INTEGER references user,
+	order integer NOT NULL
+);
