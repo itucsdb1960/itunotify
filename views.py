@@ -1,4 +1,4 @@
-from flask import Flask, current_app, render_template
+"""from flask import Flask, current_app, render_template
 
 
 def home_page():
@@ -13,3 +13,4 @@ def store_page():
     store_db = current_app.config["store_db"]
     selling_items = store_db.get_all_selling_items()
     return render_template("store.html", selling_items=sorted(selling_items))
+"""

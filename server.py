@@ -1,5 +1,5 @@
-from flask import Flask, render_template
-import views
+from flask import Flask, current_app, render_template
+#import views
 from store_database import StoreDatabase
 from sell_item import SellItem
 import dbinit
@@ -8,13 +8,15 @@ import dbinit
 # <old> app = Flask(__name__)
 connection_string = "dbname='postgres' user='postgres' password='' host='localhost' port=5432"
 
+app = Flask(__name__)
 
-def create_app():
-    app = Flask(__name__)
 
-    app.add_url_rule("/", view_func=views.home_page)
-    app.add_url_rule("/lostfound", view_func=views.lostfound_page, methods=["POST", "GET"])
-    app.add_url_rule("/store", view_func=views.store_page, endpoint='store_page', methods=["POST", "GET"])
+def create_app(app):
+    #app = Flask(__name__)
+
+    #app.add_url_rule("/", view_func=views.home_page)
+    #app.add_url_rule("/lostfound", view_func=views.lostfound_page, methods=["POST", "GET"])
+    #app.add_url_rule("/store", view_func=views.store_page, endpoint='store_page', methods=["POST", "GET"])
 
     store_db = StoreDatabase()
     sellItem1 = SellItem("fridge", 100, "alp", 3, 6, shortD="buy please", image="fridge image")
@@ -26,23 +28,26 @@ def create_app():
     return app
 
 
-""" <old>
+#""" <old>
 @app.route("/")
 def home_page():
-	return render_template("index.html")
+    return render_template("index.html")
 
 
 @app.route("/lostfound", methods=["POST", "GET"])
 def lostfound_page():
-	return render_template("lost_and_found.html")
+    return render_template("lost_and_found.html")
 
 
 @app.route("/store", endpoint='store_page', methods=["POST", "GET"])
 def store_page():
-	return render_template("store.html")
-</old> """
+    store_db = current_app.config["store_db"]
+    selling_items = store_db.get_all_selling_items()
+    return render_template("store.html", selling_items=sorted(selling_items))
+#</old> """
+
 
 if __name__ == "__main__":
-    app = create_app()
+    app = create_app(app)
     app.run(debug=True)
     # dbinit.initialize(connection_string)
