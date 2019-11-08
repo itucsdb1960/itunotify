@@ -4,6 +4,25 @@
 
 {% block body_content %}
 
-<h1> ITU Store </h1>
+	<h1> ITU Store </h1>
+
+	{% if selling_items %}
+	<table>
+		{% for sellid, sellItem in selling_items %}
+		<tr>
+        	<td>
+          		{{ sellItem.seller }}
+          		
+			</td>
+			<td>
+				{{ sellItem.item_name }}
+			</td>
+			<td>
+				{{ sellItem.shortD }}
+			</td>
+		</tr>
+		{% endfor %}
+    </table>
+    {% endif %}
 
 {% endblock %}

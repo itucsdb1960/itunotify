@@ -1,5 +1,7 @@
 from flask import Flask, render_template
 import views
+from store_database import StoreDatabase
+from sell_item import SellItem
 import dbinit
 #import psycopg2
 
@@ -14,23 +16,30 @@ def create_app():
     app.add_url_rule("/lostfound", view_func=views.lostfound_page, methods=["POST", "GET"])
     app.add_url_rule("/store", view_func=views.store_page, endpoint='store_page', methods=["POST", "GET"])
 
+    store_db = StoreDatabase()
+    sellItem1 = SellItem("fridge", 100, "alp", 3, 6, shortD="buy please", image="fridge image")
+    sellItem2 = SellItem("pen", 3343, "eren", 5, 3)
+    store_db.add_selling_item(sellItem1)
+    store_db.add_selling_item(sellItem2)
+    app.config["store_db"] = store_db
+
     return app
 
 
 """ <old>
 @app.route("/")
 def home_page():
-    return render_template("index.html")
+	return render_template("index.html")
 
 
 @app.route("/lostfound", methods=["POST", "GET"])
 def lostfound_page():
-    return render_template("lost_and_found.html")
+	return render_template("lost_and_found.html")
 
 
 @app.route("/store", endpoint='store_page', methods=["POST", "GET"])
 def store_page():
-    return render_template("store.html")
+	return render_template("store.html")
 </old> """
 
 if __name__ == "__main__":
