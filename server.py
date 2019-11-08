@@ -10,7 +10,12 @@ connection_string = "dbname='postgres' user='postgres' password='' host='localho
 def home_page():
     return render_template("index.html")
 
+@app.route("/lostfound", methods=["POST", "GET"])
+def lostfound_page():
+    return render_template("lost_and_found.html")
+
+
 
 if __name__ == "__main__":
-    app.run()
+    app.run(debug=True)
     dbinit.initialize(connection_string)

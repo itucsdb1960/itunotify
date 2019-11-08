@@ -2,8 +2,20 @@
 {% block title %} Lost & Found {% endblock %}
 
 {% block body_content %}
-	<h1> Welcome to notify </h1>
-	
+	<h2> Share a new post </h2>
+	<form action="/lostfound" method="post">
+		<input type="text" name="title" placeholder="Enter a title">
+		<input type="text" name="location" placeholder="(Optional) Enter location">
+		<br>
+		<textarea name="description" rows="5" cols="40"></textarea>
+		<br>
+		<input type="radio" name="LF" value=TRUE> Found
+		<input type="radio" name="LF" value=TRUE> Lost
+		<br>
+		<input type="submit" name="Send">
+	</form>
+
+	<h2> Latest Posts </h2>
 	{% if posts %}
 	<table>
 		{% for post in posts %}
@@ -12,6 +24,7 @@
 				{{ post.title }}
 			</td>
 		</tr>
+		{% endfor %}
 	</table>
 	{% endif %}
 

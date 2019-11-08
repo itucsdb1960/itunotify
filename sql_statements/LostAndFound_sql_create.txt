@@ -1,7 +1,7 @@
 CREATE TABLE lostfound (
 	postid SERIAL primary key,
 	title VARCHAR(32) NOT NULL,
-	description VARCHAR(128) NOT NULL,
+	description VARCHAR(512) NOT NULL,
 	location VARCHAR(32),
 	userid INTEGER references user,
 	imageid INTEGER references image,
