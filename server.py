@@ -39,7 +39,7 @@ def lostfound_page():
     return render_template("lost_and_found.html")
 
 
-@app.route("/store", methods=["POST", "GET"])
+@app.route("/store", endpoint='store_page', methods=["POST", "GET"])
 def store_page():
     store_db = current_app.config["store_db"]
     selling_items = store_db.get_all_selling_items()
