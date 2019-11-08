@@ -87,3 +87,13 @@ INSERT INTO answer VALUES(
 INSERT INTO answer VALUES(
 	6, 2, 5, 2, 2
 );
+
+// -----------------------------------------------
+
+INSERT INTO item_info VALUES(
+	1, 1
+);
+
+INSERT INTO item_info VALUES(
+	2, 2
+);

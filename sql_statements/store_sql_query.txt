@@ -26,3 +26,13 @@ WHERE (selling.itemid = item.itemid
 		[OTHER CONSTRAINTS]);
 
 // -----------------------------------------
+
+// item_name - info
+
+SELECT item.name as item_name, message.body as info
+FROM selling, item, item_info, message
+WHERE (selling.sellid = item_info.sellid
+		AND selling.itemid = item.itemid
+        AND item_info.messageid = message.messageid);
+
+// -----------------------------------------
