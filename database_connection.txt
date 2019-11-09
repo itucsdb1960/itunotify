@@ -1,0 +1,1 @@
+dbname='postgres' user='postgres' password='seqfin.456ylmz' host='localhost' port=5432
