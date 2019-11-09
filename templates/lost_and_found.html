@@ -18,14 +18,22 @@
 	<h2> Latest Posts </h2>
 	{% if posts %}
 	<table>
-		{% for post in posts %}
 		<tr>
-			<td>
-				{{ post.title }}
-			</td>
+			<th> Title </th>
+			<th> Shared by </th>
+			<th> Category </th>
+			<th> Location </th>
+		</tr>	
+		{% for postid, post in posts %}
+		<tr>
+			<td> {{ post.title }} </td>
+			<td> {{ post.userid }} </td>
+			<td> {% if post.LF %} Found {% else %} Lost {% endif %} </td>
+			<td> {% if post.location %} {{ post.location }} {% else %} --- {% endif %} </td>
 		</tr>
 		{% endfor %}
 	</table>
+	{% else %} No posts found.
 	{% endif %}
 
 {% endblock %}

@@ -2,6 +2,7 @@ from flask import Flask, current_app, render_template
 #import views
 from classes.store_database import StoreDatabase
 from classes.sell_item import SellItem
+from classes.lostfound_database import LFPost, LFDatabase
 import dbinit
 #import psycopg2
 
@@ -19,11 +20,22 @@ def create_app(app):
     #app.add_url_rule("/store", view_func=views.store_page, endpoint='store_page', methods=["POST", "GET"])
 
     store_db = StoreDatabase()
+    lf_db = LFDatabase()
+
+    # --- initialization tests ---
     sellItem1 = SellItem("fridge", 100, "alp", 3, 6, shortD="buy please", image="fridge image")
     sellItem2 = SellItem("pen", 3343, "eren", 5, 3)
     store_db.add_selling_item(sellItem1)
     store_db.add_selling_item(sellItem2)
+
+    lfpost1 = LFPost("Black Watch", "Black analog watch found in MED", 3, True, location="MED", imageid=None)
+    lfpost2 = LFPost("something", ":D:D:D:D:D", 9, False)
+    lf_db.add_post(lfpost1)
+    lf_db.add_post(lfpost2)
+    # --- end init ---
+
     app.config["store_db"] = store_db
+    app.config["lf_db"] = lf_db
 
     return app
 
@@ -36,7 +48,9 @@ def home_page():
 
 @app.route("/lostfound", methods=["POST", "GET"])
 def lostfound_page():
-    return render_template("lost_and_found.html")
+	lf_db = current_app.config["lf_db"]
+	posts = sorted(lf_db.get_all_posts().items())
+	return render_template("lost_and_found.html", posts=posts)
 
 
 @app.route("/store", endpoint='store_page', methods=["POST", "GET"])
