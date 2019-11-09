@@ -2,10 +2,10 @@ CREATE TABLE lostfound (
 	postid SERIAL primary key,
 	title VARCHAR(32) NOT NULL,
 	description VARCHAR(512) NOT NULL,
-	location VARCHAR(32),
 	userid INTEGER references user,
+	LF boolean NOT NULL,
+	location VARCHAR(32),
 	imageid INTEGER references image,
-	LF boolean NOT NULL
 );
 
 CREATE TABLE responses (
