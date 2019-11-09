@@ -1,7 +1,7 @@
 from flask import Flask, current_app, render_template
 #import views
-from store_database import StoreDatabase
-from sell_item import SellItem
+from classes.store_database import StoreDatabase
+from classes.sell_item import SellItem
 import dbinit
 #import psycopg2
 

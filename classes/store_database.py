@@ -1,4 +1,4 @@
-from sell_item import SellItem
+from classes.sell_item import SellItem
 
 
 class StoreDatabase:
