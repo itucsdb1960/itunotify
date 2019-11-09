@@ -1,5 +1,6 @@
 {% extends "layout.html" %}
 {% block title %} Lost & Found {% endblock %}
+{% block stylesheet %} "/static/style_lostfound.css" {% endblock %}
 
 {% block body_content %}
 	<h2> Share a new post </h2>
@@ -7,7 +8,7 @@
 		<input type="text" name="title" placeholder="Enter a title">
 		<input type="text" name="location" placeholder="(Optional) Enter location">
 		<br>
-		<textarea name="description" rows="5" cols="40" placeholder="Additional information and description"></textarea>
+		<textarea name="description" rows="5" cols="45" placeholder="Additional information and description"></textarea>
 		<br>
 		<input type="radio" name="LF" value=TRUE> Found
 		<input type="radio" name="LF" value=FALSE> Lost
@@ -17,7 +18,7 @@
 
 	<h2> Latest Posts </h2>
 	{% if posts %}
-	<table>
+	<table class="lfposts">
 		<tr>
 			<th> Title </th>
 			<th> Shared by </th>
@@ -26,7 +27,7 @@
 		</tr>	
 		{% for postid, post in posts %}
 		<tr>
-			<td> {{ post.title }} </td>
+			<td class="title"> {{ post.title }} </td>
 			<td> {{ post.userid }} </td>
 			<td> {% if post.LF %} Found {% else %} Lost {% endif %} </td>
 			<td> {% if post.location %} {{ post.location }} {% else %} --- {% endif %} </td>

@@ -1,10 +1,12 @@
-from flask import Flask, current_app, render_template
+from flask import Flask, current_app, render_template, request
 #import views
 from classes.store_database import StoreDatabase
 from classes.sell_item import SellItem
 from classes.lostfound_database import LFPost, LFDatabase
 import dbinit
 #import psycopg2
+
+import random	# for tests
 
 # <old> app = Flask(__name__)
 connection_string = "dbname='postgres' user='postgres' password='' host='localhost' port=5432"
@@ -50,6 +52,22 @@ def home_page():
 def lostfound_page():
 	lf_db = current_app.config["lf_db"]
 	posts = sorted(lf_db.get_all_posts().items())
+	
+	if request.method == "POST":
+		title = request.form.get("title")
+		description = request.form.get("description")
+		userid = random.randint(1,20)
+		LF = request.form.get("LF")
+		location = request.form.get("location")
+
+		if title == "" or description == "" or LF == None:
+			return render_template("lost_and_found.html", posts=posts)
+		else:
+			lfpost = LFPost(title, description, userid, LF, location=location)
+			lf_db.add_post(lfpost)
+			posts = sorted(lf_db.get_all_posts().items())
+			current_app.config["lf_db"] = lf_db
+
 	return render_template("lost_and_found.html", posts=posts)
 
 
