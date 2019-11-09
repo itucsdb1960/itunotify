@@ -1,0 +1,23 @@
+table.lfposts {
+	border: 2px solid black;
+	width: 100%;
+}
+
+tr:hover{
+	background-color: #eeddee;
+}
+
+th {
+    border: 1px solid purple;
+}
+
+td {
+    border: 1px solid purple;
+	padding-left: 10px;
+	padding-right: 10px;
+	text-align: center;
+}
+
+td.title {
+	text-align: left;
+}

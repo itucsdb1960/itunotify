@@ -1,31 +1,40 @@
 {% extends "layout.html" %}
 {% block title %} Lost & Found {% endblock %}
+{% block stylesheet %} "/static/style_lostfound.css" {% endblock %}
 
 {% block body_content %}
 	<h2> Share a new post </h2>
 	<form action="/lostfound" method="post">
-		<input type="text" name="title" placeholder="Enter a title">
+		<input type="text" name="title" placeholder="Enter a title" required>
 		<input type="text" name="location" placeholder="(Optional) Enter location">
 		<br>
-		<textarea name="description" rows="5" cols="40"></textarea>
+		<textarea name="description" rows="5" cols="45" placeholder="Additional information and description" required></textarea>
 		<br>
-		<input type="radio" name="LF" value=TRUE> Found
-		<input type="radio" name="LF" value=FALSE> Lost
+		<input type="radio" name="LF" value=TRUE required> Found
+		<input type="radio" name="LF" value=FALSE required> Lost
 		<br>
 		<input type="submit" name="Send">
 	</form>
 
 	<h2> Latest Posts </h2>
 	{% if posts %}
-	<table>
-		{% for post in posts %}
+	<table class="lfposts">
 		<tr>
-			<td>
-				{{ post.title }}
-			</td>
+			<th> Title </th>
+			<th> Shared by </th>
+			<th> Category </th>
+			<th> Location </th>
+		</tr>	
+		{% for postid, post in posts %}
+		<tr>
+			<td class="title"> {{ post.title }} </td>
+			<td> {{ post.userid }} </td>
+			<td> {% if post.LF %} Found {% else %} Lost {% endif %} </td>
+			<td> {% if post.location %} {{ post.location }} {% else %} --- {% endif %} </td>
 		</tr>
 		{% endfor %}
 	</table>
+	{% else %} No posts found.
 	{% endif %}
 
 {% endblock %}
