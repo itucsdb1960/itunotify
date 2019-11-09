@@ -12,3 +12,9 @@ class SellItem:
         self.n_answers = n_answers
         self.shortD = shortD
         self.image = image
+
+    def set_nq(n_questions):
+        self.n_questions = n_questions
+
+    def set_na(n_answers):
+        self.n_answers = n_answers
