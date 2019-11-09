@@ -36,8 +36,8 @@ def create_app(app):
     lf_db.add_post(lfpost2)
     # --- end init ---
 
-    app.config["STOREDB"] = store_db
-    app.config["LFDB"] = lf_db
+    app.config["STORE_DB"] = store_db
+    app.config["LF_DB"] = lf_db
 
     return app
 
@@ -50,7 +50,7 @@ def home_page():
 
 @app.route("/lostfound", methods=["POST", "GET"])
 def lostfound_page():
-	lf_db = current_app.config["LFDB"]
+	lf_db = current_app.config["LF_DB"]
 	posts = sorted(lf_db.get_all_posts().items())
 	
 	if request.method == "POST":
@@ -66,14 +66,14 @@ def lostfound_page():
 			lfpost = LFPost(title, description, userid, LF, location=location)
 			lf_db.add_post(lfpost)
 			posts = sorted(lf_db.get_all_posts().items())
-			current_app.config["LFDB"] = lf_db
+			current_app.config["LF_DB"] = lf_db
 
 	return render_template("lost_and_found.html", posts=posts)
 
 
 @app.route("/store", endpoint='store_page', methods=["POST", "GET"])
 def store_page():
-    store_db = current_app.config["STOREDB"]
+    store_db = current_app.config["STORE_DB"]
     selling_items = store_db.get_all_selling_items()
     return render_template("store.html", selling_items=sorted(selling_items))
 #</old> """
