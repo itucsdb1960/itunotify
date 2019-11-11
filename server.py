@@ -9,7 +9,7 @@ import dbinit
 import random  # for tests
 
 # <old> app = Flask(__name__)
-connection_string = "dbname='postgres' user='postgres' password='seqfin.456ylmz' host='localhost' port=5432"
+connection_string = "dbname='postgres' user='postgres' password='postgrepass' host='localhost' port=5432"
 
 app = Flask(__name__)
 
@@ -80,6 +80,6 @@ def store_page():
 
 
 if __name__ == "__main__":
-    dbinit.initialize(connection_string)
+    #dbinit.initialize(connection_string)
     app = create_app(app)
     app.run(debug=True)

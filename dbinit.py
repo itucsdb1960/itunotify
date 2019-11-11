@@ -88,7 +88,11 @@ INIT_STATEMENTS = [
 	    sellid integer references selling(sellid),
 	    messageid integer references message(messageid),
 	    primary key (sellid, messageid)
-	);"""
+	);""",
+
+	"""
+	INSERT INTO users (name, department, studentno, grade) VALUES ('Alp Eren', 'computer', '150170019', 2);
+	"""
 
 ]
 
@@ -103,7 +107,11 @@ def initialize(url):
 
 if __name__ == "__main__":
     url = os.getenv("DATABASE_URL")
+    file = open(r"heroku_db_url.txt", "r")
+    url = file.read()
     if url is None:
         print("Usage: DATABASE_URL=url python dbinit.py", file=sys.stderr)
+        file = open(r"heroku_db_url.txt", "r")
+        url = file.read()
         sys.exit(1)
     initialize(url)
