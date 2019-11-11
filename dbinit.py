@@ -19,13 +19,74 @@ INIT_STATEMENTS = [
 		imageid INTEGER references image,
 	);""",
 
-	"""
+    """
 	CREATE TABLE IF NOT EXISTS responses (
 		respid SERIAL primary key,
 		postid INTEGER references lostfound,
 		response VARCHAR(512) NOT NULL,
 		userid INTEGER references user,
 		order integer NOT NULL
+	);""",
+
+    """
+	CREATE TABLE IF NOT EXISTS user(
+		userid serial primary key,
+    	name varchar(40),
+    	department varchar(80),
+    	studentno varchar(10),
+    	grade integer
+	);""",
+
+    """
+	CREATE TABLE IF NOT EXISTS item(
+		itemid serial primary key,
+    	name varchar(100)
+	);""",
+
+    """
+	CREATE TABLE IF NOT EXISTS image(
+		imageid serial primary key,
+    	image varchar(100)
+	);""",
+
+    """
+	CREATE TABLE IF NOT EXISTS message(
+		messageid serial primary key,
+    	body varchar(500)
+	);""",
+
+    """
+	CREATE TABLE IF NOT EXISTS selling(
+		sellid serial primary key,
+    	itemid integer references item(itemid),
+	    imageid integer references image(imageid),
+	    seller integer references user(userid),
+	    shortD varchar(50),
+	    price integer
+	);""",
+
+    """
+	CREATE TABLE IF NOT EXISTS question(
+		questionid serial primary key,
+	    sellid integer references selling(sellid),
+	    messageid integer references message(messageid),
+	    ord integer
+	);""",
+
+    """
+	CREATE TABLE IF NOT EXISTS answer(
+		answerid serial primary key,
+	    sellid integer references selling(sellid),
+	    questionid integer references question(questionid),
+	    messageid integer references message(messageid),
+	    ord integer
+	);""",
+
+    """
+	CREATE TABLE IF NOT EXISTS item_info(
+	    sellid integer references selling(sellid),
+	    messageid integer references message(messageid),
+	    primary key (sellid, messageid)
 	);"""
 
 ]
