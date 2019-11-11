@@ -14,32 +14,32 @@ connection_string = "dbname='postgres' user='postgres' password='postgrepass' ho
 app = Flask(__name__)
 
 
-def create_app(app):
-    #app = Flask(__name__)
+#def create_app(app):
+#app = Flask(__name__)
 
-    #app.add_url_rule("/", view_func=views.home_page)
-    #app.add_url_rule("/lostfound", view_func=views.lostfound_page, methods=["POST", "GET"])
-    #app.add_url_rule("/store", view_func=views.store_page, endpoint='store_page', methods=["POST", "GET"])
+#app.add_url_rule("/", view_func=views.home_page)
+#app.add_url_rule("/lostfound", view_func=views.lostfound_page, methods=["POST", "GET"])
+#app.add_url_rule("/store", view_func=views.store_page, endpoint='store_page', methods=["POST", "GET"])
 
-    store_db = StoreDatabase()
-    lf_db = LFDatabase()
+store_db = StoreDatabase()
+lf_db = LFDatabase()
 
-    # --- initialization tests ---
-    sellItem1 = SellItem("fridge", 100, "alp", 3, 6, shortD="buy please", image="fridge image")
-    sellItem2 = SellItem("pen", 3343, "eren", 5, 3)
-    store_db.add_selling_item(sellItem1)
-    store_db.add_selling_item(sellItem2)
+# --- initialization tests ---
+sellItem1 = SellItem("fridge", 100, "alp", 3, 6, shortD="buy please", image="fridge image")
+sellItem2 = SellItem("pen", 3343, "eren", 5, 3)
+store_db.add_selling_item(sellItem1)
+store_db.add_selling_item(sellItem2)
 
-    lfpost1 = LFPost("Black Watch", "Black analog watch found in MED", 3, True, location="MED", imageid=None)
-    lfpost2 = LFPost("something", ":D:D:D:D:D", 9, False)
-    lf_db.add_post(lfpost1)
-    lf_db.add_post(lfpost2)
-    # --- end init ---
+lfpost1 = LFPost("Black Watch", "Black analog watch found in MED", 3, True, location="MED", imageid=None)
+lfpost2 = LFPost("something", ":D:D:D:D:D", 9, False)
+lf_db.add_post(lfpost1)
+lf_db.add_post(lfpost2)
+# --- end init ---
 
-    app.config["STORE_DB"] = store_db
-    app.config["LF_DB"] = lf_db
+app.config["STORE_DB"] = store_db
+app.config["LF_DB"] = lf_db
 
-    return app
+#return app
 
 
 #""" <old>
@@ -81,5 +81,5 @@ def store_page():
 
 if __name__ == "__main__":
     #dbinit.initialize(connection_string)
-    app = create_app(app)
+    #app = create_app(app)
     app.run(debug=True)
