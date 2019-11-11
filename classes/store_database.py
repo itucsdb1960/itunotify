@@ -7,8 +7,9 @@ class StoreDatabase:
         self.selling = {}
         self.last_sellid = 0
 
-        file = open(r"database_connection.txt", "r")
+        file = open(r"heroku_db_url.txt", "r")
         self.dsn = file.read()
+        #self.dsn = "dbname='postgres' user='postgres' password='postgrepass' host='localhost' port=5432"
 
         self.get_all_from_db()
 
@@ -116,7 +117,7 @@ class StoreDatabase:
 
             cursor.close()
 
-        get_all_from_db()
+        self.get_all_from_db()
 
         # handle sql database!
 
