@@ -17,19 +17,19 @@ class StoreDatabase:
     def get_all_from_db(self, item_name="%", seller="%", price_lw=0, price_hi=-1):
         self.selling.clear()
 
-        sql_getAllSellingInfo = """SELECT selling.sellid, item.name, selling.shortD, selling.price, user.name, image.image, count(question.questionid), count(answer.answerid)
-                                    FROM selling, user, item, question, answer
+        sql_getAllSellingInfo = """SELECT selling.sellid, item.name, selling.shortD, selling.price, users.name, image.image, count(question.questionid), count(answer.answerid)
+                                    FROM selling, users, item, question, answer, image
                                     WHERE (selling.itemid = item.itemid
-                                        AND selling.seller = user.userid
+                                        AND selling.seller = users.userid
                                         AND selling.imageid = image.imageid
                                         AND question.sellid = selling.sellid
                                         AND answer.questionid = question.questionid
                                         AND answer.sellid = selling.sellid
-                                        AND item.name LIKE "%(item_name)s"
-                                        AND user.name LIKE "%(seller)s"
-                                        AND selling.price >= %(price_lw)d
-                                        AND selling.price <= %(price_hi)d)
-                                    GROUP BY selling.sellid, item_name, selling.shortD, selling.price, seller_name, image.image
+                                        AND item.name LIKE %(item_name)s
+                                        AND users.name LIKE %(seller)s
+                                        AND selling.price >= %(price_lw)s
+                                        AND selling.price <= %(price_hi)s)
+                                    GROUP BY selling.sellid, item.name, selling.shortD, selling.price, users.name, image.image
                                     ORDER BY selling.sellid;"""
 
         sql_getMaxPrice = """SELECT max(price)
@@ -57,7 +57,7 @@ class StoreDatabase:
         self.selling[self.last_sellid] = sellItem"""
 
         itemid = 0
-        userid = 0
+        userid = 1
         imageid = 0
 
         sql_insertSelling = """INSERT INTO selling (itemid, imageid, seller, shortD, price) VALUES(

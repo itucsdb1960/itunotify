@@ -6,10 +6,10 @@ from classes.lostfound_database import LFPost, LFDatabase
 import dbinit
 #import psycopg2
 
-import random	# for tests
+import random  # for tests
 
 # <old> app = Flask(__name__)
-connection_string = "dbname='postgres' user='postgres' password='' host='localhost' port=5432"
+connection_string = "dbname='postgres' user='postgres' password='seqfin.456ylmz' host='localhost' port=5432"
 
 app = Flask(__name__)
 
@@ -50,25 +50,25 @@ def home_page():
 
 @app.route("/lostfound", methods=["POST", "GET"])
 def lostfound_page():
-	lf_db = current_app.config["LF_DB"]
-	posts = sorted(lf_db.get_all_posts().items())
-	
-	if request.method == "POST":
-		title = request.form.get("title")
-		description = request.form.get("description")
-		userid = random.randint(1,20)
-		LF = request.form.get("LF")
-		location = request.form.get("location")
+    lf_db = current_app.config["LF_DB"]
+    posts = sorted(lf_db.get_all_posts().items())
 
-		if title == "" or description == "" or LF == None:
-			return render_template("lost_and_found.html", posts=posts)
-		else:
-			lfpost = LFPost(title, description, userid, LF, location=location)
-			lf_db.add_post(lfpost)
-			posts = sorted(lf_db.get_all_posts().items())
-			current_app.config["LF_DB"] = lf_db
+    if request.method == "POST":
+        title = request.form.get("title")
+        description = request.form.get("description")
+        userid = random.randint(1, 20)
+        LF = request.form.get("LF")
+        location = request.form.get("location")
 
-	return render_template("lost_and_found.html", posts=posts)
+        if title == "" or description == "" or LF == None:
+            return render_template("lost_and_found.html", posts=posts)
+        else:
+            lfpost = LFPost(title, description, userid, LF, location=location)
+            lf_db.add_post(lfpost)
+            posts = sorted(lf_db.get_all_posts().items())
+            current_app.config["LF_DB"] = lf_db
+
+    return render_template("lost_and_found.html", posts=posts)
 
 
 @app.route("/store", endpoint='store_page', methods=["POST", "GET"])
@@ -80,6 +80,6 @@ def store_page():
 
 
 if __name__ == "__main__":
+    dbinit.initialize(connection_string)
     app = create_app(app)
     app.run(debug=True)
-    # dbinit.initialize(connection_string)
