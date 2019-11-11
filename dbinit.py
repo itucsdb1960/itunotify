@@ -13,18 +13,18 @@ INIT_STATEMENTS = [
 		postid SERIAL primary key,
 		title VARCHAR(32) NOT NULL,
 		description VARCHAR(512) NOT NULL,
-		userid INTEGER references user,
+		userid INTEGER references user(userid),
 		LF boolean NOT NULL,
 		location VARCHAR(32),
-		imageid INTEGER references image,
+		imageid INTEGER references image(imageid),
 	);""",
 
     """
 	CREATE TABLE IF NOT EXISTS responses (
 		respid SERIAL primary key,
-		postid INTEGER references lostfound,
+		postid INTEGER references lostfound(postid),
 		response VARCHAR(512) NOT NULL,
-		userid INTEGER references user,
+		userid INTEGER references user(userid),
 		order integer NOT NULL
 	);""",
 
