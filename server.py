@@ -14,7 +14,7 @@ connection_string = "dbname='postgres' user='postgres' password='postgrepass' ho
 app = Flask(__name__)
 
 
-#def create_app(app):
+# def create_app(app):
 #app = Flask(__name__)
 
 #app.add_url_rule("/", view_func=views.home_page)
@@ -25,10 +25,10 @@ store_db = StoreDatabase()
 lf_db = LFDatabase()
 
 # --- initialization tests ---
-sellItem1 = SellItem("fridge", 100, "alp", 3, 6, shortD="buy please", image="fridge image")
-sellItem2 = SellItem("pen", 3343, "eren", 5, 3)
-store_db.add_selling_item(sellItem1)
-store_db.add_selling_item(sellItem2)
+# sellItem1 = SellItem("fridge", 100, "alp", 3, 6, shortD="buy please", image="fridge image")
+# sellItem2 = SellItem("horse", 99999999, "horseman", 0, 0)
+# store_db.add_selling_item(sellItem1)
+# store_db.add_selling_item(sellItem2)
 
 # lfpost1 = LFPost("Black Watch", "Black analog watch found in MED", 3, True, location="MED", imageid=None)
 # lfpost2 = LFPost("something", ":D:D:D:D:D", 2, False)
@@ -39,7 +39,7 @@ store_db.add_selling_item(sellItem2)
 app.config["STORE_DB"] = store_db
 app.config["LF_DB"] = lf_db
 
-#return app
+# return app
 
 
 #""" <old>
@@ -52,7 +52,7 @@ def home_page():
 def lostfound_page():
     lf_db = current_app.config["LF_DB"]
     posts = lf_db.get_all_posts()
-    print("\n\n\n",posts,"\n\n\n")
+    print("\n\n\n", posts, "\n\n\n")
 
     if request.method == "POST":
         title = request.form.get("title")
@@ -90,6 +90,6 @@ def lfpost_page(postid):
 
 
 if __name__ == "__main__":
-    #dbinit.initialize(connection_string)
+    # dbinit.initialize(connection_string)
     #app = create_app(app)
     app.run(debug=True)

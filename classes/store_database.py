@@ -19,19 +19,18 @@ class StoreDatabase:
         self.selling.clear()
 
         sql_getAllSellingInfo = """SELECT selling.sellid, item.name, selling.shortD, selling.price, users.name, image.image, count(question.questionid), count(answer.answerid)
-                                    FROM selling, users, item, question, answer, image
-                                    WHERE (selling.itemid = item.itemid
-                                        AND selling.seller = users.userid
-                                        AND selling.imageid = image.imageid
-                                        AND question.sellid = selling.sellid
-                                        AND answer.questionid = question.questionid
-                                        AND answer.sellid = selling.sellid
-                                        AND item.name LIKE %(item_name)s
-                                        AND users.name LIKE %(seller)s
-                                        AND selling.price >= %(price_lw)s
-                                        AND selling.price <= %(price_hi)s)
-                                    GROUP BY selling.sellid, item.name, selling.shortD, selling.price, users.name, image.image
-                                    ORDER BY selling.sellid;"""
+									FROM selling left join users ON selling.seller = users.userid
+												left join item ON selling.itemid = item.itemid
+												left join image ON selling.imageid = image.imageid
+												left join question ON selling.sellid = question.sellid
+												left join answer ON question.questionid = answer.questionid
+																AND selling.sellid = answer.sellid
+									WHERE (item.name LIKE %(item_name)s
+	  									AND users.name LIKE %(seller)s
+	  									AND selling.price >= %(price_lw)s
+	  									AND selling.price <= %(price_hi)s)
+									GROUP BY selling.sellid, item.name, selling.shortD, selling.price, users.name, image.image
+									ORDER BY selling.sellid;"""
 
         sql_getAllSelling = """SELECT selling.sellid, item.name, selling.shortD, selling.price, users.name, image.image
 								FROM selling, users, item, image
@@ -67,7 +66,7 @@ class StoreDatabase:
                 maxPrice = cursor.fetchall()
                 if len(maxPrice) > 0:
                     price_hi = maxPrice[0][0]
-
+            """
             cursor.execute(sql_getAllSelling, {'item_name': item_name, 'seller': seller, 'price_lw': price_lw, 'price_hi': price_hi})
             for row in cursor:
                 sellid, item_name, shortD, price, seller, image = row
@@ -85,17 +84,15 @@ class StoreDatabase:
                 self.selling[sellid].set_nq(n_answers)
 
             cursor.close()
+			"""
 
+            cursor.execute(sql_getAllSellingInfo, {'item_name': item_name, 'seller': seller, 'price_lw': price_lw, 'price_hi': price_hi})
+            for row in cursor:
+                sellid, item_name, shortD, price, seller, image, n_ques, n_ans = row
+                self.selling[sellid] = SellItem(item_name, price, seller, n_ques, n_ans, shortD=shortD, image=image)
+                self.last_sellid = max(sellid, self.last_sellid)
 
-
-            #cursor.execute(sql_getAllSellingInfo, {'item_name': item_name, 'seller': seller, 'price_lw': price_lw, 'price_hi': price_hi})
-            #for row in cursor:
-            #    sellid, item_name, shortD, price, seller, image, n_ques, n_ans = row
-            #    self.selling[sellid] = SellItem(item_name, price, seller, n_ques, n_ans, shortD=shortD, image=image)
-            #    self.last_sellid = max(sellid, self.last_sellid)
-
-            #cursor.close()
-
+            cursor.close()
 
     def add_selling_item(self, sellItem):
         """self.last_sellid += 1
