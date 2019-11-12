@@ -77,6 +77,15 @@ def store_page():
     store_db = current_app.config["STORE_DB"]
     selling_items = store_db.get_all_selling_items()
     return render_template("store.html", selling_items=sorted(selling_items))
+
+
+@app.route("/lostfound/<int:postid>", methods=["POST", "GET"])
+def lfpost_page(postid):
+    lf_db = current_app.config["LF_DB"]
+    post, extra = lf_db.get_post(postid)
+    responses = None
+    return render_template("lfpost.html", post=post, extra=extra, responses=responses)
+
 #</old> """
 
 

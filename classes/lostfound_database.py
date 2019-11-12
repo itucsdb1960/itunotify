@@ -45,13 +45,28 @@ class LFDatabase():
 				cursor.execute(delete_statement, args)
 
 	def get_post(self, postid):
-		lfpost = copy(self.posts.get(postid))
-		return lfpost
+		select_post_statement = "SELECT * FROM lostfound WHERE lostfound.postid=%s;"
+		select_username_statement = "SELECT users.name FROM lostfound, users WHERE (lostfound.postid=%s) AND (lostfound.userid=users.userid);"
+		args = (postid,)
+
+		lfpost = None
+		extra_info = {"postid":postid}
+		with dbapi2.connect(self.dsn) as connection:
+			with connection.cursor() as cursor:
+				cursor.execute(select_post_statement, args)
+				pid, tit, desc, uid, lf, loc, imid  = cursor.fetchone()
+				lfpost = LFPost(tit, desc, uid, lf, loc, imid)
+				cursor.execute(select_username_statement, args)
+				extra_info["username"] = cursor.fetchone()[0]	# fetchone returns a tuple even if result is one element only
+
+		# lfpost = copy(self.posts.get(postid))
+		return lfpost, extra_info
 
 	def get_all_posts(self):
 		select_all_posts_statement = """
-			SELECT lostfound.title, users.name, lostfound.LF, lostfound.location 
-			FROM lostfound, users;
+			SELECT lostfound.postid, lostfound.title, users.name, lostfound.LF, lostfound.location 
+			FROM lostfound, users
+			WHERE (lostfound.userid=users.userid);
 			"""
 
 		posts = tuple()

@@ -1,0 +1,32 @@
+{% if post %} <!-- if post is NOT null -->
+
+{% extends "layout.html" %}
+{% block title %} {{post.title}} {% if post.LF %} Found {% else %} Lost {% endif %} {% endblock %}
+{% block stylesheet %} "" {% endblock %}
+
+{% block body_content %}
+
+<h2> {{post.title}} </h2>
+<h5> {% if extra %} *{{extra.username}}* {% else %} No username??? {% endif %} </h5>
+<p> {{post.description}} </p>
+
+
+{% if responses %}
+<table>
+	{% for response in responses %}
+		<tr>
+			<td> {{response.userid}} </td>
+			<td> {{response.message}} </td>
+		</tr>
+	{% endfor %}
+</table>
+{% else %}
+There is no response for this post yet.
+{% endif %}
+
+{% endblock %}
+
+{% else %} <!-- if post is null -->
+NOTHING TO SEE HERE, PAL
+
+{% endif %}

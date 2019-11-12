@@ -25,9 +25,9 @@
 			<th> Category </th>
 			<th> Location </th>
 		</tr>	
-		{% for title, username, LF, location in posts %}
+		{% for postid, title, username, LF, location in posts %}
 		<tr>
-			<td class="title"> {{ title }} </td>
+			<td class="title"> <a href="/lostfound/{{postid}}">{{ title }}</a> </td>
 			<td> {{ username }} </td>
 			<td> {% if LF %} Found {% else %} Lost {% endif %} </td>
 			<td> {% if location %} {{ location }} {% else %} --- {% endif %} </td>
