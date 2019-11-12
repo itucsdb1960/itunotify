@@ -30,10 +30,10 @@ sellItem2 = SellItem("pen", 3343, "eren", 5, 3)
 store_db.add_selling_item(sellItem1)
 store_db.add_selling_item(sellItem2)
 
-lfpost1 = LFPost("Black Watch", "Black analog watch found in MED", 3, True, location="MED", imageid=None)
-lfpost2 = LFPost("something", ":D:D:D:D:D", 9, False)
-lf_db.add_post(lfpost1)
-lf_db.add_post(lfpost2)
+# lfpost1 = LFPost("Black Watch", "Black analog watch found in MED", 3, True, location="MED", imageid=None)
+# lfpost2 = LFPost("something", ":D:D:D:D:D", 2, False)
+# lf_db.add_post(lfpost1)
+# lf_db.add_post(lfpost2)
 # --- end init ---
 
 app.config["STORE_DB"] = store_db
@@ -51,12 +51,13 @@ def home_page():
 @app.route("/lostfound", methods=["POST", "GET"])
 def lostfound_page():
     lf_db = current_app.config["LF_DB"]
-    posts = sorted(lf_db.get_all_posts().items())
+    posts = lf_db.get_all_posts()
+    print("\n\n\n",posts,"\n\n\n")
 
     if request.method == "POST":
         title = request.form.get("title")
         description = request.form.get("description")
-        userid = random.randint(1, 20)
+        userid = random.randint(1, 3)
         LF = request.form.get("LF")
         location = request.form.get("location")
 
@@ -65,7 +66,7 @@ def lostfound_page():
         else:
             lfpost = LFPost(title, description, userid, LF, location=location)
             lf_db.add_post(lfpost)
-            posts = sorted(lf_db.get_all_posts().items())
+            posts = lf_db.get_all_posts()
             current_app.config["LF_DB"] = lf_db
 
     return render_template("lost_and_found.html", posts=posts)

@@ -25,12 +25,12 @@
 			<th> Category </th>
 			<th> Location </th>
 		</tr>	
-		{% for postid, post in posts %}
+		{% for title, username, LF, location in posts %}
 		<tr>
-			<td class="title"> {{ post.title }} </td>
-			<td> {{ post.userid }} </td>
-			<td> {% if post.LF %} Found {% else %} Lost {% endif %} </td>
-			<td> {% if post.location %} {{ post.location }} {% else %} --- {% endif %} </td>
+			<td class="title"> {{ title }} </td>
+			<td> {{ username }} </td>
+			<td> {% if LF %} Found {% else %} Lost {% endif %} </td>
+			<td> {% if location %} {{ location }} {% else %} --- {% endif %} </td>
 		</tr>
 		{% endfor %}
 	</table>
