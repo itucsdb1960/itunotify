@@ -52,7 +52,7 @@ def home_page():
 def lostfound_page():
     lf_db = current_app.config["LF_DB"]
     posts = lf_db.get_all_posts()
-    print("\n\n\n", posts, "\n\n\n")
+    print("\n\n\n", posts, "\n\n\n")    # DEBUGS
 
     if request.method == "POST":
         title = request.form.get("title")

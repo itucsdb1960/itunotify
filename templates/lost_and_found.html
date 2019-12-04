@@ -27,7 +27,7 @@
 		</tr>	
 		{% for postid, title, username, LF, location in posts %}
 		<tr>
-			<td class="title"> <a href="/lostfound/{{postid}}">{{ title }}</a> </td>
+			<td class="title"> <a class="lfpost_link" href="/lostfound/{{postid}}">{{ title }}</a> </td>
 			<td> {{ username }} </td>
 			<td> {% if LF %} Found {% else %} Lost {% endif %} </td>
 			<td> {% if location %} {{ location }} {% else %} --- {% endif %} </td>
