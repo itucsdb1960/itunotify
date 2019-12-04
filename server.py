@@ -1,11 +1,11 @@
-from flask import Flask, current_app, render_template, request
+from flask import Flask, current_app, render_template, request, session, flash
 #import views
 from classes.store_database import StoreDatabase
 from classes.sell_item import SellItem
 from classes.lostfound_database import LFPost, LFDatabase
 import dbinit
 
-#import psycopg2
+import psycopg2 as dbapi2
 from hashlib import sha256  # hashing passwords
 
 import random  # for tests
@@ -55,7 +55,6 @@ def home_page():
 def lostfound_page():
     lf_db = current_app.config["LF_DB"]
     posts = lf_db.get_all_posts()
-    print("\n\n\n", posts, "\n\n\n")    # DEBUGS
 
     if request.method == "POST":
         title = request.form.get("title")
@@ -91,6 +90,15 @@ def lfpost_page(postid):
 
 @app.route("/login", methods=["POST", "GET"])
 def login_page():
+    print(session)
+
+    if request.method == "POST":
+        username = request.form.get("username")
+        password = request.form.get("password")
+        
+        #user_query = "SELECT * FROM users WHERE name=%s"
+        ...
+
 
     return render_template("login.html")    
 
