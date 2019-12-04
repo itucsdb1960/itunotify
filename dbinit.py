@@ -9,6 +9,11 @@ INIT_STATEMENTS = [
     "INSERT INTO DUMMY VALUES (42)",
 
     """
+    ALTER TABLE users
+    ADD COLUMN password_hash varchar(128);
+    """
+
+    """
 	CREATE TABLE IF NOT EXISTS users (
 		userid serial primary key,
     	name varchar(40),

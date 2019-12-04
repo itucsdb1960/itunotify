@@ -4,9 +4,12 @@ from classes.store_database import StoreDatabase
 from classes.sell_item import SellItem
 from classes.lostfound_database import LFPost, LFDatabase
 import dbinit
+
 #import psycopg2
+from hashlib import sha256  # hashing passwords
 
 import random  # for tests
+
 
 # <old> app = Flask(__name__)
 connection_string = "dbname='postgres' user='postgres' password='postgrepass' host='localhost' port=5432"
@@ -85,6 +88,11 @@ def lfpost_page(postid):
     post, extra = lf_db.get_post(postid)
     responses = None
     return render_template("lfpost.html", post=post, extra=extra, responses=responses)
+
+@app.route("/login", methods=["POST", "GET"])
+def login_page():
+
+    return render_template("login.html")    
 
 #</old> """
 

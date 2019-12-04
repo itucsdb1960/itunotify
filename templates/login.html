@@ -1,0 +1,17 @@
+{% extends "layout.html" %}
+{% block title %} Homepage {% endblock %}
+{% block stylesheet %} "/static/style_login.css" {% endblock %}
+
+{% block body_content %}
+<form action="/" method="post">
+	<input type="text" name="username" placeholder="Enter your username" required>
+	<input type="text" name="department" placeholder="Enter your department" required>
+	<input type="text" name="studentno" placeholder="Enter your student number" required>
+	<input type="text" name="grade" placeholder="Enter your grade" required>
+	<input type="text" name="password1" placeholder="Enter password" required>
+	<input type="text" name="password2" placeholder="Confirm your password" required>
+	<input type="submit" name="Register">
+</form>
+
+
+{% endblock %}
