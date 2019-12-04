@@ -66,7 +66,8 @@ class LFDatabase():
 		select_all_posts_statement = """
 			SELECT lostfound.postid, lostfound.title, users.name, lostfound.LF, lostfound.location 
 			FROM lostfound, users
-			WHERE (lostfound.userid=users.userid);
+			WHERE (lostfound.userid=users.userid)
+			ORDER BY lostfound.postid DESC;
 			"""
 
 		posts = tuple()

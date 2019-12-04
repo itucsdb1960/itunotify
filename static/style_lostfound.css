@@ -3,6 +3,21 @@ table.lfposts {
 	width: 100%;
 }
 
+tr {
+	border-bottom: 1px solid gray;
+}
+
+
+tr:nth-child(odd) {
+	background-color: #f7f7f7; 
+}
+tr:nth-child(even) {
+	background-color: #dedede; 
+}
+th{
+	background-color: #ddbbdd;
+}
+
 tr:hover{
 	background-color: #eeddee;
 }
@@ -12,7 +27,7 @@ th {
 }
 
 td {
-    border: 1px solid purple;
+    /*border: 1px solid purple;*/
 	padding-left: 10px;
 	padding-right: 10px;
 	text-align: center;

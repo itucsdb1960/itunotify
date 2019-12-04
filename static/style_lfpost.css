@@ -1,0 +1,19 @@
+div {
+	margin: 5%;
+	padding: 10px;
+}
+
+.post_side {
+	float: left;
+	width: 75%;
+}
+
+.options_side {
+	float: right;
+	width: 25%;
+}
+
+.responses {
+	width: 100%;
+	float: center;
+}
