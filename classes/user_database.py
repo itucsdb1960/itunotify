@@ -11,9 +11,6 @@ class User():
 
 
 class UserDatabase():
-
-
-<< << << < HEAD
     def __init__(self):
         self.users = {}
         self.last_userid = 0
