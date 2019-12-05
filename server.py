@@ -18,6 +18,7 @@ import random  # for tests
 connection_string = "dbname='postgres' user='postgres' password='postgrepass' host='localhost' port=5432"
 
 app = Flask(__name__)
+app.secret_key = b'dsfghj+*/-8lo98k'
 
 
 store_db = StoreDatabase()
@@ -104,19 +105,34 @@ def register_page():
 
 @app.route("/login", methods=["POST", "GET"])
 def login_page():
-    print(session)
+    print("\n\n\n", session, "\n\n\n")    # DEBUG
     user_db = current_app.config["USER_DB"]
 
     if request.method == "POST":
         username = request.form.get("username")
         user = user_db.get_user_by_username(username)
         if user == None:
+            print("NO USER")
+            flash("Invalid username. Are you registered?", "error")
             return redirect("/login")
 
         password = request.form.get("password")
-        if password != user.password_hash:
+
+        hashed_password = sha256(password.encode()).hexdigest()
+        print("\n\n\n", password, hashed_password, user.password_hash, "\n\n\n")
+
+        if hashed_password != user.password_hash:
+            print("WRONG PASS")
+            flash("Incorrect password. Try again or Register.", "error")
             return redirect("/login")
 
+
+<< << << < HEAD
+		flash("Successfully logged in as {}".format(username))
+== == == =
+
+        flash("Successfully logged in as {}".format(username))
+>>>>>> > c7116ba8f75de285081c597e374a8d4a2e11f884
         session["username"] = username
         session["is_loggedin"] = True
 
@@ -129,5 +145,5 @@ def login_page():
 
 if __name__ == "__main__":
     # dbinit.initialize(connection_string)
-    #app = create_app(app)
+    # app = create_app(app)
     app.run(debug=True)
