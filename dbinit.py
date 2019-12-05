@@ -14,7 +14,8 @@ INIT_STATEMENTS = [
     	name varchar(40),
     	department varchar(80),
     	studentno varchar(10),
-    	grade integer
+    	grade integer,
+    	password_hash varchar(256)
 	);""",
 
     """

@@ -1,8 +1,11 @@
-from flask import Flask, current_app, render_template, request, session, flash
-#import views
+from flask import Flask, current_app, render_template, request, session, flash, redirect
+
+# Importing custom classes
 from classes.store_database import StoreDatabase
 from classes.sell_item import SellItem
 from classes.lostfound_database import LFPost, LFDatabase
+from classes.user_database import User, UserDatabase
+
 import dbinit
 
 import psycopg2 as dbapi2
@@ -17,30 +20,14 @@ connection_string = "dbname='postgres' user='postgres' password='postgrepass' ho
 app = Flask(__name__)
 
 
-# def create_app(app):
-#app = Flask(__name__)
-
-#app.add_url_rule("/", view_func=views.home_page)
-#app.add_url_rule("/lostfound", view_func=views.lostfound_page, methods=["POST", "GET"])
-#app.add_url_rule("/store", view_func=views.store_page, endpoint='store_page', methods=["POST", "GET"])
-
 store_db = StoreDatabase()
 lf_db = LFDatabase()
+user_db = UserDatabase()
 
-# --- initialization tests ---
-# sellItem1 = SellItem("fridge", 100, "alp", 3, 6, shortD="buy please", image="fridge image")
-# sellItem2 = SellItem("horse", 99999999, "horseman", 0, 0)
-# store_db.add_selling_item(sellItem1)
-# store_db.add_selling_item(sellItem2)
-
-# lfpost1 = LFPost("Black Watch", "Black analog watch found in MED", 3, True, location="MED", imageid=None)
-# lfpost2 = LFPost("something", ":D:D:D:D:D", 2, False)
-# lf_db.add_post(lfpost1)
-# lf_db.add_post(lfpost2)
-# --- end init ---
 
 app.config["STORE_DB"] = store_db
 app.config["LF_DB"] = lf_db
+app.config["USER_DB"] = user_db
 
 # return app
 
@@ -91,13 +78,22 @@ def lfpost_page(postid):
 @app.route("/login", methods=["POST", "GET"])
 def login_page():
     print(session)
+    user_db = current_app.config["USER_DB"]
 
     if request.method == "POST":
         username = request.form.get("username")
+        user = user_db.get_user_by_username(username)
+        if user == None:
+            return redirect("/login")
+
         password = request.form.get("password")
+        if password != user.password_hash:
+            return redirect("/login")
         
-        #user_query = "SELECT * FROM users WHERE name=%s"
-        ...
+        session["username"] = username
+        session["is_loggedin"] = True
+
+        return redirect("/")
 
 
     return render_template("login.html")    
