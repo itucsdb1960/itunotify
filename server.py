@@ -126,13 +126,7 @@ def login_page():
             flash("Incorrect password. Try again or Register.", "error")
             return redirect("/login")
 
-
-<< << << < HEAD
-		flash("Successfully logged in as {}".format(username))
-== == == =
-
         flash("Successfully logged in as {}".format(username))
->>>>>> > c7116ba8f75de285081c597e374a8d4a2e11f884
         session["username"] = username
         session["is_loggedin"] = True
 

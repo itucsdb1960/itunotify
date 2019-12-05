@@ -48,24 +48,3 @@ class UserDatabase():
                     return None
                 else:
                     return User(user[0][1], user[0][2], user[0][3], user[0][4], user[0][5])
-== == == =
-    def __init__(self):
-        self.users = {}
-        self.last_userid = 0
-
-        file = open(r"heroku_db_url.txt", "r")
-        self.dsn = file.read()
-
-    def get_user_by_username(self, username):
-        user_query = "SELECT * FROM users WHERE users.name=%s"
-        args = (username,)
-
-        with dbapi2.connect(self.dsn) as connection:
-            with connection.cursor() as cursor:
-                cursor.execute(user_query, args)
-                user = cursor.fetchall()
-                if len(user) < 1:  # user named _username_ could not be found
-                    return None
-                else:
-                    return User(user[0][1], user[0][2], user[0][3], user[0][4], user[0][5])
->>>>>> > c7116ba8f75de285081c597e374a8d4a2e11f884
