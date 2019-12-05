@@ -1,4 +1,4 @@
-from flask import Flask, current_app, render_template, request, session, flash, redirect
+from flask import Flask, current_app, render_template, request, session, flash, redirect, url_for
 
 # Importing custom classes
 from classes.store_database import StoreDatabase
@@ -75,6 +75,33 @@ def lfpost_page(postid):
     responses = None
     return render_template("lfpost.html", post=post, extra=extra, responses=responses)
 
+
+@app.route("/register", methods=["POST", "GET"])
+def register_page():
+    user_db = current_app.config["USER_DB"]
+
+    if request.method == "POST":
+        user_name = request.form.get("username")
+        user_department = request.form.get("department")
+        user_studentno = request.form.get("studentno")
+        user_grade = request.form.get("grade")
+        user_password = request.form.get("password1")
+        password_check = request.form.get("password2")
+
+        if(password_check != user_password):
+            # passwords dont match
+            return redirect(url_for('register_page'))
+
+        user_password_hash = sha256(user_password.encode()).hexdigest()
+        user = User(user_name, user_department, user_studentno, user_grade, user_password_hash)
+
+        user_db.register_user(user)
+
+        return redirect(url_for('home_page'))
+
+    return render_template("register.html")
+
+
 @app.route("/login", methods=["POST", "GET"])
 def login_page():
     print(session)
@@ -89,14 +116,13 @@ def login_page():
         password = request.form.get("password")
         if password != user.password_hash:
             return redirect("/login")
-        
+
         session["username"] = username
         session["is_loggedin"] = True
 
         return redirect("/")
 
-
-    return render_template("login.html")    
+    return render_template("login.html")
 
 #</old> """
 
