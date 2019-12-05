@@ -89,7 +89,7 @@ class StoreDatabase:
             cursor.execute(sql_getAllSellingInfo, {'item_name': item_name, 'seller': seller, 'price_lw': price_lw, 'price_hi': price_hi})
             for row in cursor:
                 sellid, item_name, shortD, price, seller, image, n_ques, n_ans = row
-                self.selling[sellid] = SellItem(item_name, price, seller, n_ques, n_ans, shortD=shortD, image=image)
+                self.selling[sellid] = SellItem(sellid, item_name, price, seller, n_ques, n_ans, shortD=shortD, image=image)
                 self.last_sellid = max(sellid, self.last_sellid)
 
             cursor.close()
@@ -172,7 +172,7 @@ class StoreDatabase:
         sellItem = self.selling.get(sellid)
         if sellItem is None:
             return None
-        sellItem_new = SellItem(sellItem.item_name, sellItem.price, sellItem.seller, sellItem.n_questions, sellItem.n_answers, shortD=sellItem.shortD, image=sellItem.image)
+        sellItem_new = SellItem(sellItem.sellid, sellItem.item_name, sellItem.price, sellItem.seller, sellItem.n_questions, sellItem.n_answers, shortD=sellItem.shortD, image=sellItem.image)
         return sellItem_new
 
     def get_all_selling_items(self, item_name="%", seller="%", price_lw=0, price_hi=-1):
@@ -180,6 +180,6 @@ class StoreDatabase:
 
         sellingItems = []
         for sellid, sellItem in self.selling.items():
-            sellItem_new = SellItem(sellItem.item_name, sellItem.price, sellItem.seller, sellItem.n_questions, sellItem.n_answers, shortD=sellItem.shortD, image=sellItem.image)
+            sellItem_new = SellItem(sellItem.sellid, sellItem.item_name, sellItem.price, sellItem.seller, sellItem.n_questions, sellItem.n_answers, shortD=sellItem.shortD, image=sellItem.image)
             sellingItems.append((sellid, sellItem_new))
         return sellingItems

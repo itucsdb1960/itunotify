@@ -2,32 +2,38 @@
 
 {% block title %} ITU Student Store {% endblock %}
 
+{% block stylesheet %} "/static/style_storePage.css" {% endblock %}
+
 {% block body_content %}
 
 	<h1> ITU Store </h1>
 
 	{% if selling_items %}
-	<table>
-		{% for sellid, sellItem in selling_items %}
+	<table class="storePosts">
 		<tr>
-        	<td>
-          		{{ sellItem.seller }}
-          		
-			</td>
-			<td>
-				{{ sellItem.item_name }}
-			</td>
-			<td>
-				{{ sellItem.shortD }}
-			</td>
-			<td>
-				{{ sellItem.n_questions }}
-			</td>
+			<th> Image </th>
+			<th> Item Name </th>
+			<th> Price </th>
+			<th> Short Description </th>
+			<th> Seller </th>
+			<th> Total # of Questions </th>
+			<th> Total # of Answers </th>
+		</tr>
+
+		{% for sellid, sellItem in selling_items %}
+		<tr class="items" onclick="location.href='/store/{{sellid}}'">
+        	<td> {{ sellItem.image }} </td>
+        	<td> {{ sellItem.item_name }} </td>
+        	<td> {{ sellItem.price }} </td>
+        	<td> {{ sellItem.shortD }} </td>
+        	<td> {{ sellItem.seller }} </td>
+        	<td> {{ sellItem.n_questions }} </td>
+        	<td> {{ sellItem.n_answers }} </td>
 		</tr>
 		{% endfor %}
     </table>
 	{% else %}
-	<h2> not working bro </h2>
+	<h2> No Item Found in Store </h2>
 	{% endif %}
 
 {% endblock %}
