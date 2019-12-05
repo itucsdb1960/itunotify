@@ -8,6 +8,7 @@
 	</head>
 	<body>
 		<nav>
+			{% if session.is_loggedin %} <a href="/logout"> LogOut </a> {% else %} <a href="/login"> Login </a> {% endif %} |
 			<a href="/"> Homepage </a> | 
 			<a href="/lostfound"> Lost & Found Items </a> | 
 			<a href="{{ url_for('store_page') }}"> Item Sale </a> | 
