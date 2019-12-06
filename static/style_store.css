@@ -1,6 +1,59 @@
-table.storePosts {
+body {
+    background-color: #222165;
+}
+
+div.container {
+    background-color: #EBEBEC;
+    padding: 4em;
+    margin: 7em;
+}
+
+nav.main_nav {
+    background-color: #EBEBEC;
+    margin-top: 2.1em;
+    width: 30em;
+    text-align: center;
+    padding-top: 1em;
+    padding-bottom: 1em;
+}
+
+h1, h2 {
+    font-family: Georgia, Cabin, serif;
+}
+
+h1 {
+    margin-top: 0.1em;
+    margin-bottom: 1.1em;
+}
+
+table.store_posts {
     border: 1px solid black;
-    width: 100%;
+    border-collapse: collapse;
+    width: 60em;
+    margin-top: 2.1em;
+}
+
+th {
+    background-color: #787884;
+    color: #e5e5e5;
+    border: solid black;
+    width: 5em;
+    padding-top: 1em;
+    padding-bottom: 1em;
+    padding-left: 1em;
+    padding-right: 1em;
+    text-align: center;
+}
+
+td {
+    background-color: #e5e5e5;
+    border: thin solid grey;
+    width: 5em;
+    padding-top: 1em;
+    padding-bottom: 1em;
+    padding-left: 1em;
+    padding-right: 1em;
+    text-align: center;
 }
 
 tr {
@@ -8,6 +61,19 @@ tr {
 }
 
 tr.items:hover {
-    background-color: #8feff4;
+    background-color: #B1F6F9;
     cursor: pointer;
 }
+
+/*
+colors:
+    #B1F6F9, ice blue
+    #775082, interesting dark purple
+    #FE91D1, light pink
+    #2B2A92, dark blue
+    #222165, darker blue
+    #EBEBEC, lighter gray
+    #DFDFE2, light gray
+    #E5E5E5, light gray
+    #787884, dark gray
+*/
