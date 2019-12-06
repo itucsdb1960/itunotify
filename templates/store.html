@@ -8,6 +8,21 @@
 	<div class="container">
 		<h1> ITU Store </h1>
 
+		<form class="sell_form" action="/store" method="post">
+			<input type="hidden" name="form_key" value="sell">
+
+			<input class="sell" type="text" name="item_name" placeholder="Enter the name of the item" required>
+			<br>
+			<input class="sell" type="text" name="price" placeholder="Enter the price" required>
+			<br>
+			<input class="sell" type="text" name="shortD" placeholder="(Optional) Enter a short description">
+			<br>
+			<input class="sell" type="text" name="image" placeholder="(Optional) Upload an image">
+			<br>
+
+			<input class="sell" type="submit" name="send" value="Sell Item">
+		</form>
+
 		{% if selling_items %}
 		<table class="store_posts">
 			<tr>

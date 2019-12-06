@@ -26,6 +26,30 @@ h1 {
     margin-bottom: 1.1em;
 }
 
+form.sell_form {
+
+}
+
+input.sell[type=text] {
+    width: 20em;
+    height: 2em;
+    margin-top: 0.1em;
+    margin-bottom: 0.1em;
+}
+
+input.sell[type=submit] {
+    width: 7em;
+    height: 2em;
+    margin-top: 0.1em;
+    margin-bottom: 0.3em;
+    cursor: pointer;
+}
+
+input.sell[type=submit]:hover {
+    background-color: #681769;
+    color: #F7E75E;
+}
+
 table.store_posts {
     border: 1px solid black;
     border-collapse: collapse;
@@ -46,7 +70,6 @@ th {
 }
 
 td {
-    background-color: #e5e5e5;
     border: thin solid grey;
     width: 5em;
     padding-top: 1em;
@@ -57,18 +80,22 @@ td {
 }
 
 tr {
+    background-color: #e5e5e5;
     border-bottom: 1px solid gray;
 }
 
 tr.items:hover {
-    background-color: #B1F6F9;
+    background-color: #681769;
+    color: #F7E75E;
     cursor: pointer;
 }
 
 /*
 colors:
+    #F7E75E, light yellow
     #B1F6F9, ice blue
     #775082, interesting dark purple
+    #681769, dark purple
     #FE91D1, light pink
     #2B2A92, dark blue
     #222165, darker blue
