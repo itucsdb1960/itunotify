@@ -93,7 +93,8 @@ def store_page():
             store_db.add_selling_item(sellItem)
             selling_items = store_db.get_all_selling_items()
             selling_items = sorted(selling_items)
-            return render_template("store.html", selling_items=selling_items)
+            filter_items = [('', '', '', '')]
+            return render_template("store.html", selling_items=selling_items, filter_items=filter_items)
 
         elif request.form.get("form_key") == "filter":
             # filter form submitted
@@ -102,13 +103,21 @@ def store_page():
             price_hi = request.form.get("price_hi")
             seller_name = request.form.get("seller_name")
 
-            selling_items = store_db.get_all_selling_items(item_name=item_name, seller_name=seller_name, price_lw=price_lw, price_hi=price_hi)
+            if request.form.get("drop_filter"):
+                selling_items = store_db.get_all_selling_items()
+                filter_items = [('', '', '', '')]
+            else:
+                selling_items = store_db.get_all_selling_items(item_name=item_name, seller_name=seller_name, price_lw=price_lw, price_hi=price_hi)
+                filter_items = [(item_name, seller_name, price_lw, price_hi)]
+
             selling_items = sorted(selling_items)
-            return render_template("store.html", selling_items=selling_items)
+
+            return render_template("store.html", selling_items=selling_items, filter_items=filter_items)
 
     selling_items = store_db.get_all_selling_items()
     selling_items = sorted(selling_items)
-    return render_template("store.html", selling_items=selling_items)
+    filter_items = [('', '', '', '')]
+    return render_template("store.html", selling_items=selling_items, filter_items=filter_items)
 
 
 @app.route("/store/<int:sellid>", methods=["POST", "GET"])

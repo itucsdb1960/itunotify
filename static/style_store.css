@@ -39,7 +39,7 @@ input[type=text] {
     margin-bottom: 0.1em;
 }
 
-input[type=submit] {
+input[type=submit], button[type=submit] {
     width: 7em;
     height: 2em;
     margin-top: 0.1em;
@@ -47,7 +47,7 @@ input[type=submit] {
     cursor: pointer;
 }
 
-input[type=submit]:hover {
+input[type=submit]:hover, button[type=submit]:hover {
     background-color: #681769;
     color: #F7E75E;
 }

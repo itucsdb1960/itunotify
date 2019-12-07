@@ -23,19 +23,24 @@
 			<input class="sell" type="submit" name="send" value="Sell Item">
 		</form>
 
+		{% if filter_items %}
+		{% for item_name, seller_name, price_lw, price_hi in filter_items %}
 		<form class="filter_form" action="/store" method="post">
 			<input type="hidden" name="form_key" value="filter">
 
-			<input class="filter" type="text" name="item_name" placeholder="Item Name">
+			<input class="filter" type="text" name="item_name" placeholder="Item Name" value="{{ item_name }}">
 			<br>
-			<input class="filter" type="text" name="seller_name" placeholder="Seller Name">
+			<input class="filter" type="text" name="seller_name" placeholder="Seller Name" value="{{ seller_name }}">
 			<br>
-			<input class="filter" type="text" name="price_lw" placeholder="min price">
-			<input class="filter" type="text" name="price_hi" placeholder="max price">
+			<input class="filter" type="text" name="price_lw" placeholder="min price" value="{{ price_lw }}">
+			<input class="filter" type="text" name="price_hi" placeholder="max price" value="{{ price_hi }}">
 			<br>
 
-			<input class="filter" type="submit" name="send" value="Filter">
+			<input class="filter" type="submit" name="filter" value="Filter">
+			<input class="filter" type="submit" name="drop_filter" value="Drop All Filter">
 		</form>
+		{% endfor %}
+		{% endif %}
 
 		{% if selling_items %}
 		<table class="store_posts">
