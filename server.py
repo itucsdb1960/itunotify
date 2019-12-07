@@ -14,7 +14,6 @@ from hashlib import sha256  # hashing passwords
 import random  # for tests
 
 
-# <old> app = Flask(__name__)
 connection_string = "dbname='postgres' user='postgres' password='postgrepass' host='localhost' port=5432"
 
 app = Flask(__name__)
@@ -30,21 +29,27 @@ app.config["STORE_DB"] = store_db
 app.config["LF_DB"] = lf_db
 app.config["USER_DB"] = user_db
 
-# return app
-
-
-#""" <old>
+# 
+# HOME PAGE VIEW FUNCTION 
+#
 @app.route("/")
 def home_page():
     return render_template("index.html")
 
 
+# 
+# LOST ITEM PAGES VIEW FUNCTIONS 
+#
 @app.route("/lostfound", methods=["POST", "GET"])
 def lostfound_page():
     lf_db = current_app.config["LF_DB"]
     posts = lf_db.get_all_posts()
 
     if request.method == "POST":
+        if not session.get("is_loggedin", False):   # if not logged in, log in :)
+            flash("You must login first to do that!", "error")
+            return redirect("/login")
+
         title = request.form.get("title")
         description = request.form.get("description")
         userid = random.randint(1, 3)
@@ -70,6 +75,10 @@ def lfpost_page(postid):
     return render_template("lfpost.html", post=post, extra=extra, responses=responses)
 
 
+
+# 
+# STORE PAGES VIEW FUNCTIONS 
+#
 @app.route("/store", endpoint='store_page', methods=["POST", "GET"])
 def store_page():
     store_db = current_app.config["STORE_DB"]
@@ -131,6 +140,9 @@ def storePost_page(sellid):
     return render_template("storePost.html", post=post)
 
 
+# 
+# LOGIN - LOGOUT - REGISTER FUNCTIONS 
+#
 @app.route("/register", methods=["POST", "GET"])
 def register_page():
     user_db = current_app.config["USER_DB"]
@@ -159,6 +171,10 @@ def register_page():
 
 @app.route("/login", methods=["POST", "GET"])
 def login_page():
+    if session.get("is_loggedin", False):
+        flash("You are already logged in as {}.".format(session.get("username")), "warning")
+        return redirect("/")
+
     print("\n\n\n", session, "\n\n\n")    # DEBUG
     user_db = current_app.config["USER_DB"]
 
@@ -180,7 +196,7 @@ def login_page():
             flash("Incorrect password. Try again or Register.", "error")
             return redirect("/login")
 
-        flash("Successfully logged in as {}".format(username))
+        flash("Successfully logged in as {}".format(username), "info")
         session["username"] = username
         session["is_loggedin"] = True
 
@@ -192,6 +208,7 @@ def login_page():
 @app.route("/logout", methods=["POST", "GET"])
 def logout_page():
     session.clear()
+    flash("Successfully logged out.", "info")
     return redirect(url_for('home_page'))
 
 

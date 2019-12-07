@@ -4,7 +4,17 @@
 		<meta charset="utf-8" />
 		<title>notify - {% block title %} {% endblock %}</title>
 		<link rel="stylesheet" href={% block stylesheet %} {% endblock %}/>
-
+		<style type="text/css">
+			.error_flash {
+				align-content: center; text-align: center; border: solid black; background-color: red; font-size: 1.5em; margin: 0.5em;
+			}
+			.info_flash {
+				align-content: center; text-align: center; border: solid black; background-color: green; font-size: 1.5em; margin: 0.5em;
+			}
+			.warning_flash {
+				align-content: center; text-align: center; border: solid black; background-color: yellow; font-size: 1.5em; margin: 0.5em;
+			}
+		</style>
 	</head>
 	<body>
 		<nav class="main_nav">
@@ -15,6 +25,16 @@
 			<a href="{{ url_for('store_page') }}"> Item Sale </a> |
 			<a href="/courses"> Courses </a>
 		</nav>
+
+		{% with messages = get_flashed_messages(with_categories=true) %}
+			{% if messages %}
+				{% for category, message in messages %}
+					<div class="{{category}}_flash"> 
+						{{message}} 
+					</div>
+				{% endfor %}
+			{% endif %}
+		{% endwith %}
 
 		{% if session.is_loggedin %}
 		<h1 class="username"> Logged in as: {{ session.username }} </h1>
