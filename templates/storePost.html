@@ -1,0 +1,19 @@
+{% extends "layout.html" %}
+
+{% block title %} ITU Student Store {% endblock %}
+
+{% block stylesheet %} "/static/style_storePost.css" {% endblock %}
+
+{% block body_content %}
+    <div class="container">
+        <h1> ITU Store - Item {{ post.sellid }} </h1>
+
+        <form class="update_form" action="/store/{{post.sellid}}" method="post">
+            <input type="hidden" name="form_key" value="update">
+
+            <input class="update" type="submit" name="update" value="Update Item Info">
+            <input class="update" type="submit" name="delete" value="Delete Item from Store">
+        </form>
+
+    </div>
+{% endblock %}

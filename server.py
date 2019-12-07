@@ -96,6 +96,10 @@ def store_page():
             filter_items = [('', '', '', '')]
             return render_template("store.html", selling_items=selling_items, filter_items=filter_items)
 
+        elif request.form.get("form_key") == "login":
+            # login form submitted
+            return redirect(url_for('login_page'))
+
         elif request.form.get("form_key") == "filter":
             # filter form submitted
             item_name = request.form.get("item_name")
@@ -122,7 +126,9 @@ def store_page():
 
 @app.route("/store/<int:sellid>", methods=["POST", "GET"])
 def storePost_page(sellid):
-    return "sellid = {}".format(sellid)
+    post = {'sellid': sellid}
+
+    return render_template("storePost.html", post=post)
 
 
 @app.route("/register", methods=["POST", "GET"])

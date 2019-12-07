@@ -6,6 +6,7 @@ div.container {
     background-color: #EBEBEC;
     padding: 4em;
     margin: 7em;
+    margin-top: 4em;
 }
 
 nav.main_nav {
@@ -27,6 +28,13 @@ h1 {
     margin-bottom: 1.1em;
 }
 
+h1.username {
+    color: #F7E75E;
+    margin-top: 2em;
+    margin-left: 1em;
+    font-size: 120%;
+}
+
 form {
     margin-top: 2em;
     margin-bottom: 2em;
@@ -42,14 +50,22 @@ input[type=text] {
 input[type=submit], button[type=submit] {
     width: 7em;
     height: 2em;
-    margin-top: 0.1em;
+    margin-top: 0.7em;
     margin-bottom: 0.3em;
     cursor: pointer;
+}
+
+input#filter_filter[type=submit] {
+    margin-left: 7em;
 }
 
 input[type=submit]:hover, button[type=submit]:hover {
     background-color: #681769;
     color: #F7E75E;
+}
+
+.right {
+    float: right;
 }
 
 table.store_posts {
@@ -59,7 +75,7 @@ table.store_posts {
     margin-top: 2.1em;
 }
 
-th {
+th.post_header {
     background-color: #787884;
     color: #e5e5e5;
     border: solid black;
@@ -71,7 +87,7 @@ th {
     text-align: center;
 }
 
-td {
+td.items {
     border: thin solid grey;
     width: 5em;
     padding-top: 1em;
@@ -81,7 +97,7 @@ td {
     text-align: center;
 }
 
-tr {
+tr.items {
     background-color: #e5e5e5;
     border-bottom: 1px solid gray;
 }

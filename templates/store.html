@@ -23,46 +23,79 @@
 			<input class="sell" type="submit" name="send" value="Sell Item">
 		</form>
 
+		{% if not session.is_loggedin %}
+		<p> Cannot sell items without logging in! </p>
+		<form class="login_form" action="/store" method="post">
+			<input type="hidden" name="form_key" value="login">
+
+			<button class="login" type="submit" name="go_login"> Login </button>
+		</form>
+		{% endif %}
+
 		{% if filter_items %}
 		{% for item_name, seller_name, price_lw, price_hi in filter_items %}
 		<form class="filter_form" action="/store" method="post">
 			<input type="hidden" name="form_key" value="filter">
 
-			<input class="filter" type="text" name="item_name" placeholder="Item Name" value="{{ item_name }}">
-			<br>
-			<input class="filter" type="text" name="seller_name" placeholder="Seller Name" value="{{ seller_name }}">
-			<br>
-			<input class="filter" type="text" name="price_lw" placeholder="min price" value="{{ price_lw }}">
-			<input class="filter" type="text" name="price_hi" placeholder="max price" value="{{ price_hi }}">
-			<br>
+			<table>
+				<tr>
+					<td> <label> Item Name: </label> </td>
+					<td align="right">
+						<input class="filter" type="text" name="item_name" placeholder="Item Name" value="{{ item_name }}">
+					</td>
+				</tr>
 
-			<input class="filter" type="submit" name="filter" value="Filter">
-			<input class="filter" type="submit" name="drop_filter" value="Drop All Filter">
+				<tr>
+					<td> <label> Seller Name: </label> </td>
+					<td align="right">
+						<input class="filter" type="text" name="seller_name" placeholder="Seller Name" value="{{ seller_name }}">
+					</td>
+				</tr>
+
+				<tr>
+					<td> <label> Price Range: </label> </td>
+					<td align="right">
+						<input class="filter" type="text" name="price_lw" placeholder="min price" value="{{ price_lw }}">
+					</td>
+					<td align="right">
+						<input class="filter" type="text" name="price_hi" placeholder="max price" value="{{ price_hi }}">
+					</td>
+				</tr>
+
+				<tr>
+					<td>  </td>
+					<td align="right">
+						<input id="filter_filter" class="filter" type="submit" name="filter" value="Filter">
+						<input class="filter" type="submit" name="drop_filter" value="Drop All Filter">
+					</td>
+				</tr>
+
+			</table>
 		</form>
 		{% endfor %}
 		{% endif %}
 
 		{% if selling_items %}
 		<table class="store_posts">
-			<tr>
-				<th> Image </th>
-				<th> Item Name </th>
-				<th> Price </th>
-				<th> Short Description </th>
-				<th> Seller </th>
-				<th> Total # of Questions </th>
-				<th> Total # of Answers </th>
+			<tr class="post_header">
+				<th class="post_header"> Image </th>
+				<th class="post_header"> Item Name </th>
+				<th class="post_header"> Price </th>
+				<th class="post_header"> Short Description </th>
+				<th class="post_header"> Seller </th>
+				<th class="post_header"> Total # of Questions </th>
+				<th class="post_header"> Total # of Answers </th>
 			</tr>
 
 			{% for sellid, sellItem in selling_items %}
 			<tr class="items" onclick="location.href='/store/{{sellid}}'">
-        		<td> {{ sellItem.image }} </td>
-        		<td> {{ sellItem.item_name }} </td>
-        		<td> {{ sellItem.price }} </td>
-        		<td> {{ sellItem.shortD }} </td>
-        		<td> {{ sellItem.seller }} </td>
-        		<td> {{ sellItem.n_questions }} </td>
-        		<td> {{ sellItem.n_answers }} </td>
+        		<td class="items"> {{ sellItem.image }} </td>
+        		<td class="items"> {{ sellItem.item_name }} </td>
+        		<td class="items"> {{ sellItem.price }} </td>
+        		<td class="items"> {{ sellItem.shortD }} </td>
+        		<td class="items"> {{ sellItem.seller }} </td>
+        		<td class="items"> {{ sellItem.n_questions }} </td>
+        		<td class="items"> {{ sellItem.n_answers }} </td>
 			</tr>
 			{% endfor %}
     	</table>
