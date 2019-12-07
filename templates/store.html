@@ -23,6 +23,20 @@
 			<input class="sell" type="submit" name="send" value="Sell Item">
 		</form>
 
+		<form class="filter_form" action="/store" method="post">
+			<input type="hidden" name="form_key" value="filter">
+
+			<input class="filter" type="text" name="item_name" placeholder="Item Name">
+			<br>
+			<input class="filter" type="text" name="seller_name" placeholder="Seller Name">
+			<br>
+			<input class="filter" type="text" name="price_lw" placeholder="min price">
+			<input class="filter" type="text" name="price_hi" placeholder="max price">
+			<br>
+
+			<input class="filter" type="submit" name="send" value="Filter">
+		</form>
+
 		{% if selling_items %}
 		<table class="store_posts">
 			<tr>

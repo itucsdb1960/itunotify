@@ -62,19 +62,58 @@ def lostfound_page():
     return render_template("lost_and_found.html", posts=posts)
 
 
-@app.route("/store", endpoint='store_page', methods=["POST", "GET"])
-def store_page():
-    store_db = current_app.config["STORE_DB"]
-    selling_items = store_db.get_all_selling_items()
-    return render_template("store.html", selling_items=sorted(selling_items))
-
-
 @app.route("/lostfound/<int:postid>", methods=["POST", "GET"])
 def lfpost_page(postid):
     lf_db = current_app.config["LF_DB"]
     post, extra = lf_db.get_post(postid)
     responses = None
     return render_template("lfpost.html", post=post, extra=extra, responses=responses)
+
+
+@app.route("/store", endpoint='store_page', methods=["POST", "GET"])
+def store_page():
+    store_db = current_app.config["STORE_DB"]
+    user_db = current_app.config["USER_DB"]
+
+    if request.method == "POST":
+        if request.form.get("form_key") == "sell":
+            # sell form submitted
+            if not ("is_loggedin" in session) or (not session["is_loggedin"]):
+                # not logged in -> cannot sell item
+                # redirect to login
+                return redirect(url_for('login_page'))
+
+            item_name = request.form.get("item_name")
+            price = request.form.get("price")
+            seller_name = session["username"]
+            shortD = request.form.get("shortD")  # handle empty case!
+            image = request.form.get("image")  # handle empty case!
+
+            sellItem = SellItem(-1, item_name, price, seller_name, 0, 0, shortD, image)
+            store_db.add_selling_item(sellItem)
+            selling_items = store_db.get_all_selling_items()
+            selling_items = sorted(selling_items)
+            return render_template("store.html", selling_items=selling_items)
+
+        elif request.form.get("form_key") == "filter":
+            # filter form submitted
+            item_name = request.form.get("item_name")
+            price_lw = request.form.get("price_lw")
+            price_hi = request.form.get("price_hi")
+            seller_name = request.form.get("seller_name")
+
+            selling_items = store_db.get_all_selling_items(item_name=item_name, seller_name=seller_name, price_lw=price_lw, price_hi=price_hi)
+            selling_items = sorted(selling_items)
+            return render_template("store.html", selling_items=selling_items)
+
+    selling_items = store_db.get_all_selling_items()
+    selling_items = sorted(selling_items)
+    return render_template("store.html", selling_items=selling_items)
+
+
+@app.route("/store/<int:sellid>", methods=["POST", "GET"])
+def storePost_page(sellid):
+    return "sellid = {}".format(sellid)
 
 
 @app.route("/register", methods=["POST", "GET"])
@@ -134,7 +173,11 @@ def login_page():
 
     return render_template("login.html")
 
-#</old> """
+
+@app.route("/logout", methods=["POST", "GET"])
+def logout_page():
+    session.clear()
+    return redirect(url_for('home_page'))
 
 
 if __name__ == "__main__":

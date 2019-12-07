@@ -10,8 +10,9 @@ div.container {
 
 nav.main_nav {
     background-color: #EBEBEC;
+    font-size: 120%;
     margin-top: 2.1em;
-    width: 30em;
+    width: 35em;
     text-align: center;
     padding-top: 1em;
     padding-bottom: 1em;
@@ -26,18 +27,19 @@ h1 {
     margin-bottom: 1.1em;
 }
 
-form.sell_form {
-
+form {
+    margin-top: 2em;
+    margin-bottom: 2em;
 }
 
-input.sell[type=text] {
+input[type=text] {
     width: 20em;
     height: 2em;
     margin-top: 0.1em;
     margin-bottom: 0.1em;
 }
 
-input.sell[type=submit] {
+input[type=submit] {
     width: 7em;
     height: 2em;
     margin-top: 0.1em;
@@ -45,7 +47,7 @@ input.sell[type=submit] {
     cursor: pointer;
 }
 
-input.sell[type=submit]:hover {
+input[type=submit]:hover {
     background-color: #681769;
     color: #F7E75E;
 }

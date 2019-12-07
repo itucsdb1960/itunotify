@@ -15,8 +15,14 @@ class StoreDatabase:
 
         # normally get selling items from the sql database!
 
-    def get_all_from_db(self, item_name="%", seller="%", price_lw=0, price_hi=-1):
+    def get_all_from_db(self, item_name="%", seller_name="%", price_lw=0, price_hi=-1):
         self.selling.clear()
+
+        if item_name != "%":
+            item_name = "%" + item_name + "%"
+
+        if seller_name != "%":
+            seller_name = "%" + seller_name + "%"
 
         sql_getAllSellingInfo = """SELECT selling.sellid, item.name, selling.shortD, selling.price, users.name, image.image, count(question.questionid), count(answer.answerid)
 									FROM selling left join users ON selling.seller = users.userid
@@ -86,10 +92,10 @@ class StoreDatabase:
             cursor.close()
 			"""
 
-            cursor.execute(sql_getAllSellingInfo, {'item_name': item_name, 'seller': seller, 'price_lw': price_lw, 'price_hi': price_hi})
+            cursor.execute(sql_getAllSellingInfo, {'item_name': item_name, 'seller': seller_name, 'price_lw': price_lw, 'price_hi': price_hi})
             for row in cursor:
-                sellid, item_name, shortD, price, seller, image, n_ques, n_ans = row
-                self.selling[sellid] = SellItem(sellid, item_name, price, seller, n_ques, n_ans, shortD=shortD, image=image)
+                sellid, item_name, shortD, price, seller_name, image, n_ques, n_ans = row
+                self.selling[sellid] = SellItem(sellid, item_name, price, seller_name, n_ques, n_ans, shortD=shortD, image=image)
                 self.last_sellid = max(sellid, self.last_sellid)
 
             cursor.close()
@@ -127,6 +133,10 @@ class StoreDatabase:
 								%(image)s
 							);"""
 
+        sql_getUserIdByName = """SELECT users.userid
+                                    FROM users
+                                    WHERE (users.name = %(seller_name)s);"""
+
         with dbapi2.connect(self.dsn) as connection:
             cursor = connection.cursor()
 
@@ -153,6 +163,9 @@ class StoreDatabase:
                 imageid = imageExist[0][0]
 
             # set userid correctly!
+            cursor.execute(sql_getUserIdByName, {'seller_name': sellItem.seller})
+            logged_user = cursor.fetchall()
+            userid = logged_user[0][0]
 
             cursor.execute(sql_insertSelling, {'itemid': itemid, 'imageid': imageid, 'seller': userid, 'shortD': sellItem.shortD, 'price': sellItem.price})
 
@@ -175,8 +188,17 @@ class StoreDatabase:
         sellItem_new = SellItem(sellItem.sellid, sellItem.item_name, sellItem.price, sellItem.seller, sellItem.n_questions, sellItem.n_answers, shortD=sellItem.shortD, image=sellItem.image)
         return sellItem_new
 
-    def get_all_selling_items(self, item_name="%", seller="%", price_lw=0, price_hi=-1):
-        self.get_all_from_db(item_name=item_name, seller="%", price_lw=price_lw, price_hi=price_hi)
+    def get_all_selling_items(self, item_name="%", seller_name="%", price_lw=0, price_hi=-1):
+        if item_name == '' or item_name == None:
+            item_name = "%"
+        if seller_name == '' or seller_name == None:
+            seller_name = "%"
+        if price_lw == '' or price_lw == None:
+            price_lw = 0
+        if price_hi == '' or price_hi == None:
+            price_hi = -1
+
+        self.get_all_from_db(item_name=item_name, seller_name=seller_name, price_lw=price_lw, price_hi=price_hi)
 
         sellingItems = []
         for sellid, sellItem in self.selling.items():
