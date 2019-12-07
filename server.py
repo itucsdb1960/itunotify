@@ -52,7 +52,7 @@ def lostfound_page():
 
         title = request.form.get("title")
         description = request.form.get("description")
-        #userid = session["user_dict"]["userid"] # The user object who is logged in is stored in sessin["user"]
+        #userid = session["user_dict"]["userid"] # The user object who is logged in is stored in session["user"]
         userid = session["userid"]
         LF = request.form.get("LF")
         location = request.form.get("location")
