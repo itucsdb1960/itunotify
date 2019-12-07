@@ -5,6 +5,16 @@
 		<title>notify - {% block title %} {% endblock %}</title>
 		<link rel="stylesheet" href={% block stylesheet %} {% endblock %}/>
 		<style type="text/css">
+			nav {
+			    display:table;
+			    border-collapse: collapse;
+			    border-radius: .5em;
+			    box-shadow: #d0d0d0 0px 0px 0px 1px;
+			    background-color: #e7e7e7;
+			    padding: 1em;
+			    margin: 1em;
+			}
+
 			.error_flash {
 				align-content: center; text-align: center; border: solid black; background-color: red; font-size: 1.5em; margin: 0.5em;
 			}

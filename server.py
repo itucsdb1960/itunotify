@@ -52,7 +52,8 @@ def lostfound_page():
 
         title = request.form.get("title")
         description = request.form.get("description")
-        userid = random.randint(1, 3)
+        #userid = session["user_dict"]["userid"] # The user object who is logged in is stored in sessin["user"]
+        userid = session["userid"]
         LF = request.form.get("LF")
         location = request.form.get("location")
 
@@ -199,6 +200,8 @@ def login_page():
         flash("Successfully logged in as {}".format(username), "info")
         session["username"] = username
         session["is_loggedin"] = True
+        #session["user_dict"] = vars(user)   # save user obj in session (?)
+        session["userid"] = user_db.get_userid_by_username(username)
 
         return redirect("/")
 

@@ -45,3 +45,12 @@ class UserDatabase():
                     return None
                 else:
                     return User(user[0][1], user[0][2], user[0][3], user[0][4], user[0][5])
+
+    def get_userid_by_username(self, username):
+    	userid_query = "SELECT users.userid FROM users WHERE users.name = %s"
+    	args = (username,)                
+
+    	with dbapi2.connect(self.dsn) as connection:
+            with connection.cursor() as cursor:
+                cursor.execute(userid_query, args)
+                return cursor.fetchone()[0]
