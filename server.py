@@ -73,10 +73,21 @@ def lostfound_page():
 
         # Delete Post button is activated in /lostfound/<int:postid>        
         elif form_name == "delete_post":
-            #lf_db.delete_post()
-            pass
+            postowner_userid = request.form.get("userid")
+            postid = request.form.get("postid")
 
-    return render_template("lost_and_found.html", posts=posts)
+            # user must be post owner to be able to delete. if not, print error and redirect to same post's page
+            if not session.get("userid") == int(postowner_userid):  # userid is int in session, but str in form return value
+                flash("You do not have authentication to do that!", "error")
+                return redirect("/lostfound/{}".format(postid))
+
+            lf_db.delete_post(postid)
+            flash("Post is deleted successfully.", "info")
+            return redirect("/lostfound")
+
+
+    else:
+        return render_template("lost_and_found.html", posts=posts)
 
 
 @app.route("/lostfound/<int:postid>", methods=["POST", "GET"])

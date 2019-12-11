@@ -17,6 +17,8 @@
 <div class="options_side" >
 	<form action="/lostfound" method="post">
 		<input type="hidden" name="form_key" value="delete_post">
+		<input type="hidden" name="postid" value="{{extra.postid}}">
+		<input type="hidden" name="userid" value="{{post.userid}}">
 		<button type="submit"> Delete Post </button> 
 	</form>
 	
@@ -24,7 +26,7 @@
 		<br>	
 		<button type="submit"> Report Post </button> 
 		<br>
-				
+
 </div>
 
 <div class="responses">
