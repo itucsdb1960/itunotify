@@ -46,26 +46,35 @@ def lostfound_page():
     posts = lf_db.get_all_posts()
 
     if request.method == "POST":
-        if not session.get("is_loggedin", False):   # if not logged in, log in :)
-            flash("You must login first to do that!", "error")
-            return redirect("/login")
+        form_name = request.form.get("form_key")
 
-        title = request.form.get("title")
-        if len(title) > 32:
-            title = title[:29] + "..."
-        description = request.form.get("description")
-        #userid = session["user_dict"]["userid"] # The user object who is logged in is stored in session["user"]
-        userid = session["userid"]
-        LF = request.form.get("LF")
-        location = request.form.get("location")
+        # new post created from /lostfound
+        if form_name == "new_post":
+            if not session.get("is_loggedin", False):   # if not logged in, log in :)
+                flash("You must login first to do that!", "error")
+                return redirect("/login")
 
-        if title == "" or description == "" or LF == None:
-            return render_template("lost_and_found.html", posts=posts)
-        else:
-            lfpost = LFPost(title, description, userid, LF, location=location)
-            lf_db.add_post(lfpost)
-            posts = lf_db.get_all_posts()
-            current_app.config["LF_DB"] = lf_db
+            title = request.form.get("title")
+            if len(title) > 32:
+                title = title[:29] + "..."
+            description = request.form.get("description")
+            #userid = session["user_dict"]["userid"] # The user object who is logged in is stored in session["user"]
+            userid = session["userid"]
+            LF = request.form.get("LF")
+            location = request.form.get("location")
+
+            if title == "" or description == "" or LF == None:
+                return render_template("lost_and_found.html", posts=posts)
+            else:
+                lfpost = LFPost(title, description, userid, LF, location=location)
+                lf_db.add_post(lfpost)
+                posts = lf_db.get_all_posts()
+                current_app.config["LF_DB"] = lf_db
+
+        # Delete Post button is activated in /lostfound/<int:postid>        
+        elif form_name == "delete_post":
+            #lf_db.delete_post()
+            pass
 
     return render_template("lost_and_found.html", posts=posts)
 

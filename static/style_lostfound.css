@@ -4,8 +4,11 @@ body {
 
 table.lfposts {
 	border: 2px solid black;
-	margin: 5%;
+	margin-left: 5%;
+	margin-right: 5%;
+	margin-bottom: 5%;
 	float: left;
+	min-width: 50%;
 	max-width: 90%;
 }
 
@@ -28,6 +31,9 @@ tr:hover{
 th {
     border: 1px solid purple;
     background-color: #00bbdd;
+    cursor: pointer;
+    padding-top: 0.25em;
+	padding-bottom: 0.25em;
 }
 
 a.lfpost_link {

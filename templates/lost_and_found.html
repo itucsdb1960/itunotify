@@ -5,6 +5,7 @@
 {% block body_content %}
 	<h2> Share a new post </h2>
 	<form action="/lostfound" method="post">
+        <input type="hidden" name="form_key" value="new_post">
 		<input type="text" name="title" placeholder="Enter a title (max 32 chars)" required>
 		<input type="text" name="location" placeholder="(Optional) Enter location">
 		<br>
@@ -13,11 +14,17 @@
 		<input type="radio" name="LF" value=TRUE required> Found
 		<input type="radio" name="LF" value=FALSE required> Lost
 		<br>
-		<input type="submit" name="Send">
+		<input type="submit" name="Send" value="Share">
 	</form>
 
 	<h2> Latest Posts </h2>
 	{% if posts %}
+    <input type="text" id="filter_text" onkeyup="filterTable()" placeholder="Write Something to filter the table...">
+    <input type="radio" name="clmn" value=0 onclick="setFilterColumn(0); filterTable();" required checked> Title
+    <input type="radio" name="clmn" value=1 onclick="setFilterColumn(1); filterTable();" required> User
+    <input type="radio" name="clmn" value=2 onclick="setFilterColumn(2); filterTable();" required> Category
+    <input type="radio" name="clmn" value=3 onclick="setFilterColumn(3); filterTable();" required> Location
+
 	<table class="lfposts" id="lfposts_table">
 		<tr>
 			<th onclick="sortTable('title')"> Title </th>
@@ -36,26 +43,24 @@
 	</table>
 
 	<script>
+        ascending = false;
 		function sortTable(column) {
+            ascending = !ascending; 
             var col_num;
             switch(column){
                 case "title":
-                    col_num = 0;
-                    break;
+                    col_num = 0; break;
                 case "username":
-                    col_num = 1;
-                    break;
+                    col_num = 1; break;
                 case "category":
-                    col_num = 2;
-                    break;
+                    col_num = 2; break;
                 case "location":
-                    col_num = 3;
-                    break;
+                    col_num = 3; break;
             }
 
             var table, rows;
             var switching;
-            var i, el1, el2; // row index, element1 and element2
+            var i, el1, el2; // row index and two elements to compare
             var swap;        // boolean flag
             table = document.getElementById("lfposts_table");
             switching = true;
@@ -68,7 +73,8 @@
                     swap = false;
                     el1 = rows[i].getElementsByTagName("TD")[col_num];
                     el2 = rows[i + 1].getElementsByTagName("TD")[col_num];
-                    if (el1.innerHTML.toLowerCase() > el2.innerHTML.toLowerCase()) {
+                    if ( (ascending && el1.innerHTML.toLowerCase() > el2.innerHTML.toLowerCase())
+                        || !ascending && el1.innerHTML.toLowerCase() < el2.innerHTML.toLowerCase()) {
                         swap = true;
                         break;
                     }
@@ -77,6 +83,31 @@
                 if (swap) {
                     rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
                     switching = true;
+                }
+            }
+        }
+
+        filter_col_num = 0;
+        function setFilterColumn(col_num){
+            filter_col_num = col_num;
+        }
+
+        function filterTable(){
+            var filter_input = document.getElementById("filter_text");
+            var filter_text = filter_input.value.toUpperCase();
+            var table = document.getElementById("lfposts_table");
+            var trs = table.getElementsByTagName("tr");     // tablerows
+
+            for (var i = 0; i < trs.length; i++) {
+                var td = trs[i].getElementsByTagName("td")[filter_col_num];
+                if(td){
+                    var txtValue = td.textContent || td.innerText;
+                    if (txtValue.toUpperCase().indexOf(filter_text) > -1) {
+                        trs[i].style.display = "";
+                    }
+                    else {
+                        trs[i].style.display = "none";
+                    }
                 }
             }
         }
