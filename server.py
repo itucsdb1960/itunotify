@@ -51,6 +51,8 @@ def lostfound_page():
             return redirect("/login")
 
         title = request.form.get("title")
+        if len(title) > 32:
+            title = title[:29] + "..."
         description = request.form.get("description")
         #userid = session["user_dict"]["userid"] # The user object who is logged in is stored in session["user"]
         userid = session["userid"]

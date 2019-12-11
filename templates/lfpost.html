@@ -6,14 +6,16 @@
 
 {% block body_content %}
 
-<div class="post_side">
-	<h2> {{post.title}} </h2>
-	<h5> {% if extra %} Posted by: {{extra.username}} {% else %} No username??? {% endif %} </h5>
-	<p> {{post.description}} </p>
-</div>
+<div class="post_side"> 
+	<table style="border: 2px dashed green;">
+		<tr> {{post.title}} </tr>
+		<tr> {% if extra %} Posted by: {{extra.username}} {% else %} No username??? {% endif %} </tr>
+		<tr> {{post.description}} </tr>
+	</table>
+</div> 
 
-<div class="options_side">
-	<form action="/lostfound" method="get">
+<div class="options_side" >
+	<form action="/lostfound" method="post">
 		<input type="hidden" name="form_key" value="post_management">
 		<button type="submit"> Delete Post </button> <br>
 		<button type="submit"> Update Post </button> <br>

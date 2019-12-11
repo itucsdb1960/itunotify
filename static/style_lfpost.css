@@ -1,11 +1,12 @@
 div {
-	margin: 5%;
-	padding: 1em;
+	border: 1px solid purple;
+	/*margin: 1%;*/
+	padding: 2em;
 }
 
 .post_side {
 	float: left;
-	width: 70%;
+	width: 80%;
 }
 
 .options_side {
@@ -15,7 +16,8 @@ div {
 
 .responses {
 	width: 100%;
-	float: center;
+	/*float: center;*/
+	border: 2px solid green;
 }
 
 button {

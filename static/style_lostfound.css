@@ -4,7 +4,9 @@ body {
 
 table.lfposts {
 	border: 2px solid black;
-	width: 100%;
+	margin: 5%;
+	float: left;
+	max-width: 90%;
 }
 
 tr {
@@ -18,9 +20,6 @@ tr:nth-child(odd) {
 tr:nth-child(even) {
 	background-color: #dedede; 
 }
-th{
-	background-color: #ddbbdd;
-}
 
 tr:hover{
 	background-color: #eeddee;
@@ -28,6 +27,7 @@ tr:hover{
 
 th {
     border: 1px solid purple;
+    background-color: #00bbdd;
 }
 
 a.lfpost_link {
