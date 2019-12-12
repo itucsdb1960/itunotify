@@ -2,13 +2,14 @@ from copy import copy
 import psycopg2 as dbapi2
 
 class LFPost():
-	def __init__(self, title, description, userid, LF, location=None, imageid=None):
+	def __init__(self, title, description, userid, LF, location=None, imageid=None, sharetime=None):
 		self.title = title
 		self.description = description
 		self.userid = userid
 		self.LF = LF
 		self.location = location
 		self.imageid = imageid
+		self.sharetime = sharetime
 
 
 class LFDatabase():
@@ -46,7 +47,7 @@ class LFDatabase():
 
 	def get_post(self, postid):
 		select_post_statement = "SELECT * FROM lostfound WHERE lostfound.postid=%s;"
-		select_username_statement = "SELECT users.name FROM lostfound, users WHERE (lostfound.postid=%s) AND (lostfound.userid=users.userid);"
+		select_username_statement = "SELECT users.name FROM lostfound, users WHERE (lostfound.postid=%s) AND (lostfound.userid=users.studentno);"
 		args = (postid,)
 
 		lfpost = None
@@ -54,8 +55,8 @@ class LFDatabase():
 		with dbapi2.connect(self.dsn) as connection:
 			with connection.cursor() as cursor:
 				cursor.execute(select_post_statement, args)
-				pid, tit, desc, uid, lf, loc, imid  = cursor.fetchone()
-				lfpost = LFPost(tit, desc, uid, lf, loc, imid)
+				pid, tit, desc, uid, lf, loc, imid, stime  = cursor.fetchone()
+				lfpost = LFPost(tit, desc, uid, lf, loc, imid, stime)
 				cursor.execute(select_username_statement, args)
 				extra_info["username"] = cursor.fetchone()[0]	# fetchone returns a tuple even if result is one element only
 
@@ -66,7 +67,7 @@ class LFDatabase():
 		select_all_posts_statement = """
 			SELECT lostfound.postid, lostfound.title, users.name, lostfound.LF, lostfound.location 
 			FROM lostfound, users
-			WHERE (lostfound.userid=users.userid)
+			WHERE (lostfound.userid=users.studentno)
 			ORDER BY lostfound.postid DESC;
 			"""
 
