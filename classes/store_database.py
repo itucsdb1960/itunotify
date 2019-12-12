@@ -11,7 +11,7 @@ class StoreDatabase:
         self.dsn = file.read()
         #self.dsn = "dbname='postgres' user='postgres' password='postgrepass' host='localhost' port=5432"
 
-        #self.get_all_from_db()
+        # self.get_all_from_db()
 
         # normally get selling items from the sql database!
 
@@ -25,18 +25,18 @@ class StoreDatabase:
             seller_name = "%" + seller_name + "%"
 
         sql_getAllSellingInfo = """SELECT selling.sellid, item.name, selling.shortD, selling.price, users.name, image.image, count(question.questionid), count(answer.answerid)
-									FROM selling left join users ON selling.seller = users.studentno
-												left join item ON selling.itemid = item.itemid
-												left join image ON selling.imageid = image.imageid
-												left join question ON selling.sellid = question.sellid
-												left join answer ON question.questionid = answer.questionid
-																AND selling.sellid = answer.sellid
-									WHERE (item.name LIKE %(item_name)s
-	  									AND users.name LIKE %(seller)s
-	  									AND selling.price >= %(price_lw)s
-	  									AND selling.price <= %(price_hi)s)
-									GROUP BY selling.sellid, item.name, selling.shortD, selling.price, users.name, image.image
-									ORDER BY selling.sellid;"""
+                                    FROM selling left join users ON selling.seller = users.studentno
+                                                left join item ON selling.itemid = item.itemid
+                                                left join image ON selling.imageid = image.imageid
+                                                left join question ON selling.sellid = question.sellid
+                                                left join answer ON question.questionid = answer.questionid
+                                                                AND selling.sellid = answer.sellid
+                                    WHERE (item.name LIKE %(item_name)s
+                                        AND users.name LIKE %(seller)s
+                                        AND selling.price >= %(price_lw)s
+                                        AND selling.price <= %(price_hi)s)
+                                    GROUP BY selling.sellid, item.name, selling.shortD, selling.price, users.name, image.image
+                                    ORDER BY selling.sellid;"""
 
         sql_getMaxPrice = """SELECT max(price)
                                 FROM selling;"""
@@ -63,7 +63,7 @@ class StoreDatabase:
         self.selling[self.last_sellid] = sellItem"""
 
         itemid = 0
-        userid_no = ""
+        userid_no = session["userid"]
         imageid = 0
 
         sql_insertSelling = """INSERT INTO selling (itemid, imageid, seller, shortD, price) VALUES(
@@ -76,24 +76,20 @@ class StoreDatabase:
 
         # if item_name and image doesnt exist, create
         sql_itemExists = """SELECT item.itemid, item.name
-							FROM item
-							WHERE (item.name = %(item_name)s);"""
+                            FROM item
+                            WHERE (item.name = %(item_name)s);"""
 
         sql_insertItem = """INSERT INTO item (name) VALUES(
-								%(item_name)s
-							);"""
+                                %(item_name)s
+                            );"""
 
         sql_imageExists = """SELECT image.imageid, image.image
-								FROM image
-								WHERE (image.image = %(image)s);"""
+                                FROM image
+                                WHERE (image.image = %(image)s);"""
 
         sql_insertImage = """INSERT INTO image (image) VALUES(
-								%(image)s
-							);"""
-
-        sql_getUserIdByName = """SELECT users.userid
-                                    FROM users
-                                    WHERE (users.name = %(seller_name)s);"""
+                                %(image)s
+                            );"""
 
         with dbapi2.connect(self.dsn) as connection:
             cursor = connection.cursor()
@@ -121,11 +117,8 @@ class StoreDatabase:
                 imageid = imageExist[0][0]
 
             # set userid correctly!
-            cursor.execute(sql_getUserIdByName, {'seller_name': sellItem.seller})
-            logged_user = cursor.fetchall()
-            userid = logged_user[0][0]
 
-            cursor.execute(sql_insertSelling, {'itemid': itemid, 'imageid': imageid, 'seller': userid, 'shortD': sellItem.shortD, 'price': sellItem.price})
+            cursor.execute(sql_insertSelling, {'itemid': itemid, 'imageid': imageid, 'seller': userid_no, 'shortD': sellItem.shortD, 'price': sellItem.price})
 
             cursor.close()
 
@@ -143,7 +136,7 @@ class StoreDatabase:
         sellItem = self.selling.get(sellid)
         if sellItem is None:
             return None
-        sellItem_new = SellItem(sellItem.sellid, sellItem.item_name, sellItem.price, sellItem.seller, sellItem.n_questions, sellItem.n_answers, shortD=sellItem.shortD, image=sellItem.image)
+        sellItem_new = SellItem(sellItem.sellid, sellItem.item_name, sellItem.price, sellItem.seller, sellItem.n_questions, sellItem.n_answers, item_info=sellItem.item_info, shortD=sellItem.shortD, image=sellItem.image)
         return sellItem_new
 
     def get_all_selling_items(self, item_name="%", seller_name="%", price_lw=0, price_hi=-1):
@@ -160,6 +153,6 @@ class StoreDatabase:
 
         sellingItems = []
         for sellid, sellItem in self.selling.items():
-            sellItem_new = SellItem(sellItem.sellid, sellItem.item_name, sellItem.price, sellItem.seller, sellItem.n_questions, sellItem.n_answers, shortD=sellItem.shortD, image=sellItem.image)
+            sellItem_new = SellItem(sellItem.sellid, sellItem.item_name, sellItem.price, sellItem.seller, sellItem.n_questions, sellItem.n_answers, item_info=sellItem.item_info, shortD=sellItem.shortD, image=sellItem.image)
             sellingItems.append((sellid, sellItem_new))
         return sellingItems

@@ -29,16 +29,18 @@ app.config["STORE_DB"] = store_db
 app.config["LF_DB"] = lf_db
 app.config["USER_DB"] = user_db
 
-# 
-# HOME PAGE VIEW FUNCTION 
 #
+# HOME PAGE VIEW FUNCTION
+#
+
+
 @app.route("/")
 def home_page():
     return render_template("index.html")
 
 
-# 
-# LOST ITEM PAGES VIEW FUNCTIONS 
+#
+# LOST ITEM PAGES VIEW FUNCTIONS
 #
 @app.route("/lostfound", methods=["POST", "GET"])
 def lostfound_page():
@@ -58,7 +60,7 @@ def lostfound_page():
             if len(title) > 32:
                 title = title[:29] + "..."
             description = request.form.get("description")
-            #userid = session["user_dict"]["userid"] # The user object who is logged in is stored in session["user"]
+            # userid = session["user_dict"]["userid"] # The user object who is logged in is stored in session["user"]
             userid = session["userid"]
             LF = request.form.get("LF")
             location = request.form.get("location")
@@ -71,7 +73,7 @@ def lostfound_page():
                 posts = lf_db.get_all_posts()
                 current_app.config["LF_DB"] = lf_db
 
-        # Delete Post button is activated in /lostfound/<int:postid>        
+        # Delete Post button is activated in /lostfound/<int:postid>
         elif form_name == "delete_post":
             postowner_userid = request.form.get("userid")
             postid = request.form.get("postid")
@@ -85,7 +87,6 @@ def lostfound_page():
             flash("Post is deleted successfully.", "info")
             return redirect("/lostfound")
 
-
     else:
         return render_template("lost_and_found.html", posts=posts)
 
@@ -98,9 +99,8 @@ def lfpost_page(postid):
     return render_template("lfpost.html", post=post, extra=extra, responses=responses)
 
 
-
-# 
-# STORE PAGES VIEW FUNCTIONS 
+#
+# STORE PAGES VIEW FUNCTIONS
 #
 @app.route("/store", endpoint='store_page', methods=["POST", "GET"])
 def store_page():
@@ -163,8 +163,8 @@ def storePost_page(sellid):
     return render_template("storePost.html", post=post)
 
 
-# 
-# LOGIN - LOGOUT - REGISTER FUNCTIONS 
+#
+# LOGIN - LOGOUT - REGISTER FUNCTIONS
 #
 @app.route("/register", methods=["POST", "GET"])
 def register_page():
@@ -222,7 +222,7 @@ def login_page():
         flash("Successfully logged in as {}".format(username), "info")
         session["username"] = username
         session["is_loggedin"] = True
-        #session["user_dict"] = vars(user)   # save user obj in session (?)
+        # session["user_dict"] = vars(user)   # save user obj in session (?)
         session["userid"] = user_db.get_userid_by_username(username)
 
         return redirect("/")
