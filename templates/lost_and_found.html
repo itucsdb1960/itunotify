@@ -20,7 +20,7 @@
 	<h2> Latest Posts </h2>
 	{% if posts %}
     <input type="text" id="filter_text" onkeyup="filterTable()" placeholder="Write Something to filter the table...">
-    <input type="radio" name="clmn" value=0 onclick="setFilterColumn(0); filterTable();" required checked> Share Time
+    <input type="radio" name="clmn" value=0 onclick="setFilterColumn(0); filterTable();" required> Share Time
     <input type="radio" name="clmn" value=0 onclick="setFilterColumn(1); filterTable();" required checked> Title
     <input type="radio" name="clmn" value=1 onclick="setFilterColumn(2); filterTable();" required> User
     <input type="radio" name="clmn" value=2 onclick="setFilterColumn(3); filterTable();" required> Category
@@ -92,7 +92,7 @@
             }
         }
 
-        filter_col_num = 0;
+        filter_col_num = 1;
         function setFilterColumn(col_num){
             filter_col_num = col_num;
         }

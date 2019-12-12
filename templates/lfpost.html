@@ -6,27 +6,31 @@
 
 {% block body_content %}
 
-<div class="post_side"> 
-	<table style="border: 2px dashed green;">
-		<tr> {{post.title}} </tr>
-		<tr> {% if extra %} Posted by: {{extra.username}} {% else %} No username??? {% endif %} </tr>
-		<tr> {{post.description}} </tr>
-	</table>
-</div> 
+<div class="post_and_options">
+	<div class="post_side"> 
+		<table class="post_card">
+			<tr> 
+				<th> {{post.title}} </th> 
+				<th> {% if extra %} Posted by: {{extra.username}} {% else %} No username??? {% endif %} </th>
+			</tr>
+			<tr> 
+				<td colspan="2" align="center"> {{post.description}} </td> 
+			</tr>
+		</table>
+	</div> 
 
-<div class="options_side" >
-	<form action="/lostfound" method="post">
-		<input type="hidden" name="form_key" value="delete_post">
-		<input type="hidden" name="postid" value="{{extra.postid}}">
-		<input type="hidden" name="userid" value="{{post.userid}}">
-		<button type="submit"> Delete Post </button> 
-	</form>
-	
-		<button type="submit"> Update Post </button> 
-		<br>	
-		<button type="submit"> Report Post </button> 
-		<br>
-
+	<div class="options_side" >
+		<form action="/lostfound" method="post">
+			<input type="hidden" name="form_key" value="delete_post">
+			<input type="hidden" name="postid" value="{{extra.postid}}">
+			<input type="hidden" name="userid" value="{{post.userid}}">
+			<button type="submit"> Delete Post </button> 
+		</form>
+			<button type="submit"> Update Post </button> 
+			<br>	
+			<button type="submit" onclick="reportPost()"> Report Post </button> 
+			<br>
+	</div>
 </div>
 
 <div class="responses">
@@ -43,6 +47,12 @@
 	There is no response for this post yet.
 	{% endif %}
 </div>
+
+<script >
+	function reportPost(){
+		alert("Wait, that's illegal");
+	}
+</script>
 
 {% endblock %}
 

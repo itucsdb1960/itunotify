@@ -15,9 +15,7 @@ import random  # for tests
 from datetime import datetime   # obtain sharing time on form post
 
 def getTimestampString():
-    dt = datetime.now()
-    s = str(dt.year) + "/" + str(dt.month) + "/" + str(dt.day) + " ~ " + str(dt.hour) + ":" + str(dt.minute) + ":" + str(dt.second)
-    return s
+    return " ~ ".join(str(datetime.now()).split(" ")).replace("-", "/")[:-7]    # might be a little complicated :)
 
 connection_string = "dbname='postgres' user='postgres' password='postgrepass' host='localhost' port=5432"
 
@@ -85,7 +83,7 @@ def lostfound_page():
             postid = request.form.get("postid")
 
             # user must be post owner to be able to delete. if not, print error and redirect to same post's page
-            if not session.get("userid") == int(postowner_userid):  # userid is int in session, but str in form return value
+            if not session.get("userid") == postowner_userid:
                 flash("You do not have authentication to do that!", "error")
                 return redirect("/lostfound/{}".format(postid))
 
