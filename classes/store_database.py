@@ -11,7 +11,7 @@ class StoreDatabase:
         self.dsn = file.read()
         #self.dsn = "dbname='postgres' user='postgres' password='postgrepass' host='localhost' port=5432"
 
-        self.get_all_from_db()
+        #self.get_all_from_db()
 
         # normally get selling items from the sql database!
 
@@ -25,7 +25,7 @@ class StoreDatabase:
             seller_name = "%" + seller_name + "%"
 
         sql_getAllSellingInfo = """SELECT selling.sellid, item.name, selling.shortD, selling.price, users.name, image.image, count(question.questionid), count(answer.answerid)
-									FROM selling left join users ON selling.seller = users.userid
+									FROM selling left join users ON selling.seller = users.studentno
 												left join item ON selling.itemid = item.itemid
 												left join image ON selling.imageid = image.imageid
 												left join question ON selling.sellid = question.sellid
@@ -63,7 +63,7 @@ class StoreDatabase:
         self.selling[self.last_sellid] = sellItem"""
 
         itemid = 0
-        userid = 1
+        userid_no = ""
         imageid = 0
 
         sql_insertSelling = """INSERT INTO selling (itemid, imageid, seller, shortD, price) VALUES(

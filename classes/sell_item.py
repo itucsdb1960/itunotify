@@ -3,7 +3,7 @@ class SellItem:
         if(shortD == None):
             shortD = "No description."
         if(image == None):
-            image = "No image available."
+            image = "no image available"
 
         self.sellid = sellid
         self.item_name = item_name
