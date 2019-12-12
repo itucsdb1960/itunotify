@@ -1,23 +1,46 @@
-div {
+/*div {
 	border: 1px solid purple;
-	/*margin: 1%;*/
+	/*margin: 1%;
 	padding: 2em;
+}*/
+
+.post_and_options{
+	margin: 1%;
+	padding: 2em;
+	width: 100%;
+	overflow: auto;
+	border: 3px solid black;
 }
 
 .post_side {
 	float: left;
-	width: 80%;
+	width: 75%;
+	border: 2px solid black;
+	overflow: auto;
 }
-
 .options_side {
-	float: right;
+	/*float: right;*/
 	width: 20%;
+	border: 2px solid black;
+	overflow: auto;
 }
 
 .responses {
 	width: 100%;
 	/*float: center;*/
 	border: 2px solid green;
+	overflow: auto;
+}
+
+.post_card {
+	width: 100%;
+	overflow: auto;
+}
+th {
+	border: 2px solid #00aabb; 
+}
+td {
+	border: 2px solid #00aabb;
 }
 
 button {

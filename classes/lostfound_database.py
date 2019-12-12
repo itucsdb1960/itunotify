@@ -2,13 +2,21 @@ from copy import copy
 import psycopg2 as dbapi2
 
 class LFPost():
-	def __init__(self, title, description, userid, LF, location=None, imageid=None, sharetime=None):
+	def __init__(self, title, description, userid, LF, location=None, imageid=1, sharetime=None):
 		self.title = title
 		self.description = description
 		self.userid = userid
 		self.LF = LF
 		self.location = location
 		self.imageid = imageid
+		self.sharetime = sharetime
+
+class LFResponse():
+	def __init__(self, postid, response, userid, order, sharetime):
+		self.postid = postid
+		self.response = response
+		self.userid = userid
+		self.order = order
 		self.sharetime = sharetime
 
 
@@ -20,14 +28,16 @@ class LFDatabase():
 
 		file = open(r"heroku_db_url.txt", "r")
 		self.dsn = file.read()
-
-	# Database management methods
+	
+	#
+	# Database management methods for lostfound table
+	#
 	def	add_post(self, lfpost):
 		self.last_postid += 1
 		self.posts[self.last_postid] = lfpost
 
-		insert_statement = "INSERT INTO lostfound (title, description, userid, LF, location, imageid) VALUES (%s, %s, %s, %s, %s, %s);"
-		args = (lfpost.title, lfpost.description, lfpost.userid, lfpost.LF, lfpost.location, lfpost.imageid)
+		insert_statement = "INSERT INTO lostfound (title, description, userid, LF, location, imageid, sharetime) VALUES (%s, %s, %s, %s, %s, %s, %s);"
+		args = (lfpost.title, lfpost.description, lfpost.userid, lfpost.LF, lfpost.location, lfpost.imageid, lfpost.sharetime)
 
 		with dbapi2.connect(self.dsn) as connection:
 			with connection.cursor() as cursor:
@@ -65,7 +75,7 @@ class LFDatabase():
 
 	def get_all_posts(self):
 		select_all_posts_statement = """
-			SELECT lostfound.postid, lostfound.title, users.name, lostfound.LF, lostfound.location 
+			SELECT lostfound.postid, lostfound.sharetime, lostfound.title, users.name, lostfound.LF, lostfound.location 
 			FROM lostfound, users
 			WHERE (lostfound.userid=users.studentno)
 			ORDER BY lostfound.postid DESC;
@@ -81,3 +91,10 @@ class LFDatabase():
 
 		# posts = copy(self.posts)
 		return posts
+
+
+	#
+	# Database management methods for responses table
+	#
+	def add_response(self):
+		pass

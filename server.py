@@ -13,7 +13,10 @@ import psycopg2 as dbapi2
 from hashlib import sha256  # hashing passwords
 
 import random  # for tests
+from datetime import datetime   # obtain sharing time on form post
 
+def getTimestampString():
+    return " ~ ".join(str(datetime.now()).split(" ")).replace("-", "/")[:-7]    # might be a little complicated :)
 
 connection_string = "dbname='postgres' user='postgres' password='postgrepass' host='localhost' port=5432"
 
@@ -69,7 +72,8 @@ def lostfound_page():
             if title == "" or description == "" or LF == None:
                 return render_template("lost_and_found.html", posts=posts)
             else:
-                lfpost = LFPost(title, description, userid, LF, location=location)
+                timestamp = getTimestampString()
+                lfpost = LFPost(title, description, userid, LF, location=location, sharetime=timestamp)
                 lf_db.add_post(lfpost)
                 posts = lf_db.get_all_posts()
                 current_app.config["LF_DB"] = lf_db
@@ -80,7 +84,7 @@ def lostfound_page():
             postid = request.form.get("postid")
 
             # user must be post owner to be able to delete. if not, print error and redirect to same post's page
-            if not session.get("userid") == int(postowner_userid):  # userid is int in session, but str in form return value
+            if not session.get("userid") == postowner_userid:
                 flash("You do not have authentication to do that!", "error")
                 return redirect("/lostfound/{}".format(postid))
 
