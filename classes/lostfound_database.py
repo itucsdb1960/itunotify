@@ -11,6 +11,14 @@ class LFPost():
 		self.imageid = imageid
 		self.sharetime = sharetime
 
+class LFResponse():
+	def __init__(self, postid, response, userid, order, sharetime):
+		self.postid = postid
+		self.response = response
+		self.userid = userid
+		self.order = order
+		self.sharetime = sharetime
+
 
 class LFDatabase():
 	# Constructor
@@ -20,8 +28,10 @@ class LFDatabase():
 
 		file = open(r"heroku_db_url.txt", "r")
 		self.dsn = file.read()
-
-	# Database management methods
+	
+	#
+	# Database management methods for lostfound table
+	#
 	def	add_post(self, lfpost):
 		self.last_postid += 1
 		self.posts[self.last_postid] = lfpost
@@ -81,3 +91,10 @@ class LFDatabase():
 
 		# posts = copy(self.posts)
 		return posts
+
+
+	#
+	# Database management methods for responses table
+	#
+	def add_response(self):
+		pass

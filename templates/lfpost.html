@@ -26,11 +26,25 @@
 			<input type="hidden" name="userid" value="{{post.userid}}">
 			<button type="submit"> Delete Post </button> 
 		</form>
+		<form>
 			<button type="submit"> Update Post </button> 
-			<br>	
+		</form>
+		<form>	
 			<button type="submit" onclick="reportPost()"> Report Post </button> 
-			<br>
+		</form>
 	</div>
+</div>
+
+<div class="response_form">
+	<form action="/lostfound/{{extra.postid}}" method="post">
+		<input type="hidden" name="form_key" value="new_response">
+		<textarea name="response" rows="5" cols="45" placeholder="..." required></textarea>
+		<br>
+		<input type="checkbox" name="hide_name" value=TRUE> Do not show my name
+		<br>
+		<input type="submit" name="Send" value="Share">
+		<br>
+	</form>
 </div>
 
 <div class="responses">
