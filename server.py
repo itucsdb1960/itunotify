@@ -87,8 +87,7 @@ def lostfound_page():
             flash("Post is deleted successfully.", "info")
             return redirect("/lostfound")
 
-    else:
-        return render_template("lost_and_found.html", posts=posts)
+    return render_template("lost_and_found.html", posts=posts)
 
 
 @app.route("/lostfound/<int:postid>", methods=["POST", "GET"])
