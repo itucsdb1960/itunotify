@@ -38,29 +38,6 @@ class StoreDatabase:
 									GROUP BY selling.sellid, item.name, selling.shortD, selling.price, users.name, image.image
 									ORDER BY selling.sellid;"""
 
-        sql_getAllSelling = """SELECT selling.sellid, item.name, selling.shortD, selling.price, users.name, image.image
-								FROM selling, users, item, image
-								WHERE (selling.itemid = item.itemid
-										AND selling.seller = users.userid
-										AND selling.imageid = image.imageid
-                                        AND item.name LIKE %(item_name)s
-                                        AND users.name LIKE %(seller)s
-                                        AND selling.price >= %(price_lw)s
-                                        AND selling.price <= %(price_hi)s)
-								ORDER BY selling.sellid"""
-
-        sql_getNoQuestions = """SELECT selling.sellid, count(question.questionid)
-								FROM selling, question
-								WHERE (selling.sellid = question.sellid)
-								GROUP BY selling.sellid
-								ORDER BY selling.sellid;"""
-
-        sql_getNoAnswers = """SELECT selling.sellid, count(answer.answerid)
-								FROM selling, answer
-								WHERE (selling.sellid = answer.sellid)
-								GROUP BY selling.sellid
-								ORDER BY selling.sellid;"""
-
         sql_getMaxPrice = """SELECT max(price)
                                 FROM selling;"""
 
@@ -72,25 +49,6 @@ class StoreDatabase:
                 maxPrice = cursor.fetchall()
                 if len(maxPrice) > 0:
                     price_hi = maxPrice[0][0]
-            """
-            cursor.execute(sql_getAllSelling, {'item_name': item_name, 'seller': seller, 'price_lw': price_lw, 'price_hi': price_hi})
-            for row in cursor:
-                sellid, item_name, shortD, price, seller, image = row
-                self.selling[sellid] = SellItem(item_name, price, seller, 0, 0, shortD=shortD, image=image)
-                self.last_sellid = max(sellid, self.last_sellid)
-
-            cursor.execute(sql_getNoQuestions)
-            for row in cursor:
-                sellid, n_questions = row
-                self.selling[sellid].set_nq(n_questions)
-
-            cursor.execute(sql_getNoAnswers)
-            for row in cursor:
-                sellid, n_answers = row
-                self.selling[sellid].set_nq(n_answers)
-
-            cursor.close()
-			"""
 
             cursor.execute(sql_getAllSellingInfo, {'item_name': item_name, 'seller': seller_name, 'price_lw': price_lw, 'price_hi': price_hi})
             for row in cursor:
