@@ -2,7 +2,7 @@ from copy import copy
 import psycopg2 as dbapi2
 
 class LFPost():
-	def __init__(self, title, description, userid, LF, location=None, imageid=None, sharetime=None):
+	def __init__(self, title, description, userid, LF, location=None, imageid=1, sharetime=None):
 		self.title = title
 		self.description = description
 		self.userid = userid
@@ -26,8 +26,8 @@ class LFDatabase():
 		self.last_postid += 1
 		self.posts[self.last_postid] = lfpost
 
-		insert_statement = "INSERT INTO lostfound (title, description, userid, LF, location, imageid) VALUES (%s, %s, %s, %s, %s, %s);"
-		args = (lfpost.title, lfpost.description, lfpost.userid, lfpost.LF, lfpost.location, lfpost.imageid)
+		insert_statement = "INSERT INTO lostfound (title, description, userid, LF, location, imageid, sharetime) VALUES (%s, %s, %s, %s, %s, %s, %s);"
+		args = (lfpost.title, lfpost.description, lfpost.userid, lfpost.LF, lfpost.location, lfpost.imageid, lfpost.sharetime)
 
 		with dbapi2.connect(self.dsn) as connection:
 			with connection.cursor() as cursor:
@@ -65,7 +65,7 @@ class LFDatabase():
 
 	def get_all_posts(self):
 		select_all_posts_statement = """
-			SELECT lostfound.postid, lostfound.title, users.name, lostfound.LF, lostfound.location 
+			SELECT lostfound.postid, lostfound.sharetime, lostfound.title, users.name, lostfound.LF, lostfound.location 
 			FROM lostfound, users
 			WHERE (lostfound.userid=users.studentno)
 			ORDER BY lostfound.postid DESC;

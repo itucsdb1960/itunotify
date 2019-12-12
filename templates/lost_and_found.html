@@ -20,20 +20,23 @@
 	<h2> Latest Posts </h2>
 	{% if posts %}
     <input type="text" id="filter_text" onkeyup="filterTable()" placeholder="Write Something to filter the table...">
-    <input type="radio" name="clmn" value=0 onclick="setFilterColumn(0); filterTable();" required checked> Title
-    <input type="radio" name="clmn" value=1 onclick="setFilterColumn(1); filterTable();" required> User
-    <input type="radio" name="clmn" value=2 onclick="setFilterColumn(2); filterTable();" required> Category
-    <input type="radio" name="clmn" value=3 onclick="setFilterColumn(3); filterTable();" required> Location
+    <input type="radio" name="clmn" value=0 onclick="setFilterColumn(0); filterTable();" required checked> Share Time
+    <input type="radio" name="clmn" value=0 onclick="setFilterColumn(1); filterTable();" required checked> Title
+    <input type="radio" name="clmn" value=1 onclick="setFilterColumn(2); filterTable();" required> User
+    <input type="radio" name="clmn" value=2 onclick="setFilterColumn(3); filterTable();" required> Category
+    <input type="radio" name="clmn" value=3 onclick="setFilterColumn(4); filterTable();" required> Location
 
 	<table class="lfposts" id="lfposts_table">
 		<tr>
+            <th onclick="sortTable('sharetime')"> Share Time </th>
 			<th onclick="sortTable('title')"> Title </th>
 			<th onclick="sortTable('username')"> Shared by </th>
 			<th onclick="sortTable('category')"> Category </th>
 			<th onclick="sortTable('location')"> Location </th>
 		</tr>
-		{% for postid, title, username, LF, location in posts %}
+		{% for postid, sharetime, title, username, LF, location in posts %}
 		<tr>
+            <td> {{sharetime}} </td>
 			<td class="title"> <a class="lfpost_link" href="/lostfound/{{postid}}">{{ title }}</a> </td>
 			<td> {{ username }} </td>
 			<td> {% if LF %} Found {% else %} Lost {% endif %} </td>
@@ -48,14 +51,16 @@
             ascending = !ascending; 
             var col_num;
             switch(column){
-                case "title":
+                case "sharetime":
                     col_num = 0; break;
-                case "username":
+                case "title":
                     col_num = 1; break;
-                case "category":
+                case "username":
                     col_num = 2; break;
-                case "location":
+                case "category":
                     col_num = 3; break;
+                case "location":
+                    col_num = 4; break;
             }
 
             var table, rows;

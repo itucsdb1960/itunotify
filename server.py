@@ -12,7 +12,12 @@ import psycopg2 as dbapi2
 from hashlib import sha256  # hashing passwords
 
 import random  # for tests
+from datetime import datetime   # obtain sharing time on form post
 
+def getTimestampString():
+    dt = datetime.now()
+    s = str(dt.year) + "/" + str(dt.month) + "/" + str(dt.day) + " ~ " + str(dt.hour) + ":" + str(dt.minute) + ":" + str(dt.second)
+    return s
 
 connection_string = "dbname='postgres' user='postgres' password='postgrepass' host='localhost' port=5432"
 
@@ -68,7 +73,8 @@ def lostfound_page():
             if title == "" or description == "" or LF == None:
                 return render_template("lost_and_found.html", posts=posts)
             else:
-                lfpost = LFPost(title, description, userid, LF, location=location)
+                timestamp = getTimestampString()
+                lfpost = LFPost(title, description, userid, LF, location=location, sharetime=timestamp)
                 lf_db.add_post(lfpost)
                 posts = lf_db.get_all_posts()
                 current_app.config["LF_DB"] = lf_db
