@@ -5,23 +5,19 @@ import psycopg2 as dbapi2
 
 
 INIT_STATEMENTS = [
-    "CREATE TABLE IF NOT EXISTS DUMMY (NUM INTEGER)",
-    "INSERT INTO DUMMY VALUES (42)",
-
     """
 	CREATE TABLE IF NOT EXISTS users (
-		userid serial primary key,
-    	name varchar(40),
+		studentno varchar(10) primary key,
+    	name varchar(40) NOT NULL,
     	department varchar(80),
-    	studentno varchar(10),
     	grade integer,
-    	password_hash varchar(256)
+    	password_hash varchar(256) NOT NULL
 	);""",
 
     """
 	CREATE TABLE IF NOT EXISTS image (
 		imageid serial primary key,
-    	image varchar(100)
+    	image varchar(100) DEFAULT 'no image available'
 	);""",
 
     """
@@ -29,10 +25,11 @@ INIT_STATEMENTS = [
 		postid SERIAL primary key,
 		title VARCHAR(32) NOT NULL,
 		description VARCHAR(512) NOT NULL,
-		userid INTEGER references users(userid),
+		userid varchar(10) references users,
 		LF boolean NOT NULL,
 		location VARCHAR(32),
-		imageid INTEGER references image(imageid)
+		imageid INTEGER references image(imageid) DEFAULT 1,
+		sharetime VARCHAR(32)
 	);""",
 
     """
@@ -40,8 +37,9 @@ INIT_STATEMENTS = [
 		respid SERIAL primary key,
 		postid INTEGER references lostfound(postid),
 		response VARCHAR(512) NOT NULL,
-		userid INTEGER references users(userid),
-		ord integer NOT NULL
+		userid varchar(10) references users,
+		ord integer NOT NULL,
+		sharetime VARCHAR(32)
 	);""",
 
     """
@@ -61,34 +59,31 @@ INIT_STATEMENTS = [
 	CREATE TABLE IF NOT EXISTS selling (
 		sellid serial primary key,
     	itemid integer references item(itemid),
-	    imageid integer references image(imageid),
-	    seller integer references users(userid),
-	    shortD varchar(50),
-	    price integer
+	    imageid integer references image(imageid) DEFAULT 1,
+	    seller varchar(10) references users,
+	    iteminfo integer references message(messageid),
+	    shortD varchar(50) DEFAULT 'No description.',
+	    price integer NOT NULL,
+	    sharetime VARCHAR(32)
 	);""",
 
     """
 	CREATE TABLE IF NOT EXISTS question (
 		questionid serial primary key,
+		userid varchar(10) references users,
 	    sellid integer references selling(sellid),
 	    messageid integer references message(messageid),
-	    ord integer
+	    sharetime VARCHAR(32)
 	);""",
 
     """
 	CREATE TABLE IF NOT EXISTS answer (
 		answerid serial primary key,
+		userid varchar(10) references users,
 	    sellid integer references selling(sellid),
 	    questionid integer references question(questionid),
 	    messageid integer references message(messageid),
-	    ord integer
-	);""",
-
-    """
-	CREATE TABLE IF NOT EXISTS item_info (
-	    sellid integer references selling(sellid),
-	    messageid integer references message(messageid),
-	    primary key (sellid, messageid)
+	    sharetime VARCHAR(32)
 	);"""
 
 ]
