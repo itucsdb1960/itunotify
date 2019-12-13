@@ -43,6 +43,10 @@ td {
 	border: 2px solid #00aabb;
 }
 
+.response_ul {
+	max-width: 75%;
+}
+
 button {
 	margin: 0.5em;
 }

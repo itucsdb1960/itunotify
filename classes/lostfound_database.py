@@ -12,12 +12,12 @@ class LFPost():
 		self.sharetime = sharetime
 
 class LFResponse():
-	def __init__(self, postid, response, userid, order, sharetime):
+	def __init__(self, postid, response, userid, sharetime, order=0):
 		self.postid = postid
 		self.response = response
 		self.userid = userid
-		self.order = order
 		self.sharetime = sharetime
+		self.order = order
 
 
 class LFDatabase():
@@ -25,6 +25,9 @@ class LFDatabase():
 	def __init__(self, postlist=None):
 		self.posts = {}
 		self.last_postid = 0
+
+		self.responses = {}
+		self.last_responseid = 0
 
 		file = open(r"heroku_db_url.txt", "r")
 		self.dsn = file.read()
@@ -96,5 +99,42 @@ class LFDatabase():
 	#
 	# Database management methods for responses table
 	#
-	def add_response(self):
-		pass
+	def add_response(self, lfresponse):
+		self.last_responseid += 1
+		self.responses[self.last_responseid] = lfresponse
+
+		insert_statement = "INSERT INTO responses (postid, response, userid, ord, sharetime) VALUES (%s, %s, %s, %s, %s);"
+		args = (lfresponse.postid, lfresponse.response, lfresponse.userid, lfresponse.order, lfresponse.sharetime)
+
+		with dbapi2.connect(self.dsn) as connection:
+			with connection.cursor() as cursor:
+				cursor.execute(insert_statement, args)
+		
+
+	def get_all_responses_for_post(self, postid):
+		select_all_responses_statement = """
+			SELECT responses.respid, responses.response, responses.userid, responses.ord, responses.sharetime, users.name 
+			FROM responses, users
+			WHERE (responses.postid=%s AND users.studentno=responses.userid)
+			ORDER BY responses.sharetime ASC;
+			"""
+		args = (postid,)	# one element tuple
+
+		responses = tuple()
+		with dbapi2.connect(self.dsn) as connection:
+			with connection.cursor() as cursor:
+				cursor.execute(select_all_responses_statement, args)
+				responses = cursor.fetchall()
+				
+		return responses
+
+	def delete_response(self, respid):
+		if respid in self.responses:
+			del self.responses[respid]
+
+		delete_statement = "DELETE FROM responses WHERE respid=%s;"
+		args = (respid,)	# single element tuple
+
+		with dbapi2.connect(self.dsn) as connection:
+			with connection.cursor() as cursor:
+				cursor.execute(delete_statement, args)
