@@ -29,6 +29,7 @@
 	<body>
 		<nav class="main_nav">
 			{% if session.is_loggedin %} <a href="/logout"> LogOut </a> {% else %} <a href="/login"> Login </a> {% endif %} |
+			{% if session.is_loggedin %} <a href="/profile/{{session.userid}}"> {{session.username}} </a> | {% endif %} 
 			<a href="{{ url_for('register_page') }}"> Register </a> |
 			<a href="/"> Homepage </a> |
 			<a href="/lostfound"> Lost & Found Items </a> |
@@ -46,9 +47,6 @@
 			{% endif %}
 		{% endwith %}
 
-		{% if session.is_loggedin %}
-		<h1 class="username"> Logged in as: {{ session.username }} </h1>
-		{% endif %}
 
 		{% block body_content %} {% endblock %}
 	</body>

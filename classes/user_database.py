@@ -2,10 +2,10 @@ import psycopg2 as dbapi2
 
 
 class User():
-    def __init__(self, name, department, studentno, grade, password_hash):
+    def __init__(self, studentno, name, department, grade, password_hash):
+        self.studentno = studentno
         self.name = name
         self.department = department
-        self.studentno = studentno
         self.grade = grade
         self.password_hash = password_hash
 
@@ -42,6 +42,19 @@ class UserDatabase():
                 cursor.execute(user_query, args)
                 user = cursor.fetchall()
                 if len(user) < 1:  # user named _username_ could not be found
+                    return None
+                else:
+                    return User(user[0][0], user[0][1], user[0][2], user[0][3], user[0][4])
+
+    def get_user_by_userid(self, userid):
+        user_query = "SELECT * FROM users WHERE users.studentno=%s"
+        args = (userid,)
+
+        with dbapi2.connect(self.dsn) as connection:
+            with connection.cursor() as cursor:
+                cursor.execute(user_query, args)
+                user = cursor.fetchall()
+                if len(user) < 1:  # user with _userid_ could not be found
                     return None
                 else:
                     return User(user[0][0], user[0][1], user[0][2], user[0][3], user[0][4])

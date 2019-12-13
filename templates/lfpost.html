@@ -27,7 +27,7 @@
 			<button type="submit"> Delete Post </button> 
 		</form>
 		<form>
-			<button type="submit"> Update Post </button> 
+			<button type="submit"> Edit Post </button> 
 		</form>
 		<form>	
 			<button type="submit" onclick="reportPost()"> Report Post </button> 
@@ -40,7 +40,7 @@
 		<input type="hidden" name="form_key" value="new_response">
 		<textarea name="response" rows="5" cols="45" placeholder="..." required></textarea>
 		<br>
-		<input type="checkbox" name="hide_name" value=TRUE> Do not show my name
+		<input type="checkbox" name="hide_name" value=TRUE> Post this anonymously
 		<br>
 		<input type="submit" name="Send" value="Share">
 		<br>
@@ -49,20 +49,38 @@
 
 <div class="responses">
 	{% if responses %}
-	<table>
-		{% for response in responses %}
-			<tr>
-				<td> {{response.userid}} </td>
-				<td> {{response.message}} </td>
-			</tr>
+	<ul class="response_ul">
+		{% for respid, message, userid, order, sharetime, username in responses %}
+			<li>	
+				<table class="response_table">
+					<tr>
+						<th> {{sharetime}} </th>
+						<th> {{username}} </th>
+					</tr>
+					<tr>
+						<td colspan="2"> {{message}} </td>
+					</tr>
+				</table>
+				<form action="/lostfound/{{extra.postid}}" method="post">
+					<input type="hidden" name="form_key" value="delete_response">
+					<input type="hidden" name="respid" value="{{respid}}">
+					<input type="hidden" name="userid" value="{{userid}}">
+					<input type="hidden" name="postid" value="{{extra.postid}}">
+					<button type="submit"> Delete </button> 
+				</form>
+				<form>
+					<button type="submit"> Edit </button> 
+				</form>
+				<br>
+			</li>
 		{% endfor %}
-	</table>
+	</ul>
 	{% else %}
 	There is no response for this post yet.
 	{% endif %}
 </div>
 
-<script >
+<script>
 	function reportPost(){
 		alert("Wait, that's illegal");
 	}

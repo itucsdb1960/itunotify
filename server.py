@@ -4,7 +4,8 @@ from flask import Flask, current_app, render_template, request, session, flash, 
 from classes.store_database import StoreDatabase
 from classes.sell_item import SellItem
 from classes.Q_and_A import Question, Answer
-from classes.lostfound_database import LFPost, LFDatabase
+from classes.lostfound_database import LFPost, LFResponse, LFDatabase
+
 from classes.user_database import User, UserDatabase
 
 import dbinit
@@ -101,7 +102,41 @@ def lostfound_page():
 def lfpost_page(postid):
     lf_db = current_app.config["LF_DB"]
     post, extra = lf_db.get_post(postid)
-    responses = None
+    responses = lf_db.get_all_responses_for_post(postid)
+    
+    if request.method == "POST":
+        form_name = request.form.get("form_key")
+
+        # new response created from same page
+        if form_name == "new_response":
+            if not session.get("is_loggedin", False):   # if not logged in, log in :)
+                flash("You must login first to do that!", "error")
+                return redirect("/login")
+
+            response_message = request.form.get("response")
+            anonymous = request.form.get("hide_name")
+            userid = "0000000000" if anonymous else session["userid"]
+            timestamp = getTimestampString()
+
+            lfresponse = LFResponse(postid, response_message, userid, timestamp)    # not passing order attribute, default=0
+            lf_db.add_response(lfresponse)
+            responses = lf_db.get_all_responses_for_post(postid)
+
+        elif form_name == "delete_response":
+            respowner_userid = request.form.get("userid")
+            respid = request.form.get("respid")
+            postid = request.form.get("postid")
+
+            # user must be response owner to be able to delete. if not, print error and redirect to same post's page
+            if not session.get("userid") == respowner_userid:
+                flash("You do not have authentication to do that!", "error")
+                return redirect("/lostfound/{}".format(postid))
+
+            lf_db.delete_response(respid)
+            flash("Message is deleted successfully.", "info")
+            return redirect("/lostfound/{}".format(postid))
+
+
     return render_template("lfpost.html", post=post, extra=extra, responses=responses)
 
 
@@ -266,6 +301,13 @@ def logout_page():
     session.clear()
     flash("Successfully logged out.", "info")
     return redirect(url_for('home_page'))
+
+@app.route("/profile/<string:userid>", methods=["POST", "GET"])
+def profile(userid):
+    user_db = current_app.config["USER_DB"]
+    userobj = user_db.get_user_by_userid(userid)
+    #print("\n\n\n",userobj.studentno,"\n\n\n")    # DEBUG
+    return render_template("profile.html", userobj=userobj)
 
 
 if __name__ == "__main__":

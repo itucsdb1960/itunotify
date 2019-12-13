@@ -14,6 +14,11 @@ INIT_STATEMENTS = [
     	password_hash varchar(256) NOT NULL
 	);""",
 
+	"""
+	INSERT into users (studentno, name, department, grade, password_hash) 
+	values ('0000000000', 'Anonymous', 'anonymous', 0, '0123456789anonymouspasswordhash012andsomerandomnumbers9876543210') 
+	on conflict do nothing;""",
+
     """
 	CREATE TABLE IF NOT EXISTS image (
 		imageid serial primary key,
