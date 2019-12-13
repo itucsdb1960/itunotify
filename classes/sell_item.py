@@ -1,5 +1,5 @@
 class SellItem:
-    def __init__(self, sellid, item_name, price, seller, n_questions, n_answers, item_info=None, shortD=None, image=None):
+    def __init__(self, sellid, item_name, price, seller_name, seller_no, n_questions, n_answers, item_info=None, shortD=None, image=None):
         if(shortD == None):
             shortD = "No description."
         if(image == None):
@@ -8,7 +8,8 @@ class SellItem:
         self.sellid = sellid
         self.item_name = item_name
         self.price = price
-        self.seller = seller
+        self.seller_name = seller_name
+        self.seller_no = seller_no
         self.n_questions = n_questions
         self.n_answers = n_answers
         self.item_info = item_info

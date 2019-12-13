@@ -6,14 +6,41 @@
 
 {% block body_content %}
     <div class="container">
-        <h1> ITU Store - Item {{ post.sellid }} </h1>
+        <h1> ITU Store - Item {{ sellItem.sellid }} </h1>
 
-        <form class="update_form" action="/store/{{post.sellid}}" method="post">
-            <input type="hidden" name="form_key" value="update">
+        {% if session.userid == sellItem.seller_no %}
+        <form class="update_form" action="/store/{{sellItem.sellid}}" method="post">
+            <input type="hidden" name="form_key" value="change">
 
             <input class="update" type="submit" name="update" value="Update Item Info">
             <input class="update" type="submit" name="delete" value="Delete Item from Store">
         </form>
+        {% endif %}
+
+        <h2> {{ sellItem.item_name }} </h2>
+
+        <h2> Q&A </h2>
+
+        {% if questions %}
+        <ul>
+            {% for q_i, all_ans in questions %}
+            <li>
+                {{ q_i.item_name }}
+                <ul>
+                    {% for ans_j in all_ans %}
+                    <li>
+
+                    {{ ans_j.item_name }}
+
+                    </li>
+                    {% endfor %}
+                </ul>
+            </li>
+            {% endfor %}
+        </ul>
+        {% else %}
+        <h2> No Questions </h2>
+        {% endif %}
 
     </div>
 {% endblock %}

@@ -3,7 +3,9 @@ from flask import Flask, current_app, render_template, request, session, flash, 
 # Importing custom classes
 from classes.store_database import StoreDatabase
 from classes.sell_item import SellItem
+from classes.Q_and_A import Question, Answer
 from classes.lostfound_database import LFPost, LFResponse, LFDatabase
+
 from classes.user_database import User, UserDatabase
 
 import dbinit
@@ -155,10 +157,11 @@ def store_page():
             item_name = request.form.get("item_name")
             price = request.form.get("price")
             seller_name = session["username"]
+            seller_no = session["userid"]
             shortD = request.form.get("shortD")  # handle empty case!
             image = request.form.get("image")  # handle empty case!
 
-            sellItem = SellItem(-1, item_name, price, seller_name, 0, 0, shortD, image)
+            sellItem = SellItem(-1, item_name, price, seller_name, seller_no, 0, 0, shortD=shortD, image=image)
             store_db.add_selling_item(sellItem)
             selling_items = store_db.get_all_selling_items()
             selling_items = sorted(selling_items)
@@ -195,9 +198,24 @@ def store_page():
 
 @app.route("/store/<int:sellid>", methods=["POST", "GET"])
 def storePost_page(sellid):
-    post = {'sellid': sellid}
+    store_db = current_app.config["STORE_DB"]
+    user_db = current_app.config["USER_DB"]
 
-    return render_template("storePost.html", post=post)
+    if request.method == "POST":
+        if request.form.get("form_key") == "change":
+            if request.form.get("update"):
+                flash("Post is updated successfully.", "info")
+
+            elif request.form.get("delete"):
+                flash("Post is deleted successfully.", "info")
+
+                store_db.delete_selling_item(sellid)
+                return redirect(url_for('store_page'))
+
+    sellItem = store_db.get_selling_item(sellid)
+    questions = [(sellItem, (sellItem, sellItem)), (sellItem, (sellItem, sellItem))]
+
+    return render_template("storePost.html", sellItem=sellItem, questions=questions)
 
 
 #
