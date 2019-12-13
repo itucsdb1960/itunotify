@@ -152,7 +152,7 @@ class StoreDatabase:
         with dbapi2.connect(self.dsn) as connection:
             cursor = connection.cursor()
 
-            cursor.execute(sql_insertAnswer, {'userid_no': answer.user_no, 'sellid': answer.sellid, 'questionid': answer.questionid, ans_body': answer.ans_body, 'share_time': answer.share_time})
+            cursor.execute(sql_insertAnswer, {'userid_no': answer.user_no, 'sellid': answer.sellid, 'questionid': answer.questionid, 'ans_body': answer.ans_body, 'share_time': answer.share_time})
 
             cursor.close()
 
