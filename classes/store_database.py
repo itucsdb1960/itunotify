@@ -160,13 +160,12 @@ class StoreDatabase:
                                 %(message_body)s
                             );"""
 
-        sql_findMessageid = """ ;""""
+        sql_findMessageid = """ ;"""
 
         with dbapi2.connect(self.dsn) as connection:
             cursor = connection.cursor()
 
             cursor.execute(sql_addMessage, {'message_body': question.q_body})
-
 
             cursor.close()
 
