@@ -103,7 +103,7 @@ def lfpost_page(postid):
     lf_db = current_app.config["LF_DB"]
     post, extra = lf_db.get_post(postid)
     responses = lf_db.get_all_responses_for_post(postid)
-    
+
     if request.method == "POST":
         form_name = request.form.get("form_key")
 
@@ -136,7 +136,6 @@ def lfpost_page(postid):
             flash("Message is deleted successfully.", "info")
             return redirect("/lostfound/{}".format(postid))
 
-
     return render_template("lfpost.html", post=post, extra=extra, responses=responses)
 
 
@@ -166,9 +165,9 @@ def store_page():
             sellItem = SellItem(-1, item_name, price, seller_name, seller_no, 0, 0, shortD=shortD, image=image)
             store_db.add_selling_item(sellItem)
             selling_items = store_db.get_all_selling_items()
-            selling_items = sorted(selling_items)
             filter_items = [('', '', '', '')]
-            return render_template("store.html", selling_items=selling_items, filter_items=filter_items)
+            return redirect(url_for('store_page'))
+            # return render_template("store.html", selling_items=selling_items, filter_items=filter_items)
 
         elif request.form.get("form_key") == "login":
             # login form submitted
@@ -188,12 +187,9 @@ def store_page():
                 selling_items = store_db.get_all_selling_items(item_name=item_name, seller_name=seller_name, price_lw=price_lw, price_hi=price_hi)
                 filter_items = [(item_name, seller_name, price_lw, price_hi)]
 
-            selling_items = sorted(selling_items)
-
             return render_template("store.html", selling_items=selling_items, filter_items=filter_items)
 
     selling_items = store_db.get_all_selling_items()
-    selling_items = sorted(selling_items)
     filter_items = [('', '', '', '')]
     return render_template("store.html", selling_items=selling_items, filter_items=filter_items)
 
@@ -221,7 +217,9 @@ def storePost_page(sellid):
             share_time = getTimestampString()
 
             question = Question(-1, q_body, userid_no, user_name, sellid, share_time)
-            #store_db.add_question(question)
+            store_db.add_question(question)
+
+            return redirect('/store/{}'.format(sellid))
 
     sellItem = store_db.get_selling_item(sellid)
     questions = store_db.get_all_question_answer_pairs(sellid)
@@ -302,11 +300,12 @@ def logout_page():
     flash("Successfully logged out.", "info")
     return redirect(url_for('home_page'))
 
+
 @app.route("/profile/<string:userid>", methods=["POST", "GET"])
 def profile(userid):
     user_db = current_app.config["USER_DB"]
     userobj = user_db.get_user_by_userid(userid)
-    #print("\n\n\n",userobj.studentno,"\n\n\n")    # DEBUG
+    # print("\n\n\n",userobj.studentno,"\n\n\n")    # DEBUG
     return render_template("profile.html", userobj=userobj)
 
 
