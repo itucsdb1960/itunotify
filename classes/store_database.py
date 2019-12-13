@@ -126,7 +126,7 @@ class StoreDatabase:
 
     def delete_selling_item(self, sellid):
 
-        sql_deleteSellingItem = """ DELETE FROM selling
+        sql_deleteSellingItem = """DELETE FROM selling
                                     WHERE (selling.sellid = %(sellid)s);"""
 
         with dbapi2.connect(self.dsn) as connection:
@@ -146,6 +146,75 @@ class StoreDatabase:
 
         sellItem_new = SellItem(sellItem.sellid, sellItem.item_name, sellItem.price, sellItem.seller_name, sellItem.seller_no, sellItem.n_questions, sellItem.n_answers, item_info=sellItem.item_info, shortD=sellItem.shortD, image=sellItem.image)
         return sellItem_new
+
+    def add_question(self, question):
+
+        sql_addQuestion = """INSERT INTO question (userid, sellid, messageid, sharetime) VALUES (
+                                %(userid_no)s,
+                                %(sellid)s,
+                                %(messageid)s,
+                                %(shate_time)s
+                            );"""
+
+        sql_addMessage = """INSERT INTO message (body) VALUES (
+                                %(message_body)s
+                            );"""
+
+        sql_findMessageid = """ ;""""
+
+        with dbapi2.connect(self.dsn) as connection:
+            cursor = connection.cursor()
+
+            cursor.execute(sql_addMessage, {'message_body': question.q_body})
+
+
+            cursor.close()
+
+    def get_all_question_answer_pairs(self, sellid):
+
+        # question.sellid :: already known
+        sql_getAllQuestions = """SELECT question.questionid, message.body, question.userid, users.name, question.sharetime
+                            FROM question, users, message
+                            WHERE (question.messageid = message.messageid
+                                AND question.userid = users.studentno
+                                AND question.sellid = %(sellid)s)
+                            ORDER BY question.sharetime DESC;"""
+
+        # answer.questionid, answer.sellid :: already known
+        sql_getAllAnsOfOneQuestion = """SELECT answer.answerid, message.body, answer.userid, users.name, answer.shatetime
+                                        FROM answer, question, users, message
+                                        WHERE (answer.userid = users.studentno
+                                            AND answer.messageid = message.messageid
+                                            AND answer.questionid = %(questionid)s
+                                            AND answer.sellid = %(sellid)s)
+                                        ORDER BY answer.sharetime DESC;"""
+
+        all_questions = []
+        with dbapi2.connect(self.dsn) as connection:
+            cursor = connection.cursor()
+
+            cursor.execute(sql_getAllQuestions, {'sellid': sellid})
+            questions = cursor.fetchall()
+            for questionid, q_body, q_userid_no, q_user_name, q_shate_time in questions:
+                qi_and_all_ans = tuple()
+
+                q_i = Question(questionid, q_body, q_userid_no, q_user_name, sellid, q_share_time)
+                qi_and_all_ans.append(q_i)
+
+                cursor.execute(sql_getAllAnsOfOneQuestion, {'questionid': questionid, 'sellid': sellid})
+                answers = cursor.fetchall()
+
+                ans_of_qi = tuple()
+                for answerid, ans_body, ans_userid_no, ans_user_name, ans_shate_time in answers:
+                    ans_i = Answer(answerid, questionid, ans_body, ans_userid_no, ans_user_name, sellid, ans_share_time)
+                    ans_of_qi.append(ans_i)
+
+                qi_and_all_ans.append(ans_of_qi)
+                all_questions.append(qi_and_all_ans)
+
+            cursor.close()
+
+        return all_questions
 
     def get_all_selling_items(self, item_name="%", seller_name="%", price_lw=0, price_hi=-1):
         if item_name == '' or item_name == None:

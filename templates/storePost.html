@@ -21,16 +21,33 @@
 
         <h2> Q&A </h2>
 
+        {% if session.is_loggedin %}
+        <form class="question_form" action="/store/{{sellItem.sellid}}" method="post">
+            <input type="hidden" name="form_key" value="ask_question">
+
+            <textarea name="question" rows="5" cols="50" placeholder="Ask a question." required></textarea>
+
+            <input class="ask_question" type="submit" name="ask" value="Ask Question">
+        </form>
+        {% else %}
+        <p> Cannot ask questions or write answers without logging in! </p>
+        <form class="login_form" action="/store" method="post">
+            <input type="hidden" name="form_key" value="login">
+
+            <button class="login" type="submit" name="go_login"> Login </button>
+        </form>
+        {% endif %}
+
         {% if questions %}
         <ul>
             {% for q_i, all_ans in questions %}
             <li>
-                {{ q_i.item_name }}
+                {{ q_i.q_body }}
                 <ul>
                     {% for ans_j in all_ans %}
                     <li>
 
-                    {{ ans_j.item_name }}
+                    {{ ans_j.ans_bodys }}
 
                     </li>
                     {% endfor %}

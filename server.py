@@ -15,8 +15,10 @@ from hashlib import sha256  # hashing passwords
 import random  # for tests
 from datetime import datetime   # obtain sharing time on form post
 
+
 def getTimestampString():
     return " ~ ".join(str(datetime.now()).split(" ")).replace("-", "/")[:-7]    # might be a little complicated :)
+
 
 connection_string = "dbname='postgres' user='postgres' password='postgrepass' host='localhost' port=5432"
 
@@ -177,8 +179,17 @@ def storePost_page(sellid):
                 store_db.delete_selling_item(sellid)
                 return redirect(url_for('store_page'))
 
+        elif request.form.get("form_key") == "ask_question":  # logged in
+            q_body = request.form.get("question")
+            userid_no = session["userid"]
+            user_name = session["username"]
+            share_time = getTimestampString()
+
+            question = Question(-1, q_body, userid_no, user_name, sellid, share_time)
+            #store_db.add_question(question)
+
     sellItem = store_db.get_selling_item(sellid)
-    questions = [(sellItem, (sellItem, sellItem)), (sellItem, (sellItem, sellItem))]
+    questions = store_db.get_all_question_answer_pairs(sellid)
 
     return render_template("storePost.html", sellItem=sellItem, questions=questions)
 
