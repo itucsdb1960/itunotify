@@ -50,25 +50,12 @@ INIT_STATEMENTS = [
 	);""",
 
     """
-	CREATE TABLE IF NOT EXISTS item (
-		itemid serial primary key,
-    	name varchar(100)
-	);""",
-
-
-    """
-	CREATE TABLE IF NOT EXISTS message (
-		messageid serial primary key,
-    	body varchar(500)
-	);""",
-
-    """
 	CREATE TABLE IF NOT EXISTS selling (
 		sellid serial primary key,
-    	itemid integer references item(itemid) ON DELETE CASCADE ON UPDATE CASCADE,
+    	itemname varchar(100),
 	    imageid integer references image(imageid) ON DELETE set default ON UPDATE CASCADE DEFAULT 1,
 	    seller varchar(10) references users ON DELETE CASCADE ON UPDATE CASCADE,
-	    iteminfo integer references message(messageid) ON DELETE set null ON UPDATE CASCADE,
+	    iteminfo varchar(500),
 	    shortD varchar(50) DEFAULT 'No description.',
 	    price integer NOT NULL,
 	    sharetime VARCHAR(32)
@@ -79,7 +66,7 @@ INIT_STATEMENTS = [
 		questionid serial primary key,
 		userid varchar(10) references users ON DELETE CASCADE ON UPDATE CASCADE,
 	    sellid integer references selling(sellid) ON DELETE CASCADE ON UPDATE CASCADE,
-	    messageid integer references message(messageid) ON DELETE CASCADE ON UPDATE CASCADE,
+	    body varchar(500),
 	    sharetime VARCHAR(32)
 	);""",
 
@@ -89,7 +76,7 @@ INIT_STATEMENTS = [
 		userid varchar(10) references users ON DELETE CASCADE ON UPDATE CASCADE,
 	    sellid integer references selling(sellid) ON DELETE CASCADE ON UPDATE CASCADE,
 	    questionid integer references question(questionid) ON DELETE CASCADE ON UPDATE CASCADE,
-	    messageid integer references message(messageid) ON DELETE CASCADE ON UPDATE CASCADE,
+	    body varchar(500),
 	    sharetime VARCHAR(32)
 	);"""
 
