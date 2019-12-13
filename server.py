@@ -291,6 +291,13 @@ def logout_page():
     flash("Successfully logged out.", "info")
     return redirect(url_for('home_page'))
 
+@app.route("/profile/<string:userid>", methods=["POST", "GET"])
+def profile(userid):
+    user_db = current_app.config["USER_DB"]
+    userobj = user_db.get_user_by_userid(userid)
+    #print("\n\n\n",userobj.studentno,"\n\n\n")    # DEBUG
+    return render_template("profile.html", userobj=userobj)
+
 
 if __name__ == "__main__":
     # dbinit.initialize(connection_string)
