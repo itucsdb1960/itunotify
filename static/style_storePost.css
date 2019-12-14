@@ -35,9 +35,34 @@ h1.username {
     font-size: 120%;
 }
 
+div.item_info {
+    float: right;
+}
+
+table.item_info {
+    background-color: #e5e5e5;
+}
+
+table.item_info th {
+    border-bottom-style: groove;
+    height: 3em;
+}
+
+table.item_info td {
+    width: 30em;
+    max-width: 30em;
+    padding: 1.3em;
+    word-wrap: break-word;
+    overflow: auto;
+}
+
 form {
     margin-top: 2em;
     margin-bottom: 2em;
+}
+
+form.q_change_form {
+    margin: 0em;
 }
 
 input[type=submit], button[type=submit] {
@@ -53,4 +78,80 @@ input[type=submit], button[type=submit] {
 input[type=submit]:hover, button[type=submit]:hover {
     background-color: #681769;
     color: #F7E75E;
+}
+
+form.answer_form {
+    margin: 1em;
+}
+
+table.q_table {
+    background-color: #C8C8C8;
+    border-style: groove;
+    border-collapse: collapse;
+    /*width: 60em;*/
+    table-layout: fixed;
+}
+
+table.q_table td {
+    width: 30em;
+    max-width: 30em;
+    border-style: groove;
+    padding: 0.8em;
+    word-wrap: normal;
+    overflow: auto;
+}
+
+table.q_table tr.q_body {
+    height: 5em;
+    min-height: 5em;
+}
+
+table.ans_table {
+    background-color: #C8C8C8;
+    border-style: groove;
+    border-collapse: collapse;
+    /*width: 60em;*/
+    table-layout: fixed;
+}
+
+table.ans_table td {
+    width: 10em;
+    max-width: 30em;
+    border-style: groove;
+    padding: 0.8em;
+    word-wrap: normal;
+    overflow: auto;
+}
+
+table.ans_table tr.ans_body {
+    height: 5em;
+    min-height: 5em;
+}
+
+div.questions {
+    margin-top: 5em;
+}
+
+div.question_i {
+    border-style: groove;
+    padding: 1em;
+}
+
+div.q_body {
+    /*background-color: #C8C8C8;*/
+    padding: 0.7em;
+}
+
+div.ans_i_cluster {
+    margin: 2em;
+    margin-bottom: 0.4em;
+    padding: 0.6em;
+}
+
+div.individual_ans {
+    padding-bottom: 0.8em;
+}
+
+div.ans_body {
+
 }
