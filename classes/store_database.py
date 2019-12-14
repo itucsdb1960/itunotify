@@ -139,6 +139,33 @@ class StoreDatabase:
 
             cursor.close()
 
+    def update_question(self, questionid, sellid, new_q_body):
+
+        sql_updateQuestion = """UPDATE question
+                                SET question.q_body = %(new_q_body)s
+                                WHERE (question.sellid = %(sellid)s
+                                    AND question.questionid = %(questionid)s);"""
+
+        with dbapi2.connect(self.dsn) as connection:
+            cursor = connection.cursor()
+
+            cursor.execute(sql_updateQuestion, {'new_q_body': new_q_body, 'sellid': sellid, 'questionid': questionid})
+
+            cursor.close()
+
+    def delete_question(self, questionid, sellid):
+
+        sql_deleteQuestion = """DELETE FROM question
+                                WHERE (question.sellid = %(sellid)s
+                                    AND question.questionid = %(questionid)s);"""
+
+        with dbapi2.connect(self.dsn) as connection:
+            cursor = connection.cursor()
+
+            cursor.execute(sql_deleteQuestion, {'sellid': sellid, 'questionid': questionid})
+
+            cursor.close()
+
     def add_answer(self, answer):
 
         sql_insertAnswer = """INSERT INTO answer (userid, sellid, questionid, body, sharetime) VALUES (
@@ -153,6 +180,35 @@ class StoreDatabase:
             cursor = connection.cursor()
 
             cursor.execute(sql_insertAnswer, {'userid_no': answer.user_no, 'sellid': answer.sellid, 'questionid': answer.questionid, 'ans_body': answer.ans_body, 'share_time': answer.share_time})
+
+            cursor.close()
+
+    def update_answer(self, answerid, questionid, sellid, new_ans_body):
+
+        sql_updateAnswer = """UPDATE answer
+                                SET answer.ans_body = %(new_ans_body)s
+                                WHERE (answer.sellid = %(sellid)s
+                                    AND answer.questionid = %(questionid)s
+                                    AND answer.answerid = %(answerid)s);"""
+
+        with dbapi2.connect(self.dsn) as connection:
+            cursor = connection.cursor()
+
+            cursor.execute(sql_updateAnswer, {'new_ans_body': new_ans_body, 'sellid': sellid, 'questionid': questionid, 'answerid': answerid})
+
+            cursor.close()
+
+    def delete_answer(self, answerid, questionid, sellid, new_ans_body):
+
+        sql_deleteAnswer = """DELETE FROM answer
+                                WHERE (answer.sellid = %(sellid)s
+                                    AND answer.questionid = %(questionid)s
+                                    AND answer.answerid = %(answerid)s);"""
+
+        with dbapi2.connect(self.dsn) as connection:
+            cursor = connection.cursor()
+
+            cursor.execute(sql_updateAnswer, {'sellid': sellid, 'questionid': questionid, 'answerid': answerid})
 
             cursor.close()
 

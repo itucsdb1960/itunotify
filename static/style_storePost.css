@@ -61,6 +61,10 @@ form {
     margin-bottom: 2em;
 }
 
+form.q_change_form {
+    margin: 0em;
+}
+
 input[type=submit], button[type=submit] {
     width: auto;
     height: 2em;

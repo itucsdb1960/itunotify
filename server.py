@@ -200,12 +200,12 @@ def storePost_page(sellid):
     user_db = current_app.config["USER_DB"]
 
     if request.method == "POST":
-        if request.form.get("form_key") == "change":
+        if request.form.get("form_key") == "item_change":
             if request.form.get("update"):
-                flash("Post is updated successfully.", "info")
+                flash("Post has been updated successfully.", "info")
 
             elif request.form.get("delete"):
-                flash("Post is deleted successfully.", "info")
+                flash("Post has been deleted successfully.", "info")
 
                 store_db.delete_selling_item(sellid)
                 return redirect(url_for('store_page'))
@@ -232,9 +232,21 @@ def storePost_page(sellid):
             store_db.add_answer(answer)
             return redirect('/store/{}'.format(sellid))
 
+        elif request.form.get("form_key") == "q_change":  # logged in
+            questionid = request.form.get("questionid")
+
+            if request.form.get("update"):
+                flash("Question has been updated successfully.", "info")
+                return redirect('/store/{}'.format(sellid))
+
+            elif request.form.get("delete"):
+                store_db.delete_question(questionid, sellid)
+
+                flash("Question has been deleted successfully.", "info")
+                return redirect('/store/{}'.format(sellid))
+
     sellItem = store_db.get_selling_item(sellid)
     questions = store_db.get_all_question_answer_pairs(sellid)
-    print(questions)
 
     return render_template("storePost.html", sellItem=sellItem, questions=questions)
 
@@ -323,9 +335,9 @@ def profile(userid):
             new_name = request.form.get("user_newname")
             new_depart = request.form.get("user_newdepartment")
             new_grade = request.form.get("user_newgrade")
-            userobj.name = userobj.name if new_name=="" else new_name
-            userobj.department = userobj.department if new_depart=="" else new_depart
-            userobj.grade = userobj.grade if new_grade=="" else new_grade
+            userobj.name = userobj.name if new_name == "" else new_name
+            userobj.department = userobj.department if new_depart == "" else new_depart
+            userobj.grade = userobj.grade if new_grade == "" else new_grade
 
             user_db.update_user_attrs(userobj)
             session["username"] = userobj.name
@@ -347,8 +359,7 @@ def profile(userid):
             new_pass_hash = sha256(new_pass1.encode()).hexdigest()
             user_db.update_user_password(new_pass_hash, userid)
             flash("Your password is updated successfully.", "info")
-            return redirect("/profile/{}".format(userid)) 
-
+            return redirect("/profile/{}".format(userid))
 
         elif request.form.get("form_key") == "delete_user":
             studentno = request.form.get("studentno")
@@ -356,7 +367,7 @@ def profile(userid):
             password = request.form.get("password")
             hashed_password = sha256(password.encode()).hexdigest()
 
-            if studentno!=userobj.studentno or name!=userobj.name or hashed_password!=userobj.password_hash:
+            if studentno != userobj.studentno or name != userobj.name or hashed_password != userobj.password_hash:
                 flash("Invalid Credentials, Account is not deleted.", "warning")
                 return redirect("/profile/{}".format(userid))
 
@@ -364,7 +375,6 @@ def profile(userid):
             flash("Account with ID {} is successfully deleted.".format(userobj.studentno), "info")
             session.clear()
             return redirect("/")
-
 
     return render_template("profile.html", userobj=userobj)
 

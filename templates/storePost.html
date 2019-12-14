@@ -9,11 +9,11 @@
         <h1> ITU Store - Item {{ sellItem.sellid }} </h1>
 
         {% if session.userid == sellItem.seller_no %}
-        <form class="update_form" action="/store/{{sellItem.sellid}}" method="post">
-            <input type="hidden" name="form_key" value="change">
+        <form class="item_change_form" action="/store/{{sellItem.sellid}}" method="post">
+            <input type="hidden" name="form_key" value="item_change">
 
-            <input class="update" type="submit" name="update" value="Update Item Info">
-            <input class="update" type="submit" name="delete" value="Delete Item from Store">
+            <input class="item_change" type="submit" name="update" value="Update Item Info">
+            <input class="item_change" type="submit" name="delete" value="Delete Item from Store">
         </form>
         {% endif %}
 
@@ -71,7 +71,19 @@
                                 </tr>
                                 <tr>
                                     <td align="center"> {{ q_i.user_name }} </td>
-                                    <td align="center"> BUTTONS </td>
+                                    <td align="center">
+
+                                        {% if session.userid == q_i.user_no %}
+                                        <form class="q_change_form" action="/store/{{sellItem.sellid}}" method="post">
+                                            <input type="hidden" name="form_key" value="q_change">
+                                            <input type="hidden" name="questionid" value="{{ q_i.questionid }}">
+
+                                            <input class="q_change" type="submit" name="update" value="Update Question">
+                                            <input class="q_change" type="submit" name="delete" value="Delete Question">
+                                        </form>
+                                        {% endif %}
+
+                                    </td>
                                 </tr>
                             </table>
 
