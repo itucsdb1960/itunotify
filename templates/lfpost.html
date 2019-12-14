@@ -12,9 +12,13 @@
 			<tr> 
 				<th> {{post.title}} </th> 
 				<th> {% if extra %} Posted by: {{extra.username}} {% else %} No username??? {% endif %} </th>
+				<th> {% if post.LF %} Found in: {% else %} Lost in vicinity of: 
+					 {% if post.location %} {{ post.location }} {% else %} --- {% endif %}
+					 {% endif %} 
+				</th>
 			</tr>
-			<tr> 
-				<td colspan="2" align="center"> {{post.description}} </td> 
+			<tr style="line-height: 1.5em; height: 10em; white-space: pre-wrap; word-wrap: break-word"> 
+				<td colspan="3" align="center"> {{post.description}} </td> 
 			</tr>
 		</table>
 	</div> 
@@ -24,26 +28,42 @@
 			<input type="hidden" name="form_key" value="delete_post">
 			<input type="hidden" name="postid" value="{{extra.postid}}">
 			<input type="hidden" name="userid" value="{{post.userid}}">
-			<button type="submit"> Delete Post </button> 
+			<button type="submit" class="delete"> Delete Post </button> 
 		</form>
 		<form>
-			<button type="submit"> Edit Post </button> 
+			<button type="submit" class="update"> Edit Post </button> 
 		</form>
 		<form>	
-			<button type="submit" onclick="reportPost()"> Report Post </button> 
+			<button type="submit" class="delete" onclick="reportPost()"> Report Post </button> 
 		</form>
 	</div>
 </div>
 
+<hr>
+
 <div class="response_form">
 	<form action="/lostfound/{{extra.postid}}" method="post">
 		<input type="hidden" name="form_key" value="new_response">
-		<textarea name="response" rows="5" cols="45" placeholder="..." required></textarea>
+		<textarea name="response" rows="5" cols="45" placeholder="Your response" required></textarea>
 		<br>
 		<input type="checkbox" name="hide_name" value=TRUE> Post this anonymously
 		<br>
-		<input type="submit" name="Send" value="Share">
+		<!--<input type="submit" name="Send" value="Share">-->
+		<button class="insert"> Share </button>
 		<br>
+	</form>
+</div>
+
+<hr>
+
+<div class="response_update_form">
+	<form action="/lostfound/{{extra.postid}}" method="post">
+		<input type="hidden" name="form_key" value="update_response">
+		<textarea name="response" rows="5" cols="45" placeholder="Your response" style="display: none;" id="txt_udateresp" required></textarea>
+		<br style="display: none;" id="br_updateresp">
+		<!--<input type="submit" name="Send" value="Update" style="display: none;" id="btn_updateresp"> -->
+		<button style="display: none;" class="update" id="btn_updateresp"> Update </button>
+		<br style="display: none;">
 	</form>
 </div>
 
@@ -54,22 +74,22 @@
 			<li>	
 				<table class="response_table">
 					<tr>
-						<th> {{sharetime}} </th>
-						<th> {{username}} </th>
+						<th style="width: 70%"> {{sharetime}} </th>
+						<th style="width: 30%"> {{username}} </th>
 					</tr>
 					<tr>
-						<td colspan="2"> {{message}} </td>
+						<td colspan="2" style="height: 2em; padding-left: 1em; padding-right: 1em;"> {{message}} </td>
 					</tr>
 				</table>
-				<form action="/lostfound/{{extra.postid}}" method="post">
+				<form action="/lostfound/{{extra.postid}}" method="post" style="float: left;">
 					<input type="hidden" name="form_key" value="delete_response">
 					<input type="hidden" name="respid" value="{{respid}}">
 					<input type="hidden" name="userid" value="{{userid}}">
 					<input type="hidden" name="postid" value="{{extra.postid}}">
-					<button type="submit"> Delete </button> 
+					<button type="submit" class="delete"> Delete </button> 
 				</form>
 				<form>
-					<button type="submit"> Edit </button> 
+					<button type="button" class="update" onclick="showUpdateForm('{{message}}')"> Edit </button> 
 				</form>
 				<br>
 			</li>
@@ -84,6 +104,30 @@
 	function reportPost(){
 		alert("Wait, that's illegal");
 	}
+
+	visible = false;
+	function showUpdateForm(message) {
+		var textarea_update_resp = document.getElementById('txt_udateresp');
+		var button_update_resp = document.getElementById('btn_updateresp');
+		var br_updateresp = document.getElementById("br_updateresp");
+		if(!visible){ // if not visible, make visible
+			textarea_update_resp.style.display = "";
+			button_update_resp.style.display = "";
+			br_updateresp.style.display = "";
+
+			textarea_update_resp.value = message;
+			textarea_update_resp.focus();
+		}
+		else { // make invisible
+			textarea_update_resp.style.display = "none";
+			button_update_resp.style.display = "none";
+			br_updateresp.style.display = "none";
+
+			textarea_update_resp.value = "";
+		}
+		visible = (!visible);
+	}
+
 </script>
 
 {% endblock %}
