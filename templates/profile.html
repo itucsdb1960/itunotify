@@ -1,26 +1,51 @@
 {% extends "layout.html" %}
 {% block title %} Lost & Found {% endblock %}
-{% block stylesheet %} "" {% endblock %}
+{% block stylesheet %} "/static/style_profile.css" {% endblock %}
 
 {% block body_content %}
 
-<h3 class="username"> Logged in as: {{ session.username }} </h3>
+<h2>Viewing {{userobj.name}}'s profile</h2>
 <p>id: {{userobj.studentno}}</p>
 <p>name: {{userobj.name}}</p>
 <p>department: {{userobj.department}}</p>
 <p>grade: {{userobj.grade}}</p>
 
 {% if session.userid == userobj.studentno %} <!-- if viewing current user's profile, add option to edit info -->
-Update your info
-()
-<form>
-	<input type="text" name="user_newname" placeholder="change name">
-	<input type="text" name="user_newdepartment" placeholder="change name">
-	<input type="text" name="user_newgrade" placeholder="change name">
+<hr>
+
+<h3> Update your info </h3>
+<p> (Fill in the textboxes with the new value of the attributes you want to change.) </p>
+<form action="/profile/{{userobj.studentno}}" method="post">
+	<input type="hidden" name="form_key" value="update_user_attributes">
+	<input type="text" name="user_newname" placeholder="Change name">
+	<input type="text" name="user_newdepartment" placeholder="Change department">
+	<input type="text" name="user_newgrade" placeholder="Change grade">
+	<input type="submit" name="Submit" value="Confirm Changes">
 </form>
 
-{% else %} <!-- view other users' profile -->
+<hr>
 
+<h3> Change your password </h3>
+<form action="/profile/{{userobj.studentno}}" method="post">
+	<input type="hidden" name="form_key" value="update_user_password">
+	<input type="password" name="curr_pass" placeholder="Your current password">
+	<input type="password" name="new_pass1" placeholder="New password">
+	<input type="password" name="new_pass2" placeholder="Confirm new password">
+	<input type="submit" name="Submit" value="Confirm Changes">
+</form>
+
+<hr>
+
+<h3 style="color: #cc4444"> Delete Account </h3>
+<form action="/profile/{{userobj.studentno}}" method="post" autocomplete="off">
+	<p style="color: #dd5555"> Warning! This action cannot be undone.</p>
+	<p> Confirm your info using input fields below. </p>
+	<input type="hidden" name="form_key" value="delete_user">
+	<input type="text" name="studentno" placeholder="Enter your id" autocomplete="off">
+	<input type="text" name="name" placeholder="Enter your name" autocomplete="off">
+	<input type="password" name="password" placeholder="Enter your password" autocomplete="off">
+	<input type="submit" name="Submit" value="Confirm Account Deletion" style="color: red;">
+</form>
 
 {% endif %}
 
