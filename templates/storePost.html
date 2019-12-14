@@ -9,30 +9,57 @@
         <h1> ITU Store - Item {{ sellItem.sellid }} </h1>
 
         {% if session.userid == sellItem.seller_no %}
-        <form class="item_change_form" action="/store/{{sellItem.sellid}}" method="post">
-            <input type="hidden" name="form_key" value="item_change">
+        <form class="item_delete_form" action="/store/{{sellItem.sellid}}" method="post">
+            <input type="hidden" name="form_key" value="item_delete">
 
-            <input class="item_change" type="submit" name="update" value="Update Item Info">
-            <input class="item_change" type="submit" name="delete" value="Delete Item from Store">
+            <input class="item_delete" type="submit" name="delete" value="Delete Item from Store">
         </form>
         {% endif %}
 
         <div class="item_info">
 
-            <table class="item_info">
-                <tr>
-                    <th> {{ sellItem.item_name }} </th>
-                </tr>
-                <tr>
-                    <td>
-                        <p> item_info item_info item_info item_info item_info item_info
-                            item_info item_info item_info item_info item_info item_info item_info
-                            item_info item_info item_info item_info item_info item_info item_info item_info
-                            item_info item_info item_info item_info item_info item_info item_info item_info
-                            item_info item_info item_info item_info item_info item_info </p>
-                    </td>
-                </tr>
-            </table>
+            <div id="item_info_static">
+                <button class="item_change" onclick="Update_Item_Info();"> Update Item Information </button>
+
+                <table class="item_info">
+                    <tr>
+                        <th> {{ sellItem.item_name }} </th>
+                    </tr>
+                    <tr>
+                        <td>
+                            <p> {{ sellItem.item_info }} </p>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
+            <div hidden id="item_info_change">
+                <button class="item_change" onclick="Renew_To_Static();"> Changed My Mind </button>
+
+                <table class="item_info">
+                    <form class="item_update_form" action="/store/{{sellItem.sellid}}" method="post">
+                        <input type="hidden" name="form_key" value="item_update">
+                        <tr>
+                            <th>
+                                <input class="item_update" type="text" name="item_name" value="{{ sellItem.item_name }}" placeholder="Enter the name of the item" required>
+                                <br>
+                                <input class="item_update" type="text" name="price" value="{{ sellItem.price }}" placeholder="Enter the price" required>
+                                <br>
+                                <input class="item_update" type="text" name="shortD" value="{{ sellItem.shortD }}" placeholder="(Optional) Enter a short description">
+                                <br>
+                            </th>
+                        </tr>
+                        <tr>
+                            <td>
+                                <textarea class="item_update" name="item_info" rows="5" cols="50" placeholder="Write Information Here" required> {{ sellItem.item_info }} </textarea>
+                                <br>
+
+                                <input class="item_update" type="submit" name="item_update" value="Submit Update">
+                            </td>
+                        </tr>
+                    </form>
+                </table>
+            </div>
 
         </div>
 
@@ -133,6 +160,21 @@
                 </li>
                 {% endfor %}
             </ul>
+
+            <script type="text/javascript">
+
+                function Update_Item_Info(){
+                    document.getElementById("item_info_static").style.display = "none";
+                    document.getElementById("item_info_change").style.display = "block";
+                }
+
+                function Renew_To_Static(){
+                    document.getElementById("item_info_static").style.display = "block";
+                    document.getElementById("item_info_change").style.display = "none";
+                }
+
+            </script>
+
             {% else %}
             <h2> No Questions </h2>
             {% endif %}

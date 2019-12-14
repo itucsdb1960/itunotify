@@ -100,6 +100,22 @@ class StoreDatabase:
 
         # handle sql database!
 
+    def update_selling_item(self, sellid, new_item_name, new_price, new_shortD, new_item_info):
+
+        sql_updateSellingItem = """UPDATE selling
+                                    SET itemname = %(new_item_name)s,
+                                        price = %(new_price)s,
+                                        shortD = %(new_shortD)s,
+                                        iteminfo = %(new_item_info)s
+                                    WHERE (selling.sellid = %(sellid)s);"""
+
+        with dbapi2.connect(self.dsn) as connection:
+            cursor = connection.cursor()
+
+            cursor.execute(sql_updateSellingItem, {'sellid': sellid, 'new_item_name': new_item_name, 'new_price': new_price, 'new_shortD': new_shortD, 'new_item_info': new_item_info})
+
+            cursor.close()
+
     def delete_selling_item(self, sellid):
 
         sql_deleteSellingItem = """DELETE FROM selling
@@ -115,6 +131,7 @@ class StoreDatabase:
         # handle sql database!
 
     def get_selling_item(self, sellid):
+        self.get_all_from_db()
         sellItem = self.selling.get(sellid)
 
         if sellItem is None:

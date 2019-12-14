@@ -200,15 +200,22 @@ def storePost_page(sellid):
     user_db = current_app.config["USER_DB"]
 
     if request.method == "POST":
-        if request.form.get("form_key") == "item_change":
-            if request.form.get("update"):
-                flash("Post has been updated successfully.", "info")
-
-            elif request.form.get("delete"):
+        if request.form.get("form_key") == "item_delete":  # logged in
+            if request.form.get("delete"):
                 flash("Post has been deleted successfully.", "info")
 
                 store_db.delete_selling_item(sellid)
                 return redirect(url_for('store_page'))
+
+        elif request.form.get("form_key") == "item_update":  # logged in
+            new_item_name = request.form.get("item_name")
+            new_price = request.form.get("price")
+            new_item_info = request.form.get("item_info")
+            new_shortD = request.form.get("shortD")  # handle empty case!
+
+            store_db.update_selling_item(sellid, new_item_name, new_price, new_shortD, new_item_info)
+
+            return redirect('/store/{}'.format(sellid))
 
         elif request.form.get("form_key") == "ask_question":  # logged in
             q_body = request.form.get("q_body")
@@ -235,11 +242,7 @@ def storePost_page(sellid):
         elif request.form.get("form_key") == "q_change":  # logged in
             questionid = request.form.get("questionid")
 
-            if request.form.get("update"):
-                flash("Question has been updated successfully.", "info")
-                return redirect('/store/{}'.format(sellid))
-
-            elif request.form.get("delete"):
+            if request.form.get("delete"):
                 store_db.delete_question(questionid, sellid)
 
                 flash("Question has been deleted successfully.", "info")
