@@ -24,20 +24,18 @@ class StoreDatabase:
         if seller_name != "%":
             seller_name = "%" + seller_name + "%"
 
-        sql_getAllSellingInfo = """SELECT selling.sellid, item.name, selling.shortD, message.body, selling.price, users.name, users.studentno, image.image, count(question.questionid), count(answer.answerid)
+        sql_getAllSellingInfo = """SELECT selling.sellid, selling.itemname, selling.shortD, selling.iteminfo, selling.price, users.name, users.studentno, image.image, count(question.questionid), count(answer.answerid)
                                     FROM selling left join users ON selling.seller = users.studentno
-                                                left join item ON selling.itemid = item.itemid
-                                                left join message ON selling.iteminfo = message.messageid
                                                 left join image ON selling.imageid = image.imageid
                                                 left join question ON selling.sellid = question.sellid
                                                 left join answer ON question.questionid = answer.questionid
                                                                 AND selling.sellid = answer.sellid
-                                    WHERE (item.name LIKE %(item_name)s
+                                    WHERE (selling.itemname LIKE %(item_name)s
                                         AND users.name LIKE %(seller)s
                                         AND selling.price >= %(price_lw)s
                                         AND selling.price <= %(price_hi)s)
-                                    GROUP BY selling.sellid, item.name, selling.shortD, message.body, selling.price, users.name, users.studentno, image.image
-                                    ORDER BY selling.sellid;"""
+                                    GROUP BY selling.sellid, selling.itemname, selling.shortD, selling.iteminfo, selling.price, users.name, users.studentno, image.image
+                                    ORDER BY selling.sharetime DESC;"""
 
         sql_getMaxPrice = """SELECT max(price)
                                 FROM selling;"""
@@ -60,26 +58,15 @@ class StoreDatabase:
 
     def add_selling_item(self, sellItem):
 
-        itemid = 0
-        userid_no = sellItem.seller_no
         imageid = 0
 
-        sql_insertSelling = """INSERT INTO selling (itemid, imageid, seller, shortD, price) VALUES(
-                                    %(itemid)s,
+        sql_insertSelling = """INSERT INTO selling (itemname, imageid, seller, shortD, price) VALUES(
+                                    %(item_name)s,
                                     %(imageid)s,
                                     %(seller_no)s,
                                     %(shortD)s,
                                     %(price)s
                                 );"""
-
-        # if item_name and image doesnt exist, create
-        sql_itemExists = """SELECT item.itemid, item.name
-                            FROM item
-                            WHERE (item.name = %(item_name)s);"""
-
-        sql_insertItem = """INSERT INTO item (name) VALUES(
-                                %(item_name)s
-                            );"""
 
         sql_imageExists = """SELECT image.imageid, image.image
                                 FROM image
@@ -91,17 +78,6 @@ class StoreDatabase:
 
         with dbapi2.connect(self.dsn) as connection:
             cursor = connection.cursor()
-
-            cursor.execute(sql_itemExists, {'item_name': sellItem.item_name})
-            itemExist = cursor.fetchall()
-            if len(itemExist) == 0:
-                # create item
-                cursor.execute(sql_insertItem, {'item_name': sellItem.item_name})
-                cursor.execute(sql_itemExists, {'item_name': sellItem.item_name})
-                new_item = cursor.fetchall()
-                itemid = new_item[0][0]
-            else:
-                itemid = itemExist[0][0]
 
             cursor.execute(sql_imageExists, {'image': sellItem.image})
             imageExist = cursor.fetchall()
@@ -116,7 +92,7 @@ class StoreDatabase:
 
             # set userid correctly!
 
-            cursor.execute(sql_insertSelling, {'itemid': itemid, 'imageid': imageid, 'seller_no': userid_no, 'shortD': sellItem.shortD, 'price': sellItem.price})
+            cursor.execute(sql_insertSelling, {'item_name': sellItem.item_name, 'imageid': imageid, 'seller_no': sellItem.seller_no, 'shortD': sellItem.shortD, 'price': sellItem.price})
 
             cursor.close()
 
@@ -149,42 +125,50 @@ class StoreDatabase:
 
     def add_question(self, question):
 
-        sql_addQuestion = """INSERT INTO question (userid, sellid, messageid, sharetime) VALUES (
+        sql_insertQuestion = """INSERT INTO question (userid, sellid, body, sharetime) VALUES (
                                 %(userid_no)s,
                                 %(sellid)s,
-                                %(messageid)s,
-                                %(shate_time)s
+                                %(q_body)s,
+                                %(share_time)s
                             );"""
-
-        sql_addMessage = """INSERT INTO message (body) VALUES (
-                                %(message_body)s
-                            );"""
-
-        sql_findMessageid = """ ;"""
 
         with dbapi2.connect(self.dsn) as connection:
             cursor = connection.cursor()
 
-            cursor.execute(sql_addMessage, {'message_body': question.q_body})
+            cursor.execute(sql_insertQuestion, {'userid_no': question.user_no, 'sellid': question.sellid, 'q_body': question.q_body, 'share_time': question.share_time})
 
+            cursor.close()
+
+    def add_answer(self, answer):
+
+        sql_insertAnswer = """INSERT INTO answer (userid, sellid, questionid, body, sharetime) VALUES (
+                                %(userid_no)s,
+                                %(sellid)s,
+                                %(questionid)s,
+                                %(ans_body)s,
+                                %(share_time)s
+                            );"""
+
+        with dbapi2.connect(self.dsn) as connection:
+            cursor = connection.cursor()
+
+            cursor.execute(sql_insertAnswer, {'userid_no': answer.user_no, 'sellid': answer.sellid, 'questionid': answer.questionid, 'ans_body': answer.ans_body, 'share_time': answer.share_time})
 
             cursor.close()
 
     def get_all_question_answer_pairs(self, sellid):
 
         # question.sellid :: already known
-        sql_getAllQuestions = """SELECT question.questionid, message.body, question.userid, users.name, question.sharetime
-                            FROM question, users, message
-                            WHERE (question.messageid = message.messageid
-                                AND question.userid = users.studentno
+        sql_getAllQuestions = """SELECT question.questionid, question.body, question.userid, users.name, question.sharetime
+                            FROM question, users
+                            WHERE (question.userid = users.studentno
                                 AND question.sellid = %(sellid)s)
                             ORDER BY question.sharetime DESC;"""
 
         # answer.questionid, answer.sellid :: already known
-        sql_getAllAnsOfOneQuestion = """SELECT answer.answerid, message.body, answer.userid, users.name, answer.shatetime
-                                        FROM answer, question, users, message
+        sql_getAllAnsOfOneQuestion = """SELECT answer.answerid, answer.body, answer.userid, users.name, answer.sharetime
+                                        FROM answer, question, users
                                         WHERE (answer.userid = users.studentno
-                                            AND answer.messageid = message.messageid
                                             AND answer.questionid = %(questionid)s
                                             AND answer.sellid = %(sellid)s)
                                         ORDER BY answer.sharetime DESC;"""
@@ -195,8 +179,8 @@ class StoreDatabase:
 
             cursor.execute(sql_getAllQuestions, {'sellid': sellid})
             questions = cursor.fetchall()
-            for questionid, q_body, q_userid_no, q_user_name, q_shate_time in questions:
-                qi_and_all_ans = tuple()
+            for questionid, q_body, q_userid_no, q_user_name, q_share_time in questions:
+                qi_and_all_ans = []
 
                 q_i = Question(questionid, q_body, q_userid_no, q_user_name, sellid, q_share_time)
                 qi_and_all_ans.append(q_i)
@@ -204,12 +188,14 @@ class StoreDatabase:
                 cursor.execute(sql_getAllAnsOfOneQuestion, {'questionid': questionid, 'sellid': sellid})
                 answers = cursor.fetchall()
 
-                ans_of_qi = tuple()
-                for answerid, ans_body, ans_userid_no, ans_user_name, ans_shate_time in answers:
+                ans_of_qi = []
+                for answerid, ans_body, ans_userid_no, ans_user_name, ans_share_time in answers:
                     ans_i = Answer(answerid, questionid, ans_body, ans_userid_no, ans_user_name, sellid, ans_share_time)
                     ans_of_qi.append(ans_i)
 
+                ans_of_qi = tuple(ans_of_qi)
                 qi_and_all_ans.append(ans_of_qi)
+                qi_and_all_ans = tuple(qi_and_all_ans)
                 all_questions.append(qi_and_all_ans)
 
             cursor.close()
