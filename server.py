@@ -80,6 +80,7 @@ def lostfound_page():
                 lf_db.add_post(lfpost)
                 posts = lf_db.get_all_posts()
                 current_app.config["LF_DB"] = lf_db
+                return redirect("/lostfound")
 
         # Delete Post button is activated in /lostfound/<int:postid>
         elif form_name == "delete_post":
@@ -121,6 +122,7 @@ def lfpost_page(postid):
             lfresponse = LFResponse(postid, response_message, userid, timestamp)    # not passing order attribute, default=0
             lf_db.add_response(lfresponse)
             responses = lf_db.get_all_responses_for_post(postid)
+            return redirect("/lostfound/{}".format(postid))
 
         elif form_name == "delete_response":
             respowner_userid = request.form.get("userid")

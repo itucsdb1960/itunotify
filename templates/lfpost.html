@@ -5,7 +5,6 @@
 {% block stylesheet %} "/static/style_lfpost.css" {% endblock %}
 
 {% block body_content %}
-{{post.description|replace('\n', '')}}
 <div class="post_and_options">
 	<div class="post_side"> 
 		<table class="post_card">
@@ -31,7 +30,7 @@
 			<button type="submit" class="delete"> Delete Post </button> 
 		</form>
 		<form>
-			<button type="button" class="update" onclick="showPostUpdateForm('{{post.description|replace('\r', '')}}','{{post.userid}}','{{post.postid}}')"> Edit Post </button> 
+			<button type="button" class="update" onclick="showPostUpdateForm('{{post.description}}','{{post.userid}}','{{post.postid}}')"> Edit Post </button> 
 		</form>
 		<form>	
 			<button type="submit" class="delete" onclick="reportPost()"> Report Post </button> 
