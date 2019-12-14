@@ -306,7 +306,41 @@ def logout_page():
 def profile(userid):
     user_db = current_app.config["USER_DB"]
     userobj = user_db.get_user_by_userid(userid)
-    #print("\n\n\n",userobj.studentno,"\n\n\n")    # DEBUG
+    if request.method == "POST":
+        if request.form.get("form_key") == "update_user_attributes":
+            new_name = request.form.get("user_newname")
+            new_depart = request.form.get("user_newdepartment")
+            new_grade = request.form.get("user_newgrade")
+            userobj.name = userobj.name if new_name=="" else new_name
+            userobj.department = userobj.department if new_depart=="" else new_depart
+            userobj.grade = userobj.grade if new_grade=="" else new_grade
+
+            user_db.update_user_attrs(userobj)
+            session["username"] = userobj.name
+            return redirect("/profile/{}".format(userid))
+
+        elif request.form.get("form_key") == "update_user_password":
+            curr_pass = request.form.get("curr_pass")
+            curr_pass_hash = sha256(curr_pass.encode()).hexdigest()
+            if curr_pass_hash != userobj.password_hash:
+                flash("Incorrect current password.", "warning")
+                return redirect("/profile/{}".format(userid))
+
+            new_pass1 = request.form.get("new_pass1")
+            new_pass2 = request.form.get("new_pass2")
+            if new_pass1 != new_pass2:
+                flash("New passwords do not match.", "warning")
+                return redirect("/profile/{}".format(userid))
+
+            new_pass_hash = sha256(new_pass1.encode()).hexdigest()
+            user_db.update_user_password(new_pass_hash, userid)
+            flash("Your password is updated successfully.", "info")
+            return redirect("/profile/{}".format(userid)) 
+
+
+        elif request.form.get("form_key") == "delete_user":
+            pass
+
     return render_template("profile.html", userobj=userobj)
 
 

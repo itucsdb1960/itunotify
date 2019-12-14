@@ -18,6 +18,9 @@ class UserDatabase():
         file = open(r"heroku_db_url.txt", "r")
         self.dsn = file.read()
 
+    #
+    # INSERT QUERY
+    #
     def register_user(self, user):
         sql_insert_user = """INSERT INTO users (name, department, studentno, grade, password_hash) VALUES (
                                 %(name)s,
@@ -33,6 +36,10 @@ class UserDatabase():
             with connection.cursor() as cursor:
                 cursor.execute(sql_insert_user, args)
 
+
+    #
+    # READ (SELECT) QUERIES
+    #
     def get_user_by_username(self, username):
         user_query = "SELECT * FROM users WHERE users.name=%s"
         args = (username,)
@@ -67,3 +74,42 @@ class UserDatabase():
             with connection.cursor() as cursor:
                 cursor.execute(userid_query, args)
                 return cursor.fetchone()[0]
+
+
+    #
+    # UPDATE QUERIES
+    #
+    def update_user_attrs(self, user):
+        update_statement = "UPDATE users SET name=%s, department=%s, grade=%s WHERE studentno=%s;"
+        args = (user.name, user.department, user.grade, user.studentno)
+
+        with dbapi2.connect(self.dsn) as connection:
+            with connection.cursor() as cursor:
+                cursor.execute(update_statement, args)
+
+        return        
+
+    def update_user_password(self, new_passhash, userid):
+        update_statement = "UPDATE users SET password_hash=%s WHERE studentno=%s;"
+        args = (new_passhash, userid)
+
+        with dbapi2.connect(self.dsn) as connection:
+            with connection.cursor() as cursor:
+                cursor.execute(update_statement, args)
+
+        return
+
+
+
+    #
+    # DELETE QUERY
+    #
+    def delete_user(self, userid):
+        delete_statement = "DELETE FROM users WHERE studentno=%s;"
+        args = (userid,)    # single element tuple
+
+        with dbapi2.connect(self.dsn) as connection:
+            with connection.cursor() as cursor:
+                cursor.execute(delete_statement, args)
+
+        return
