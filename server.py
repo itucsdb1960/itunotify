@@ -339,7 +339,19 @@ def profile(userid):
 
 
         elif request.form.get("form_key") == "delete_user":
-            pass
+            studentno = request.form.get("studentno")
+            name = request.form.get("name")
+            password = request.form.get("password")
+            hashed_password = sha256(password.encode()).hexdigest()
+
+            if studentno!=userobj.studentno or name!=userobj.name or hashed_password!=userobj.password_hash:
+                flash("Invalid Credentials, Account is not deleted.", "warning")
+                return redirect("/profile/{}".format(userid))
+
+            user_db.delete_user(userid)
+            flash("Account with ID {} is successfully deleted.".format(userobj.studentno), "info")
+            session.clear()
+            return redirect("/")
 
     return render_template("profile.html", userobj=userobj)
 
