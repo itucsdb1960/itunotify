@@ -96,6 +96,19 @@ class LFDatabase():
 		return posts
 
 
+	def update_post(self, new_description, postid):
+		update_statement = "UPDATE lostfound SET description=%s WHERE postid=%s;"
+		args = (new_description, postid)
+
+		with dbapi2.connect(self.dsn) as connection:
+			with connection.cursor() as cursor:
+				cursor.execute(update_statement, args)
+
+		return
+
+###########################################################################################################
+###########################################################################################################
+
 	#
 	# Database management methods for responses table
 	#
@@ -138,3 +151,14 @@ class LFDatabase():
 		with dbapi2.connect(self.dsn) as connection:
 			with connection.cursor() as cursor:
 				cursor.execute(delete_statement, args)
+
+	def update_response(self, new_message, respid):
+		update_statement = "UPDATE responses SET response=%s WHERE respid=%s;"
+		args = (new_message, respid)
+
+		with dbapi2.connect(self.dsn) as connection:
+			with connection.cursor() as cursor:
+				cursor.execute(update_statement, args)
+
+		return
+

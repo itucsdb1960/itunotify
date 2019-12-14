@@ -1,46 +1,50 @@
-/*div {
-	border: 1px solid purple;
-	/*margin: 1%;
-	padding: 2em;
-}*/
+body {
+	font-family: Arial;
+	background-color: #eeeeee;
+}
 
 .post_and_options{
 	margin: 1%;
 	padding: 2em;
-	width: 100%;
+	width: auto;
 	overflow: auto;
-	border: 3px solid black;
+	/*border: 3px solid black;*/
 }
 
 .post_side {
 	float: left;
 	width: 75%;
-	border: 2px solid black;
+	/*border: 2px solid black;*/
 	overflow: auto;
 }
 .options_side {
 	/*float: right;*/
 	width: 20%;
-	border: 2px solid black;
+	/*border: 2px solid black;*/
+	overflow: auto;
+}
+.post_card {
+	width: 100%;
 	overflow: auto;
 }
 
 .responses {
 	width: 100%;
 	/*float: center;*/
-	border: 2px solid green;
+	/*border: 2px solid green;*/
 	overflow: auto;
+}
+.response_form, .response_update_form, .post_update_form {
+	margin-left: 3em;
 }
 
-.post_card {
-	width: 100%;
-	overflow: auto;
-}
 th {
-	border: 2px solid #00aabb; 
+	border: 2px solid #228899;
+	background-color: #ccffff; 
 }
 td {
-	border: 2px solid #00aabb;
+	border: 2px solid #228899;
+	background-color: #ccffff;
 }
 
 .response_ul {
@@ -49,4 +53,23 @@ td {
 
 button {
 	margin: 0.5em;
+	color: #f0f0f0;
+	background-color: #228899;
+	border: none;
+	padding: 0.2em;
+	width: 10em;
+	height: 2em;
+}
+button:hover {
+	background-color: #00aabb;
+	cursor: pointer;
+}
+button.delete{
+	color: #d9342a;
+}
+button.update{
+	color: #f5cb42;
+}
+button.insert{
+	color: #1ce20a;
 }
