@@ -167,7 +167,7 @@ class StoreDatabase:
 
         # answer.questionid, answer.sellid :: already known
         sql_getAllAnsOfOneQuestion = """SELECT answer.answerid, answer.body, answer.userid, users.name, answer.sharetime
-                                        FROM answer, question, users
+                                        FROM answer, users
                                         WHERE (answer.userid = users.studentno
                                             AND answer.questionid = %(questionid)s
                                             AND answer.sellid = %(sellid)s)

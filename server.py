@@ -211,7 +211,7 @@ def storePost_page(sellid):
                 return redirect(url_for('store_page'))
 
         elif request.form.get("form_key") == "ask_question":  # logged in
-            q_body = request.form.get("question")
+            q_body = request.form.get("q_body")
             userid_no = session["userid"]
             user_name = session["username"]
             share_time = getTimestampString()
@@ -221,8 +221,20 @@ def storePost_page(sellid):
 
             return redirect('/store/{}'.format(sellid))
 
+        elif request.form.get("form_key") == "answer":  # logged in
+            ans_body = request.form.get("ans_body")
+            questionid = request.form.get("questionid")
+            userid_no = session["userid"]
+            user_name = session["username"]
+            share_time = getTimestampString()
+
+            answer = Answer(-1, questionid, ans_body, userid_no, user_name, sellid, share_time)
+            store_db.add_answer(answer)
+            return redirect('/store/{}'.format(sellid))
+
     sellItem = store_db.get_selling_item(sellid)
     questions = store_db.get_all_question_answer_pairs(sellid)
+    print(questions)
 
     return render_template("storePost.html", sellItem=sellItem, questions=questions)
 

@@ -17,7 +17,24 @@
         </form>
         {% endif %}
 
-        <h2> {{ sellItem.item_name }} </h2>
+        <div class="item_info">
+
+            <table class="item_info">
+                <tr>
+                    <th> {{ sellItem.item_name }} </th>
+                </tr>
+                <tr>
+                    <td>
+                        <p> item_info item_info item_info item_info item_info item_info
+                            item_info item_info item_info item_info item_info item_info item_info
+                            item_info item_info item_info item_info item_info item_info item_info item_info
+                            item_info item_info item_info item_info item_info item_info item_info item_info
+                            item_info item_info item_info item_info item_info item_info </p>
+                    </td>
+                </tr>
+            </table>
+
+        </div>
 
         <h2> Q&A </h2>
 
@@ -25,40 +42,89 @@
         <form class="question_form" action="/store/{{sellItem.sellid}}" method="post">
             <input type="hidden" name="form_key" value="ask_question">
 
-            <textarea name="question" rows="5" cols="50" placeholder="Ask a question." required></textarea>
+            <textarea class="ask_question" name="q_body" rows="5" cols="50" placeholder="Ask a question." required></textarea>
             <br>
 
-            <input class="ask_question" type="submit" name="ask" value="Ask Question">
+            <input class="ask_question" type="submit" name="ask_question" value="Ask Question">
         </form>
         {% else %}
         <p> Cannot ask questions or write answers without logging in! </p>
-        <form class="login_form" action="/store" method="post">
+        <form class="login_form" action="/store/{{sellItem.sellid}}" method="post">
             <input type="hidden" name="form_key" value="login">
 
             <button class="login" type="submit" name="go_login"> Login </button>
         </form>
         {% endif %}
 
-        {% if questions %}
-        <ul>
-            {% for q_i, all_ans in questions %}
-            <li>
-                {{ q_i.q_body }}
-                <ul>
-                    {% for ans_j in all_ans %}
-                    <li>
+        <div class="questions">
+            {% if questions %}
+            <ul>
+                {% for q_i, all_ans in questions %}
+                <li>
+                    <div class="question_i">
+                        <div class="q_body">
 
-                    {{ ans_j.ans_bodys }}
+                            <table class="q_table">
+                                <tr class="q_body">
+                                    <td> {{ q_i.q_body }} </td>
+                                    <td align="center"> {{ q_i.share_time }} </td>
+                                </tr>
+                                <tr>
+                                    <td align="center"> {{ q_i.user_name }} </td>
+                                    <td align="center"> BUTTONS </td>
+                                </tr>
+                            </table>
 
-                    </li>
-                    {% endfor %}
-                </ul>
-            </li>
-            {% endfor %}
-        </ul>
-        {% else %}
-        <h2> No Questions </h2>
-        {% endif %}
+                        </div>
+
+                        {% if session.is_loggedin %}
+                        <form class="answer_form" action="/store/{{sellItem.sellid}}" method="post">
+                            <input type="hidden" name="form_key" value="answer">
+                            <input type="hidden" name="questionid" value="{{ q_i.questionid }}">
+
+                            <textarea class="answer" name="ans_body" rows="5" cols="50" placeholder="Your answer" required></textarea>
+                            <br>
+
+                            <input class="answer" type="submit" name="post_answer" value="Post Answer">
+                        </form>
+                        {% endif %}
+
+                        <ul>
+                            <div class="ans_i_cluster">
+
+                                {% for ans_j in all_ans %}
+                                <li>
+                                    <div class="individual_ans">
+
+                                        <div class="ans_body">
+
+                                            <table class="ans_table">
+                                                <tr class="ans_body">
+                                                    <td> {{ ans_j.ans_body }} </td>
+                                                    <td align="center"> {{ ans_j.share_time }} </td>
+                                                </tr>
+                                                <tr>
+                                                    <td align="center"> {{ ans_j.user_name }} </td>
+                                                    <td align="center"> BUTTONS </td>
+                                                </tr>
+                                            </table>
+
+                                        </div>
+
+                                    </div>
+                                </li>
+                                {% endfor %}
+
+                            </div>
+                        </ul>
+                    </div>
+                </li>
+                {% endfor %}
+            </ul>
+            {% else %}
+            <h2> No Questions </h2>
+            {% endif %}
+        </div>
 
     </div>
 {% endblock %}
