@@ -136,6 +136,31 @@ def lfpost_page(postid):
             flash("Message is deleted successfully.", "info")
             return redirect("/lostfound/{}".format(postid))
 
+        elif form_name == "update_response":
+            respowner_userid = request.form.get("userid")
+            if not session.get("userid") == respowner_userid:
+                flash("You do not have authentication to do that!", "error")
+                return redirect("/lostfound/{}".format(postid))
+
+            respid = request.form.get("respid")
+            new_message = request.form.get("new_response")
+            lf_db.update_response(new_message, respid)
+            flash("Response is updated successfully.", "info")
+            return redirect("/lostfound/{}".format(postid))
+
+        elif form_name == "update_post":
+            postowner_userid = request.form.get("userid")
+            if not session.get("userid") == postowner_userid:
+                flash("You do not have authentication to do that!", "error")
+                return redirect("/lostfound/{}".format(postid))
+
+            #postid = request.form.get("postid")    # postid is already known
+            new_description = request.form.get("new_description")
+            lf_db.update_post(new_description, postid)
+            flash("Post description is updated successfully.", "info")
+            return redirect("/lostfound/{}".format(postid))
+
+
     return render_template("lfpost.html", post=post, extra=extra, responses=responses)
 
 

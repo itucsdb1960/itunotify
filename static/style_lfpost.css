@@ -34,7 +34,7 @@ body {
 	/*border: 2px solid green;*/
 	overflow: auto;
 }
-.response_form, .response_update_form {
+.response_form, .response_update_form, .post_update_form {
 	margin-left: 3em;
 }
 
