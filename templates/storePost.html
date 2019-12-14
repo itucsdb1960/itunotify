@@ -19,7 +19,11 @@
         <div class="item_info">
 
             <div id="item_info_static">
+                {% if session.is_loggedin %}
+                {% if session.userid == sellItem.seller_no %}
                 <button class="item_change" onclick="Update_Item_Info();"> Update Item Information </button>
+                {% endif %}
+                {% endif %}
 
                 <table class="item_info">
                     <tr>
@@ -100,6 +104,7 @@
                                     <td align="center"> {{ q_i.user_name }} </td>
                                     <td align="center">
 
+                                        {% if session.is_loggedin %}
                                         {% if session.userid == q_i.user_no %}
                                         <form class="q_change_form" action="/store/{{sellItem.sellid}}" method="post">
                                             <input type="hidden" name="form_key" value="q_change">
@@ -108,6 +113,7 @@
                                             <input class="q_change" type="submit" name="update" value="Update Question">
                                             <input class="q_change" type="submit" name="delete" value="Delete Question">
                                         </form>
+                                        {% endif %}
                                         {% endif %}
 
                                     </td>
