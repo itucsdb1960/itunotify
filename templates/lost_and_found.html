@@ -3,27 +3,31 @@
 {% block stylesheet %} "/static/style_lostfound.css" {% endblock %}
 
 {% block body_content %}
-	<h2> Share a new post </h2>
-	<form action="/lostfound" method="post">
-        <input type="hidden" name="form_key" value="new_post">
-		<input type="text" name="title" placeholder="Enter a title (max 32 chars)" required>
-		<input type="text" name="location" placeholder="(Optional) Enter location">
-		<br>
-		<textarea name="description" rows="5" cols="45" placeholder="Additional information and description" required></textarea>
-		<br>
-		<input type="radio" name="LF" value=TRUE required> Found
-		<input type="radio" name="LF" value=FALSE required> Lost
-		<input type="submit" name="Send" value="Share">
-	</form>
+	<div style="margin-left: 5%">
+        <h2> Share a new post </h2>
+    	<form action="/lostfound" method="post">
+            <input type="hidden" name="form_key" value="new_post">
+    		<input type="text" name="title" placeholder="Enter a title (max 32 chars)" required>
+    		<input type="text" name="location" placeholder="(Optional) Enter location">
+    		<br>
+    		<textarea name="description" rows="5" cols="45" placeholder="Additional information and description" required></textarea>
+    		<br>
+    		<input type="radio" name="LF" value=TRUE required> Found
+    		<input type="radio" name="LF" value=FALSE required> Lost
+    		<input type="submit" name="Send" value="Share">
+    	</form>
+    </div>
 
-	<h2> Latest Posts </h2>
-	{% if posts %}
-    <input type="text" id="filter_text" onkeyup="filterTable()" placeholder="Write Something to filter the table...">
-    <input type="radio" name="clmn" value=0 onclick="setFilterColumn(0); filterTable();" required> Share Time
-    <input type="radio" name="clmn" value=0 onclick="setFilterColumn(1); filterTable();" required checked> Title
-    <input type="radio" name="clmn" value=1 onclick="setFilterColumn(2); filterTable();" required> User
-    <input type="radio" name="clmn" value=2 onclick="setFilterColumn(3); filterTable();" required> Category
-    <input type="radio" name="clmn" value=3 onclick="setFilterColumn(4); filterTable();" required> Location
+    <div style="margin-left: 5%;">
+    	<h2> Latest Posts </h2>
+    	{% if posts %}
+        <input type="text" id="filter_text" onkeyup="filterTable()" placeholder="Write Something to filter the table...">
+        <input type="radio" name="clmn" value=0 onclick="setFilterColumn(0); filterTable();" required> Share Time
+        <input type="radio" name="clmn" value=0 onclick="setFilterColumn(1); filterTable();" required checked> Title
+        <input type="radio" name="clmn" value=1 onclick="setFilterColumn(2); filterTable();" required> User
+        <input type="radio" name="clmn" value=2 onclick="setFilterColumn(3); filterTable();" required> Category
+        <input type="radio" name="clmn" value=3 onclick="setFilterColumn(4); filterTable();" required> Location
+    </div>
 
 	<table class="lfposts" id="lfposts_table">
 		<tr>

@@ -3,18 +3,18 @@ body {
 	background-color: #fcfce0;
 }
 
-/*p {
-	margin: 0.2em;
-}*/
-
 input[type="text"], input[type="password"] {
 	 border-radius: 1em;
+	 border: none;
 	 padding: 0.5em;
 	 margin:0.5em; 
 	 width: 15em; 
 	 height: 2em;
 	 background-color: #fffff0;
 	 outline: none;
+}
+input[type="text"]:focus, input[type="password"]:focus {
+	border: 1px inset #EBE9ED;
 }
 
 label {
@@ -26,9 +26,10 @@ label {
 }
 
 p {
-	margin:0em; 
+	margin:0.1em; 
 	width: auto; 
 	height: 2em;
+	font-size: 18px;
 }
 
 input[type="submit"] {
