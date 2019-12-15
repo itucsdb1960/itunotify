@@ -281,6 +281,10 @@ def storePost_page(sellid):
     return render_template("storePost.html", sellItem=sellItem, questions=questions)
 
 
+@app.route("/courses", methods=["POST", "GET"])
+def courses():
+    return render_template("courses.html")
+
 #
 # LOGIN - LOGOUT - REGISTER FUNCTIONS
 #

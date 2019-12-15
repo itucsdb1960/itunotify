@@ -6,3 +6,19 @@ form {
 	float: center;
 	width: 50%;
 }
+
+input[type="text"], input[type="password"] {
+	 border-radius: 1em;
+	 padding: 0.5em;
+	 margin:0.5em; 
+	 width: 15em; 
+	 height: 2em;
+}
+
+label {
+	clear: both; 
+	float: left; 
+	margin:0.5em; 
+	width: 10em; 
+	height: 1em;
+}

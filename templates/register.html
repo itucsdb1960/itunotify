@@ -4,11 +4,17 @@
 
 {% block body_content %}
 <form action="/register" method="post">
-	<input type="text" name="username" placeholder="Enter your username" required>
+	<label >Name and Surname:</label>
+	<input type="text" name="username" placeholder="Enter your name" required>
+	<label>Department:</label>
 	<input type="text" name="department" placeholder="Enter your department" required>
+	<label>Student ID:</label>
 	<input type="text" name="studentno" placeholder="Enter your student number" required>
+	<label>Grade:</label>
 	<input type="text" name="grade" placeholder="Enter your grade" required>
+	<label>Create Your Password:</label>
 	<input type="password" name="password1" placeholder="Enter password" required>
+	<label>Confirm Your Password:</label>
 	<input type="password" name="password2" placeholder="Confirm your password" required>
 	<input type="submit" name="Register">
 </form>

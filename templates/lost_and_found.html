@@ -34,11 +34,11 @@
 			<th onclick="sortTable('category')"> Category </th>
 			<th onclick="sortTable('location')"> Location </th>
 		</tr>
-		{% for postid, sharetime, title, username, LF, location in posts %}
+		{% for userid, postid, sharetime, title, username, LF, location in posts %}
 		<tr>
             <td> {{sharetime}} </td>
 			<td class="title"> <a class="lfpost_link" href="/lostfound/{{postid}}">{{ title }}</a> </td>
-			<td> {{ username }} </td>
+			<td> <a class="profile_link" href="/profile/{{userid}}">{{ username }}</a> </td>
 			<td> {% if LF %} Found {% else %} Lost {% endif %} </td>
 			<td> {% if location %} {{ location }} {% else %} --- {% endif %} </td>
 		</tr>

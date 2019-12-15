@@ -10,7 +10,7 @@
 		<table class="post_card">
 			<tr> 
 				<th> {{post.title}} </th> 
-				<th> {% if extra %} Posted by: {{extra.username}} {% else %} No username??? {% endif %} </th>
+				<th> {% if extra %} Posted by: <a class="profile_link" href="/profile/{{post.userid}}">{{ extra.username }}</a> {% else %} No username??? {% endif %} </th>
 				<th> {% if post.LF %} Found in: {% else %} Lost in vicinity of: 
 					 {% if post.location %} {{ post.location }} {% else %} --- {% endif %}
 					 {% endif %} 
@@ -78,7 +78,7 @@
 				<table class="response_table">
 					<tr>
 						<th style="width: 70%"> {{sharetime}} </th>
-						<th style="width: 30%"> {{username}} </th>
+						<th style="width: 30%"> {% if username == "Anonymous" %} {{username}} {% else %}<a class="profile_link" href="/profile/{{userid}}">{{username}}</a> {% endif %} </th>
 					</tr>
 					<tr>
 						<td colspan="2" style="height: 2em; padding-left: 1em; padding-right: 1em; white-space: pre-wrap; word-wrap: break-word"> {{message}} </td>
