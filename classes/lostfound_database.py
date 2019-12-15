@@ -12,12 +12,15 @@ class LFPost():
 		self.sharetime = sharetime
 
 class LFResponse():
-	def __init__(self, postid, response, userid, sharetime, order=0):
+	def __init__(self, postid, response, userid, sharetime, lastupdate, anonymous=False, textcolor="black"):
 		self.postid = postid
 		self.response = response
 		self.userid = userid
 		self.sharetime = sharetime
-		self.order = order
+		self.lastupdate = lastupdate
+		self.anonymous = anonymous
+		self.textcolor = textcolor
+		
 
 
 class LFDatabase():
@@ -113,8 +116,11 @@ class LFDatabase():
 		self.last_responseid += 1
 		self.responses[self.last_responseid] = lfresponse
 
-		insert_statement = "INSERT INTO responses (postid, response, userid, ord, sharetime) VALUES (%s, %s, %s, %s, %s);"
-		args = (lfresponse.postid, lfresponse.response, lfresponse.userid, lfresponse.order, lfresponse.sharetime)
+		insert_statement = """
+		INSERT INTO responses (postid, response, userid, sharetime, lastupdate, anonymous, textcolor) 
+		VALUES (%s, %s, %s, %s, %s, %s, %s);
+		"""
+		args = (lfresponse.postid, lfresponse.response, lfresponse.userid, lfresponse.sharetime, lfresponse.lastupdate, lfresponse.anonymous, lfresponse.textcolor)
 
 		with dbapi2.connect(self.dsn) as connection:
 			with connection.cursor() as cursor:
@@ -123,7 +129,7 @@ class LFDatabase():
 
 	def get_all_responses_for_post(self, postid):
 		select_all_responses_statement = """
-			SELECT responses.respid, responses.response, responses.userid, responses.ord, responses.sharetime, users.name 
+			SELECT responses.respid, responses.response, responses.userid, responses.sharetime, responses.lastupdate, responses.anonymous, responses.textcolor, users.name
 			FROM responses, users
 			WHERE (responses.postid=%s AND users.studentno=responses.userid)
 			ORDER BY responses.sharetime ASC;
@@ -149,9 +155,9 @@ class LFDatabase():
 			with connection.cursor() as cursor:
 				cursor.execute(delete_statement, args)
 
-	def update_response(self, new_message, respid):
-		update_statement = "UPDATE responses SET response=%s WHERE respid=%s;"
-		args = (new_message, respid)
+	def update_response(self, new_message, update_time, respid):
+		update_statement = "UPDATE responses SET response=%s, lastupdate=%s WHERE respid=%s;"
+		args = (new_message, update_time, respid)
 
 		with dbapi2.connect(self.dsn) as connection:
 			with connection.cursor() as cursor:

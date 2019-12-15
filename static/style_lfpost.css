@@ -73,3 +73,12 @@ button.update{
 button.insert{
 	color: #1ce20a;
 }
+textarea {
+	border-radius: 1em;
+	padding: 0.5em;
+	margin:0.5em; 
+	width: 32.5em; 
+	height: 6em;
+	background-color: #f3ffff;
+	outline: none;
+}

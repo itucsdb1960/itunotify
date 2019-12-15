@@ -116,10 +116,11 @@ def lfpost_page(postid):
 
             response_message = request.form.get("response")
             anonymous = request.form.get("hide_name")
-            userid = "0000000000" if anonymous else session["userid"]
+            textcolor = request.form.get("textcolor")
+            userid = session["userid"]
             timestamp = getTimestampString()
 
-            lfresponse = LFResponse(postid, response_message, userid, timestamp)    # not passing order attribute, default=0
+            lfresponse = LFResponse(postid, response_message, userid, timestamp, timestamp, anonymous, textcolor)
             lf_db.add_response(lfresponse)
             responses = lf_db.get_all_responses_for_post(postid)
             return redirect("/lostfound/{}".format(postid))
@@ -146,7 +147,9 @@ def lfpost_page(postid):
 
             respid = request.form.get("respid")
             new_message = request.form.get("new_response")
-            lf_db.update_response(new_message, respid)
+            timestamp = getTimestampString()
+
+            lf_db.update_response(new_message, timestamp, respid)
             flash("Response is updated successfully.", "info")
             return redirect("/lostfound/{}".format(postid))
 
@@ -415,7 +418,14 @@ def profile(userid):
     userobj = user_db.get_user_by_userid(userid)
 
     if request.method == "POST":
-        if request.form.get("form_key") == "update_user_attributes":
+        if request.form.get("form_key") == "update_user_personal_info":
+            new_personal_info = request.form.get("personal_info")
+
+            user_db.update_personal_info(new_personal_info, userid)
+            flash("Your Bio is updated successfully.", "info")
+            return redirect("/profile/{}".format(userid))
+
+        elif request.form.get("form_key") == "update_user_attributes":
             new_name = request.form.get("user_newname")
             new_depart = request.form.get("user_newdepartment")
             new_grade = request.form.get("user_newgrade")

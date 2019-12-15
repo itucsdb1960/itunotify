@@ -2,12 +2,13 @@ import psycopg2 as dbapi2
 
 
 class User():
-    def __init__(self, studentno, name, department, grade, password_hash):
+    def __init__(self, studentno, name, department, grade, password_hash, personal_info="..."):
         self.studentno = studentno
         self.name = name
         self.department = department
         self.grade = grade
         self.password_hash = password_hash
+        self.personal_info = personal_info
 
 
 class UserDatabase():
@@ -22,16 +23,17 @@ class UserDatabase():
     # INSERT QUERY
     #
     def register_user(self, user):
-        sql_insert_user = """INSERT INTO users (name, department, studentno, grade, password_hash) VALUES (
+        sql_insert_user = """INSERT INTO users (name, department, studentno, grade, password_hash, personal_info) VALUES (
                                 %(name)s,
                                 %(department)s,
                                 %(studentno)s,
                                 %(grade)s,
-                                %(password_hash)s
+                                %(password_hash)s,
+                                %(personal_info)s
                             );"""
 
         args = {'name': user.name, 'department': user.department, 'studentno': user.studentno,
-                'grade': user.grade, 'password_hash': user.password_hash};
+                'grade': user.grade, 'password_hash': user.password_hash, 'personal_info': user.personal_info};
         with dbapi2.connect(self.dsn) as connection:
             with connection.cursor() as cursor:
                 cursor.execute(sql_insert_user, args)
@@ -51,7 +53,7 @@ class UserDatabase():
                 if len(user) < 1:  # user named _username_ could not be found
                     return None
                 else:
-                    return User(user[0][0], user[0][1], user[0][2], user[0][3], user[0][4])
+                    return User(user[0][0], user[0][1], user[0][2], user[0][3], user[0][4], user[0][5])
 
     def get_user_by_userid(self, userid):
         user_query = "SELECT * FROM users WHERE users.studentno=%s"
@@ -64,7 +66,7 @@ class UserDatabase():
                 if len(user) < 1:  # user with _userid_ could not be found
                     return None
                 else:
-                    return User(user[0][0], user[0][1], user[0][2], user[0][3], user[0][4])
+                    return User(user[0][0], user[0][1], user[0][2], user[0][3], user[0][4], user[0][5])
 
     def get_userid_by_username(self, username):
     	userid_query = "SELECT users.studentno FROM users WHERE users.name = %s"
@@ -99,7 +101,16 @@ class UserDatabase():
 
         return
 
+    def update_personal_info(self, new_personal_info, userid):
+        update_statement = "UPDATE users SET personal_info=%s WHERE studentno=%s;"
 
+        args = (new_personal_info, userid)
+
+        with dbapi2.connect(self.dsn) as connection:
+            with connection.cursor() as cursor:
+                cursor.execute(update_statement, args)
+
+        return
 
     #
     # DELETE QUERY
