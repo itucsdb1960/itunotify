@@ -78,7 +78,7 @@ class LFDatabase():
 
 	def get_all_posts(self):
 		select_all_posts_statement = """
-			SELECT lostfound.postid, lostfound.sharetime, lostfound.title, users.name, lostfound.LF, lostfound.location 
+			SELECT users.studentno, lostfound.postid, lostfound.sharetime, lostfound.title, users.name, lostfound.LF, lostfound.location 
 			FROM lostfound, users
 			WHERE (lostfound.userid=users.studentno)
 			ORDER BY lostfound.postid DESC;
@@ -89,10 +89,7 @@ class LFDatabase():
 			with connection.cursor() as cursor:
 				cursor.execute(select_all_posts_statement)
 				posts = cursor.fetchall()
-				# for pid, tit, name, lf, loc in cursor:
-				# 	post = LFPost()
 
-		# posts = copy(self.posts)
 		return posts
 
 

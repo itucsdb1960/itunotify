@@ -284,6 +284,10 @@ def storePost_page(sellid):
     return render_template("storePost.html", sellItem=sellItem, questions=questions)
 
 
+@app.route("/courses", methods=["POST", "GET"])
+def courses():
+    return render_template("courses.html")
+
 #
 # LOGIN - LOGOUT - REGISTER FUNCTIONS
 #
@@ -301,10 +305,11 @@ def register_page():
 
         if(password_check != user_password):
             # passwords dont match
+            flash("Entered passwords do not match", "error")
             return redirect(url_for('register_page'))
 
         user_password_hash = sha256(user_password.encode()).hexdigest()
-        user = User(user_name, user_department, user_studentno, user_grade, user_password_hash)
+        user = User(user_studentno, user_name, user_department, user_grade, user_password_hash)
 
         user_db.register_user(user)
 
@@ -323,11 +328,11 @@ def login_page():
     user_db = current_app.config["USER_DB"]
 
     if request.method == "POST":
-        username = request.form.get("username")
-        user = user_db.get_user_by_username(username)
+        userid = request.form.get("userid")
+        user = user_db.get_user_by_userid(userid)
         if user == None:
             print("NO USER")
-            flash("Invalid username. Are you registered?", "error")
+            flash("Invalid ID. Are you registered?", "error")
             return redirect("/login")
 
         password = request.form.get("password")
@@ -340,11 +345,11 @@ def login_page():
             flash("Incorrect password. Try again or Register.", "error")
             return redirect("/login")
 
-        flash("Successfully logged in as {}".format(username), "info")
-        session["username"] = username
+        flash("Successfully logged in as {}".format(user.name), "info")
+        session["username"] = user.name
         session["is_loggedin"] = True
         # session["user_dict"] = vars(user)   # save user obj in session (?)
-        session["userid"] = user_db.get_userid_by_username(username)
+        session["userid"] = userid
 
         return redirect("/")
 

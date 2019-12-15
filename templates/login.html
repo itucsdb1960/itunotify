@@ -4,9 +4,11 @@
 
 {% block body_content %}
 <form action="/login" method="post">
-	<input type="text" name="username" placeholder="Enter your username" required>
+	<label>Student ID:</label>
+	<input type="text" name="userid" placeholder="Enter your student number" required>
+	<label>Password:</label>
 	<input type="password" name="password" placeholder="Enter your password" required>
-	<input type="submit" name="Login">
+	<input type="submit" name="Login" value="OK">
 </form>
 
 

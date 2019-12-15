@@ -24,6 +24,22 @@
 			.warning_flash {
 				align-content: center; text-align: center; border: solid black; background-color: yellow; font-size: 1.5em; margin: 0.5em;
 			}
+
+			a.profile_link {
+				text-decoration: none;
+				color: #e3ca40;
+			}
+			a.profile_link:hover {
+				color: #eeaa22;
+			}
+
+			footer {
+			    clear: both;
+			    position: relative;
+			    height: 200px;
+			    margin-top: -200px;
+			}
+
 		</style>
 	</head>
 	<body>
@@ -49,6 +65,14 @@
 
 
 		{% block body_content %} {% endblock %}
+		<!--
+		<hr>
+
+		<footer id="footer">
+			<small style="float: left;"> &copy; 2019 - notify İTÜ</small>
+		    <small style="float: center;"> <a href="mailto:gencoglu17@itu.edu.tr?Subject=ITU%20notify" target="_top">Alp Eren Gençoğlu</a> </small>
+		</footer>
+		-->
 	</body>
 
 </html>

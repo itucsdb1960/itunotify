@@ -6,3 +6,34 @@ form {
 	float: center;
 	width: 50%;
 }
+
+input[type="text"], input[type="password"] {
+	 border-radius: 1em;
+	 padding: 0.5em;
+	 margin:0.5em; 
+	 width: 15em; 
+	 height: 2em;
+	outline: none;
+}
+
+label {
+	clear: both; 
+	float: left; 
+	margin:0.5em; 
+	width: 10em; 
+	height: 1em;
+}
+
+input[type="submit"] {
+	padding: 0.5em;
+	margin:0.5em; 
+	width: 24em; 
+	height: 2em;
+	background-color: #f0fff0;
+	color: green;
+	font-size: 16px;
+}
+input[type="submit"]:hover {
+	background-color: #fffff0;
+	cursor: pointer;
+}

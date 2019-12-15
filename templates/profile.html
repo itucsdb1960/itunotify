@@ -5,16 +5,16 @@
 {% block body_content %}
 
 <h2>Viewing {{userobj.name}}'s profile</h2>
-<p>id: {{userobj.studentno}}</p>
-<p>name: {{userobj.name}}</p>
-<p>department: {{userobj.department}}</p>
-<p>grade: {{userobj.grade}}</p>
+<label> ID: </label> <p>{{userobj.studentno}}</p>
+<label> Name: </label> <p>{{userobj.name}}</p>
+<label> Department: </label> <p>{{userobj.department}}</p>
+<label> Grade: </label> <p>{{userobj.grade}}</p>
 
 {% if session.userid == userobj.studentno %} <!-- if viewing current user's profile, add option to edit info -->
 <hr>
 
 <h3> Update your info </h3>
-<p> (Fill in the textboxes with the new value of the attributes you want to change.) </p>
+<p> (Fill in the textboxes with the new value of the attributes you want to change. Empty textbox will retain current value.) </p>
 <form action="/profile/{{userobj.studentno}}" method="post">
 	<input type="hidden" name="form_key" value="update_user_attributes">
 	<input type="text" name="user_newname" placeholder="Change name">
@@ -44,7 +44,7 @@
 	<input type="text" name="studentno" placeholder="Enter your id" autocomplete="off">
 	<input type="text" name="name" placeholder="Enter your name" autocomplete="off">
 	<input type="password" name="password" placeholder="Enter your password" autocomplete="off">
-	<input type="submit" name="Submit" value="Confirm Account Deletion" style="color: red;">
+	<input type="submit" name="Submit" value="Confirm Account Deletion" style="color: #ff6666;">
 </form>
 
 {% endif %}
