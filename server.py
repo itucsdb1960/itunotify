@@ -302,6 +302,7 @@ def register_page():
 
         if(password_check != user_password):
             # passwords dont match
+            flash("Entered passwords do not match", "error")
             return redirect(url_for('register_page'))
 
         user_password_hash = sha256(user_password.encode()).hexdigest()

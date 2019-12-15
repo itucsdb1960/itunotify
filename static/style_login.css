@@ -13,6 +13,7 @@ input[type="text"], input[type="password"] {
 	 margin:0.5em; 
 	 width: 15em; 
 	 height: 2em;
+	outline: none;
 }
 
 label {
