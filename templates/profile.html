@@ -39,6 +39,7 @@
 <h3 style="color: #cc4444"> Delete Account </h3>
 <form action="/profile/{{userobj.studentno}}" method="post" autocomplete="off">
 	<p style="color: #dd5555"> Warning! This action cannot be undone.</p>
+	<p style="color: #dd5555"> Once your account is deleted, all of the posts and messages which you own will be deleted too.</p>
 	<p> Confirm your info using input fields below. </p>
 	<input type="hidden" name="form_key" value="delete_user">
 	<input type="text" name="studentno" placeholder="Enter your id" autocomplete="off">
