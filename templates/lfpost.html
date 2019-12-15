@@ -30,7 +30,7 @@
 			<button type="submit" class="delete"> Delete Post </button> 
 		</form>
 		<form>
-			<button type="button" class="update" onclick="showPostUpdateForm('{{post.description}}','{{post.userid}}','{{post.postid}}')"> Edit Post </button> 
+			<button type="button" class="update" onclick="showPostUpdateForm()"> Edit Post </button> 
 		</form>
 		<form>	
 			<button type="submit" class="delete" onclick="reportPost()"> Report Post </button> 
@@ -41,9 +41,9 @@
 <div class="post_update_form">
 	<form action="/lostfound/{{extra.postid}}" method="post">
 		<input type="hidden" name="form_key" value="update_post">
-		<input type="hidden" name="postid" value="" id="postid_updatepost">
-		<input type="hidden" name="userid" value="" id="userid_updatepost">
-		<textarea name="new_description" rows="5" cols="45" placeholder="Description..." style="display: none;" id="txt_udatepost" required></textarea>
+		<input type="hidden" name="postid" value="{{extra.postid}}" id="postid_updatepost">
+		<input type="hidden" name="userid" value="{{post.userid}}" id="userid_updatepost">
+		<textarea name="new_description" rows="5" cols="45" placeholder="Description..." style="display: none;" id="txt_udatepost" required>{{post.description}}</textarea>
 		<br style="display: none;" id="br_updatepost">
 		<!--<input type="submit" name="Send" value="Update" style="display: none;" id="btn_updateresp"> -->
 		<button style="display: none;" class="update" id="btn_updatepost"> Update </button>
@@ -68,18 +68,7 @@
 
 <hr>
 
-<div class="response_update_form">
-	<form action="/lostfound/{{extra.postid}}" method="post">
-		<input type="hidden" name="form_key" value="update_response">
-		<input type="hidden" name="respid" value="" id="respid_updateresp">
-		<input type="hidden" name="userid" value="" id="userid_updateresp">
-		<textarea name="new_response" rows="5" cols="45" placeholder="Your response" style="display: none;" id="txt_udateresp" required></textarea>
-		<br style="display: none;" id="br_updateresp">
-		<!--<input type="submit" name="Send" value="Update" style="display: none;" id="btn_updateresp"> -->
-		<button style="display: none;" class="update" id="btn_updateresp"> Update </button>
-		<br style="display: none;">
-	</form>
-</div>
+
 
 <div class="responses">
 	{% if responses %}
@@ -92,7 +81,7 @@
 						<th style="width: 30%"> {{username}} </th>
 					</tr>
 					<tr>
-						<td colspan="2" style="height: 2em; padding-left: 1em; padding-right: 1em;"> {{message}} </td>
+						<td colspan="2" style="height: 2em; padding-left: 1em; padding-right: 1em; white-space: pre-wrap; word-wrap: break-word"> {{message}} </td>
 					</tr>
 				</table>
 				<form action="/lostfound/{{extra.postid}}" method="post" style="float: left;">
@@ -103,8 +92,20 @@
 					<button type="submit" class="delete"> Delete </button> 
 				</form>
 				<form>
-					<button type="button" class="update" onclick="showResponseUpdateForm('{{message}}','{{userid}}','{{respid}}')"> Edit </button> 
+					<button type="button" class="update" onclick="showResponseUpdateForm('{{respid}}')"> Edit </button> 
 				</form>
+				<div class="response_update_form" id="updateresp_{{respid}}" style="display:none;">
+					<form action="/lostfound/{{extra.postid}}" method="post">
+						<input type="hidden" name="form_key" value="update_response">
+						<input type="hidden" name="respid" value="{{respid}}" id="respid_updateresp">
+						<input type="hidden" name="userid" value="{{userid}}" id="userid_updateresp">
+						<textarea name="new_response" rows="5" cols="45" placeholder="Your response" id="txt_udateresp" required>{{message}}</textarea>
+						<br>
+						<!--<input type="submit" name="Send" value="Update" style="display: none;" id="btn_updateresp"> -->
+						<button class="update"> Update </button>
+						<br>
+					</form>
+				</div>
 				<br>
 			</li>
 		{% endfor %}
@@ -120,40 +121,44 @@
 	}
 
 	visible_resp = false;
-	function showResponseUpdateForm(message, userid, respid) {
+	function showResponseUpdateForm(respid) {
 		var textarea_update_resp = document.getElementById('txt_udateresp');
-		var button_update_resp = document.getElementById('btn_updateresp');
+		/*var button_update_resp = document.getElementById('btn_updateresp');
 		var br_updateresp = document.getElementById("br_updateresp");
 
 		var userid_inp = document.getElementById("userid_updateresp");
-		var respid_inp = document.getElementById("respid_updateresp");
+		var respid_inp = document.getElementById("respid_updateresp");*/
+
+		var updateresp_form = document.getElementById("updateresp_".concat(respid))
 
 		if(!visible_resp){ // if not visible, make visible
-			textarea_update_resp.style.display = "";
+			/*textarea_update_resp.style.display = "";
 			button_update_resp.style.display = "";
-			br_updateresp.style.display = "";
+			br_updateresp.style.display = "";*/
+			updateresp_form.style.display = "";
 
-			userid_inp.value = userid;
+			/*userid_inp.value = userid;
 			respid_inp.value = respid;
 
-			textarea_update_resp.value = message;
+			textarea_update_resp.value = message;*/
 			textarea_update_resp.focus();
 		}
 		else { // make invisible
-			textarea_update_resp.style.display = "none";
+			/*textarea_update_resp.style.display = "none";
 			button_update_resp.style.display = "none";
-			br_updateresp.style.display = "none";
+			br_updateresp.style.display = "none";*/
+			updateresp_form.style.display = "none";
 
-			userid_inp.value = "";
+			/*userid_inp.value = "";
 			respid_inp.value = "";
 
-			textarea_update_resp.value = "";
+			textarea_update_resp.value = "";*/
 		}
 		visible_resp = (!visible_resp);
 	}
 
 	visible_post = false;
-	function showPostUpdateForm(message, userid, postid) {
+	function showPostUpdateForm() {
 		var textarea_update_post = document.getElementById('txt_udatepost');
 		var button_update_post = document.getElementById('btn_updatepost');
 		var br_updatepost = document.getElementById("br_updatepost");
@@ -166,10 +171,10 @@
 			button_update_post.style.display = "";
 			br_updatepost.style.display = "";
 
-			userid_inp.value = userid;
+			/*userid_inp.value = userid;
 			postid_inp.value = postid;
 
-			textarea_update_post.value = message;
+			textarea_update_post.value = message;*/
 			textarea_update_post.focus();
 		}
 		else { // make invisible
@@ -177,10 +182,10 @@
 			button_update_post.style.display = "none";
 			br_updatepost.style.display = "none";
 
-			userid_inp.value = "";
+			/*userid_inp.value = "";
 			postid_inp.value = "";
 
-			textarea_update_post.value = "";
+			textarea_update_post.value = "";*/
 		}
 		visible_post = (!visible_post);
 	}
