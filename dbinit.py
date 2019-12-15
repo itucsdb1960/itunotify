@@ -11,13 +11,10 @@ INIT_STATEMENTS = [
     	name varchar(40) NOT NULL,
     	department varchar(80),
     	grade integer,
-    	password_hash varchar(256) NOT NULL
+    	password_hash varchar(256) NOT NULL,
+    	personal_info VARCHAR(512)
 	);""",
 
-	"""
-	INSERT into users (studentno, name, department, grade, password_hash) 
-	values ('0000000000', 'Anonymous', 'anonymous', 0, '0123456789anonymouspasswordhash012andsomerandomnumbers9876543210') 
-	on conflict do nothing;""",
 
     """
 	CREATE TABLE IF NOT EXISTS image (
@@ -45,8 +42,10 @@ INIT_STATEMENTS = [
 		postid INTEGER references lostfound(postid) ON DELETE CASCADE ON UPDATE CASCADE,
 		response VARCHAR(512) NOT NULL,
 		userid varchar(10) references users ON DELETE CASCADE ON UPDATE CASCADE,
-		ord integer NOT NULL,
-		sharetime VARCHAR(32)
+		sharetime VARCHAR(32),
+		lastupdate VARCHAR(32),
+		anonymous boolean DEFAULT FALSE,
+		textcolor varchar(16)
 	);""",
 
     """
@@ -67,7 +66,10 @@ INIT_STATEMENTS = [
 		userid varchar(10) references users ON DELETE CASCADE ON UPDATE CASCADE,
 	    sellid integer references selling(sellid) ON DELETE CASCADE ON UPDATE CASCADE,
 	    body varchar(500),
-	    sharetime VARCHAR(32)
+	    sharetime VARCHAR(32),
+	    lastupdate VARCHAR(32),
+		anonymous boolean DEFAULT FALSE,
+		backcolor varchar(16)
 	);""",
 
     """
@@ -77,7 +79,10 @@ INIT_STATEMENTS = [
 	    sellid integer references selling(sellid) ON DELETE CASCADE ON UPDATE CASCADE,
 	    questionid integer references question(questionid) ON DELETE CASCADE ON UPDATE CASCADE,
 	    body varchar(500),
-	    sharetime VARCHAR(32)
+	    sharetime VARCHAR(32),
+	    lastupdate VARCHAR(32),
+		anonymous boolean DEFAULT FALSE,
+		backcolor varchar(16)
 	);"""
 
 ]

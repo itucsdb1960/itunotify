@@ -58,6 +58,9 @@
 		<input type="hidden" name="form_key" value="new_response">
 		<textarea name="response" rows="5" cols="45" placeholder="Your response" required></textarea>
 		<br>
+		<input type="radio" name="textcolor" value="black" required checked> Black
+		<input type="radio" name="textcolor" value="brown" required> Brown
+		<br>
 		<input type="checkbox" name="hide_name" value=TRUE> Post this anonymously
 		<br>
 		<!--<input type="submit" name="Send" value="Share">-->
@@ -73,15 +76,16 @@
 <div class="responses">
 	{% if responses %}
 	<ul class="response_ul">
-		{% for respid, message, userid, order, sharetime, username in responses %}
+		{% for respid, message, userid, sharetime, lastupdate, anonymous, textcolor, username in responses %}
 			<li>	
 				<table class="response_table">
 					<tr>
-						<th style="width: 70%"> {{sharetime}} </th>
-						<th style="width: 30%"> {% if username == "Anonymous" %} {{username}} {% else %}<a class="profile_link" href="/profile/{{userid}}">{{username}}</a> {% endif %} </th>
+						<th style="width: 40%"> Shared: {{sharetime}} </th>
+						<th style="width: 40%"> Updated: {{lastupdate}} </th>
+						<th style="width: 30%"> {% if anonymous %} Anonymous {% else %}<a class="profile_link" href="/profile/{{userid}}">{{username}}</a> {% endif %} </th>
 					</tr>
 					<tr>
-						<td colspan="2" style="height: 2em; padding-left: 1em; padding-right: 1em; white-space: pre-wrap; word-wrap: break-word"> {{message}} </td>
+						<td colspan="3" style="height: 2em; padding-left: 1em; padding-right: 1em; white-space: pre-wrap; word-wrap: break-word; color: {{textcolor}}"> {{message}} </td>
 					</tr>
 				</table>
 				<form action="/lostfound/{{extra.postid}}" method="post" style="float: left;">
