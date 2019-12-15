@@ -4,12 +4,16 @@
 
 {% block body_content %}
 
+<div style="height: auto; overflow: auto;">
 <h2>Viewing {{userobj.name}}'s profile</h2>
 <label> ID: </label> <p>{{userobj.studentno}}</p>
 <label> Name: </label> <p>{{userobj.name}}</p>
 <label> Department: </label> <p>{{userobj.department}}</p>
 <label> Grade: </label> <p>{{userobj.grade}}</p>
-<label> About {{userobj.name}}: </label> <p>{{userobj.personal_info}}</p>
+<label> About {{userobj.name}}: </label> 
+<br><br>
+<p style="white-space: pre-wrap; word-wrap: break-word; margin: 1em;">{{userobj.personal_info}}</p>
+</div>
 
 {% if session.userid == userobj.studentno %} <!-- if viewing current user's profile, add option to edit info -->
 <hr>
@@ -18,7 +22,7 @@
 <p> Write anything you want about yourself. This may include contact info, hobbies etc. </p>
 <form action="/profile/{{userobj.studentno}}" method="post">
 	<input type="hidden" name="form_key" value="update_user_personal_info">
-	<textarea name="personal_info" rows="5" cols="45" placeholder="Peronal Info..." required></textarea>
+	<textarea name="personal_info" rows="5" cols="45" placeholder="Personal Info..." required></textarea>
 	<br>
 	<input type="submit" name="Submit" value="Confirm Changes">
 </form>
