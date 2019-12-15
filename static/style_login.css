@@ -23,3 +23,17 @@ label {
 	width: 10em; 
 	height: 1em;
 }
+
+input[type="submit"] {
+	padding: 0.5em;
+	margin:0.5em; 
+	width: 24em; 
+	height: 2em;
+	background-color: #f0fff0;
+	color: green;
+	font-size: 16px;
+}
+input[type="submit"]:hover {
+	background-color: #fffff0;
+	cursor: pointer;
+}
