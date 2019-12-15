@@ -75,7 +75,7 @@ table.store_posts {
     margin-top: 2.1em;
 }
 
-th.post_header {
+table.store_posts th {
     background-color: #787884;
     color: #e5e5e5;
     border: solid black;
@@ -87,7 +87,7 @@ th.post_header {
     text-align: center;
 }
 
-td.items {
+table.store_posts td {
     border: thin solid grey;
     width: 5em;
     padding-top: 1em;
@@ -97,12 +97,12 @@ td.items {
     text-align: center;
 }
 
-tr.items {
+table.store_posts tr.items {
     background-color: #e5e5e5;
     border-bottom: 1px solid gray;
 }
 
-tr.items:hover {
+table.store_posts tr.items:hover {
     background-color: #681769;
     color: #F7E75E;
     cursor: pointer;
@@ -123,4 +123,8 @@ colors:
     #C8C8C8, light->dark grey
     #AFACAC, light-->dark grey
     #787884, dark gray
+    #D01818, basic red
+    #A32828, darker red
+    #F36868, light red
+    #F65656, nicer light red
 */

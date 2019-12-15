@@ -11,16 +11,42 @@
 		<form class="sell_form" action="/store" method="post">
 			<input type="hidden" name="form_key" value="sell">
 
-			<input class="sell" type="text" name="item_name" placeholder="Enter the name of the item" required>
-			<br>
-			<input class="sell" type="text" name="price" placeholder="Enter the price" required>
-			<br>
-			<input class="sell" type="text" name="shortD" placeholder="(Optional) Enter a short description">
-			<br>
-			<input class="sell" type="text" name="image" placeholder="(Optional) Upload an image">
-			<br>
+			<table>
+				<tr>
+					<td> <label> Item Name: </label> </td>
+					<td align="right">
+						<input class="sell" type="text" name="item_name" placeholder="Enter the name of the item" required>
+					</td>
+				</tr>
 
-			<input class="sell" type="submit" name="send" value="Sell Item">
+				<tr>
+					<td> <label> Price: </label> </td>
+					<td align="right">
+						<input class="sell" type="text" name="price" placeholder="Enter the price" required>
+					</td>
+				</tr>
+
+				<tr>
+					<td> <label> Short Description: </label> </td>
+					<td align="right">
+						<input class="sell" type="text" name="shortD" placeholder="(Optional) Enter a short description">
+					</td>
+				</tr>
+
+				<tr>
+					<td> <label> Image: </label> </td>
+					<td align="right">
+						<input class="sell" type="text" name="image" placeholder="(Optional) Upload an image">
+					</td>
+				</tr>
+
+				<tr>
+					<td colspan="2" align="right">
+						<input class="sell" type="submit" name="send" value="Sell Item">
+					</td>
+				</tr>
+
+			</table>
 		</form>
 
 		{% if not session.is_loggedin %}
@@ -63,8 +89,7 @@
 				</tr>
 
 				<tr>
-					<td>  </td>
-					<td align="right">
+					<td colspan="2" align="right">
 						<input id="filter_filter" class="filter" type="submit" name="filter" value="Filter">
 						<input class="filter" type="submit" name="drop_filter" value="Drop All Filter">
 					</td>
@@ -78,26 +103,26 @@
 		{% if selling_items %}
 		<table class="store_posts">
 			<tr class="post_header">
-				<th class="post_header"> Image </th>
-				<th class="post_header"> Item Name </th>
-				<th class="post_header"> Price </th>
-				<th class="post_header"> Short Description </th>
-				<th class="post_header"> Seller </th>
-				<th class="post_header"> Total # of Questions </th>
-				<th class="post_header"> Total # of Answers </th>
-				<th class="post_header"> Last Update </th>
+				<th> Image </th>
+				<th> Item Name </th>
+				<th> Price </th>
+				<th> Short Description </th>
+				<th> Seller </th>
+				<th> Total # of Questions </th>
+				<th> Total # of Answers </th>
+				<th> Last Update </th>
 			</tr>
 
 			{% for sellid, sellItem in selling_items %}
 			<tr class="items" onclick="location.href='/store/{{sellid}}'">
-        		<td class="items"> {{ sellItem.image }} </td>
-        		<td class="items"> {{ sellItem.item_name }} </td>
-        		<td class="items"> {{ sellItem.price }} </td>
-        		<td class="items"> {{ sellItem.shortD }} </td>
-        		<td class="items"> {{ sellItem.seller_name }} </td>
-        		<td class="items"> {{ sellItem.n_questions }} </td>
-        		<td class="items"> {{ sellItem.n_answers }} </td>
-        		<td class="items"> {{ sellItem.share_time }} </td>
+        		<td> {{ sellItem.image }} </td>
+        		<td> {{ sellItem.item_name }} </td>
+        		<td> {{ sellItem.price }} </td>
+        		<td> {{ sellItem.shortD }} </td>
+        		<td> {{ sellItem.seller_name }} </td>
+        		<td> {{ sellItem.n_questions }} </td>
+        		<td> {{ sellItem.n_answers }} </td>
+        		<td> {{ sellItem.share_time }} </td>
 			</tr>
 			{% endfor %}
     	</table>

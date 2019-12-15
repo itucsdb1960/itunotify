@@ -27,11 +27,12 @@
 
                 <table class="item_info">
                     <tr>
-                        <th> {{ sellItem.item_name }} </th>
+                        <th> Item Name: {{ sellItem.item_name }} </th>
+                        <th> Price: {{ sellItem.price }} TL</th>
                     </tr>
                     <tr>
-                        <td>
-                            <p> {{ sellItem.item_info }} </p>
+                        <td colspan="2">
+                            <p><span style="white-space: pre-wrap;">{{ sellItem.item_info }}</span></p>
                         </td>
                     </tr>
                 </table>
@@ -44,14 +45,37 @@
                     <form class="item_update_form" action="/store/{{sellItem.sellid}}" method="post">
                         <input type="hidden" name="form_key" value="item_update">
                         <tr>
-                            <th>
-                                <input class="item_update" type="text" name="item_name" value="{{ sellItem.item_name }}" placeholder="Enter the name of the item" required>
+                            <td class="header_td">
+                                <!--<input class="item_update" type="text" name="item_name" value="{{ sellItem.item_name }}" placeholder="Enter the name of the item" required>
                                 <br>
                                 <input class="item_update" type="text" name="price" value="{{ sellItem.price }}" placeholder="Enter the price" required>
                                 <br>
                                 <input class="item_update" type="text" name="shortD" value="{{ sellItem.shortD }}" placeholder="(Optional) Enter a short description">
-                                <br>
-                            </th>
+                                <br>-->
+
+                                <table>
+                                    <tr>
+                                        <td> <label> Item Name: </label> </td>
+                                        <td align="right">
+                                            <input class="item_update" type="text" name="item_name" value="{{ sellItem.item_name }}" placeholder="Enter the name of the item" required>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td> <label> Price: </label> </td>
+                                        <td align="right">
+                                            <input class="item_update" type="text" name="price" value="{{ sellItem.price }}" placeholder="Enter the price" required>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td> <label> Short Description: </label> </td>
+                                        <td align="right">
+                                            <input class="item_update" type="text" name="shortD" value="{{ sellItem.shortD }}" placeholder="(Optional) Enter a short description">
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
                         </tr>
                         <tr>
                             <td>
@@ -75,6 +99,11 @@
 
             <textarea class="ask_question" name="q_body" rows="5" cols="50" placeholder="Ask a question." required></textarea>
             <br>
+            <input type="radio" name="color" value="#F65656" required> Light Red
+            <input type="radio" name="color" value="#C8C8C8" required checked> Gray
+            <br>
+            <input type="checkbox" name="anonymous" value=TRUE> Post anonymously
+            <br>
 
             <input class="ask_question" type="submit" name="ask_question" value="Ask Question">
         </form>
@@ -95,11 +124,11 @@
                     <div class="question_i">
                         <div class="q_body">
 
-                            <table class="q_table">
+                            <table class="q_table" id="q_table_{{q_i.questionid}}">
                                 <tr class="q_body">
                                     <td class="message_body">
                                         <div id="q_body_static_{{ q_i.questionid }}">
-                                            <p> {{ q_i.q_body }} </p>
+                                            <p><span style="white-space: pre-wrap;">{{ q_i.q_body }}</span></p>
                                         </div>
 
                                         <div hidden id="q_body_change_{{ q_i.questionid }}">
@@ -115,10 +144,16 @@
                                             </form>
                                         </div>
                                     </td>
-                                    <td class="last_column" align="center"> {{ q_i.share_time }} </td>
+                                    <td class="last_column" align="center"> {{ q_i.last_update }} </td>
                                 </tr>
                                 <tr>
-                                    <td align="center"> {{ q_i.user_name }} </td>
+                                    <td align="center">
+                                        {% if q_i.anonymous %}
+                                        Anonymous
+                                        {% else %}
+                                        {{ q_i.user_name }}
+                                        {% endif %}
+                                    </td>
                                     <td class="last_column" align="center">
 
                                         {% if session.is_loggedin %}
@@ -153,6 +188,11 @@
 
                             <textarea class="answer" name="ans_body" rows="5" cols="50" placeholder="Your answer" required></textarea>
                             <br>
+                            <input type="radio" name="color" value="#F65656" required> Light Red
+                            <input type="radio" name="color" value="#C8C8C8" required checked> Gray
+                            <br>
+                            <input type="checkbox" name="anonymous" value=TRUE> Post anonymously
+                            <br>
 
                             <input class="answer" type="submit" name="post_answer" value="Post Answer">
                         </form>
@@ -167,12 +207,12 @@
 
                                         <div class="ans_body">
 
-                                            <table class="ans_table">
+                                            <table class="ans_table" id="ans_table_{{q_i.questionid}}_{{ans_j.answerid}}">
                                                 <tr class="ans_body">
                                                     <td>
 
                                                         <div id="ans_body_static_{{q_i.questionid}}_{{ans_j.answerid}}">
-                                                            {{ ans_j.ans_body }}
+                                                            <p><span style="white-space: pre-wrap;">{{ ans_j.ans_body }}</span></p>
                                                         </div>
 
                                                         <div hidden id="ans_body_change_{{q_i.questionid}}_{{ans_j.answerid}}">
@@ -190,10 +230,16 @@
                                                         </div>
 
                                                     </td>
-                                                    <td align="center"> {{ ans_j.share_time }} </td>
+                                                    <td align="center"> {{ ans_j.last_update }} </td>
                                                 </tr>
                                                 <tr>
-                                                    <td align="center"> {{ ans_j.user_name }} </td>
+                                                    <td align="center">
+                                                        {% if ans_j.anonymous %}
+                                                        Anonymous
+                                                        {% else %}
+                                                        {{ ans_j.user_name }}
+                                                        {% endif %}
+                                                    </td>
                                                     <td align="center">
                                                         {% if session.is_loggedin %}
                                                         {% if session.userid == ans_j.user_no %}
@@ -222,12 +268,24 @@
 
                                     </div>
                                 </li>
+
+                                <style type="text/css">
+                                    table#ans_table_{{q_i.questionid}}_{{ans_j.answerid}} {
+                                        background-color: {{ans_j.color}};
+                                    }
+                                </style>
                                 {% endfor %}
 
                             </div>
                         </ul>
                     </div>
                 </li>
+
+                <style type="text/css">
+                    table#q_table_{{q_i.questionid}} {
+                        background-color: {{q_i.color}};
+                    }
+                </style>
                 {% endfor %}
             </ul>
 

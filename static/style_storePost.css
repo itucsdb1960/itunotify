@@ -38,14 +38,21 @@ h1.username {
 div.item_info {
     /*float: right;*/
     position: inherit;
-    left: 50%;
+    right: 70%;
+}
+
+input.item_update[type=text] {
+    width: 20em;
+    height: 2em;
+    margin-top: 0.1em;
+    margin-bottom: 0.1em;
 }
 
 table.item_info {
     background-color: #e5e5e5;
 }
 
-table.item_info th {
+table.item_info th, table.item_info td.header_td{
     border-bottom-style: groove;
     height: 3em;
 }
@@ -54,6 +61,7 @@ table.item_info td {
     width: 30em;
     max-width: 30em;
     padding: 1.3em;
+    align: center;
     word-wrap: break-word;
     overflow: auto;
 }
@@ -83,7 +91,7 @@ form.answer_form {
 }
 
 table.q_table {
-    background-color: #C8C8C8;
+    /*background-color: #C8C8C8;*/
     border-style: groove;
     border-collapse: collapse;
     /*width: 60em;*/
@@ -114,7 +122,8 @@ table.q_table tr.q_body {
 }
 
 table.ans_table {
-    background-color: #C8C8C8;
+    /*background-color: #C8C8C8;*/
+    /*background-color: #F65656;*/
     border-style: groove;
     border-collapse: collapse;
     /*width: 60em;*/

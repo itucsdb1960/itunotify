@@ -144,31 +144,35 @@ class StoreDatabase:
 
     def add_question(self, question):
 
-        sql_insertQuestion = """INSERT INTO question (userid, sellid, body, sharetime) VALUES (
+        sql_insertQuestion = """INSERT INTO question (userid, sellid, body, backcolor, lastupdate, sharetime, anonymous) VALUES (
                                 %(userid_no)s,
                                 %(sellid)s,
                                 %(q_body)s,
-                                %(share_time)s
+                                %(color)s,
+                                %(last_update)s,
+                                %(share_time)s,
+                                %(anonymous)s
                             );"""
 
         with dbapi2.connect(self.dsn) as connection:
             cursor = connection.cursor()
 
-            cursor.execute(sql_insertQuestion, {'userid_no': question.user_no, 'sellid': question.sellid, 'q_body': question.q_body, 'share_time': question.share_time})
+            cursor.execute(sql_insertQuestion, {'userid_no': question.user_no, 'sellid': question.sellid, 'q_body': question.q_body, 'color': question.color, 'last_update': question.last_update, 'share_time': question.share_time, 'anonymous': question.anonymous})
 
             cursor.close()
 
-    def update_question(self, questionid, sellid, new_q_body):
+    def update_question(self, questionid, sellid, new_q_body, update_time):
 
         sql_updateQuestion = """UPDATE question
                                 SET body = %(new_q_body)s
+                                    lastupdate = %(update_time)s
                                 WHERE (question.sellid = %(sellid)s
                                     AND question.questionid = %(questionid)s);"""
 
         with dbapi2.connect(self.dsn) as connection:
             cursor = connection.cursor()
 
-            cursor.execute(sql_updateQuestion, {'new_q_body': new_q_body, 'sellid': sellid, 'questionid': questionid})
+            cursor.execute(sql_updateQuestion, {'new_q_body': new_q_body, 'update_time': update_time, 'sellid': sellid, 'questionid': questionid})
 
             cursor.close()
 
@@ -187,25 +191,29 @@ class StoreDatabase:
 
     def add_answer(self, answer):
 
-        sql_insertAnswer = """INSERT INTO answer (userid, sellid, questionid, body, sharetime) VALUES (
+        sql_insertAnswer = """INSERT INTO answer (userid, sellid, questionid, body, backcolor, lastupdate, sharetime, anonymous) VALUES (
                                 %(userid_no)s,
                                 %(sellid)s,
                                 %(questionid)s,
                                 %(ans_body)s,
-                                %(share_time)s
+                                %(color)s,
+                                %(last_update)s,
+                                %(share_time)s,
+                                %(anonymous)s
                             );"""
 
         with dbapi2.connect(self.dsn) as connection:
             cursor = connection.cursor()
 
-            cursor.execute(sql_insertAnswer, {'userid_no': answer.user_no, 'sellid': answer.sellid, 'questionid': answer.questionid, 'ans_body': answer.ans_body, 'share_time': answer.share_time})
+            cursor.execute(sql_insertAnswer, {'userid_no': answer.user_no, 'sellid': answer.sellid, 'questionid': answer.questionid, 'ans_body': answer.ans_body, 'color': answer.color, 'last_update': answer.last_update, 'share_time': answer.share_time, 'anonymous': answer.anonymous})
 
             cursor.close()
 
-    def update_answer(self, answerid, questionid, sellid, new_ans_body):
+    def update_answer(self, answerid, questionid, sellid, new_ans_body, update_time):
 
         sql_updateAnswer = """UPDATE answer
-                                SET body = %(new_ans_body)s
+                                SET body = %(new_ans_body)s,
+                                    lastupdate = %(update_time)s
                                 WHERE (answer.sellid = %(sellid)s
                                     AND answer.questionid = %(questionid)s
                                     AND answer.answerid = %(answerid)s);"""
@@ -234,14 +242,14 @@ class StoreDatabase:
     def get_all_question_answer_pairs(self, sellid):
 
         # question.sellid :: already known
-        sql_getAllQuestions = """SELECT question.questionid, question.body, question.userid, users.name, question.sharetime
+        sql_getAllQuestions = """SELECT question.questionid, question.body, question.userid, users.name, question.backcolor, question.lastupdate, question.sharetime, question.anonymous
                             FROM question, users
                             WHERE (question.userid = users.studentno
                                 AND question.sellid = %(sellid)s)
                             ORDER BY question.sharetime DESC;"""
 
         # answer.questionid, answer.sellid :: already known
-        sql_getAllAnsOfOneQuestion = """SELECT answer.answerid, answer.body, answer.userid, users.name, answer.sharetime
+        sql_getAllAnsOfOneQuestion = """SELECT answer.answerid, answer.body, answer.userid, users.name, answer.backcolor, answer.lastupdate, answer.sharetime, answer.anonymous
                                         FROM answer, users
                                         WHERE (answer.userid = users.studentno
                                             AND answer.questionid = %(questionid)s
@@ -254,18 +262,18 @@ class StoreDatabase:
 
             cursor.execute(sql_getAllQuestions, {'sellid': sellid})
             questions = cursor.fetchall()
-            for questionid, q_body, q_userid_no, q_user_name, q_share_time in questions:
+            for questionid, q_body, q_userid_no, q_user_name, q_color, q_last_update, q_share_time, q_anonymous in questions:
                 qi_and_all_ans = []
 
-                q_i = Question(questionid, q_body, q_userid_no, q_user_name, sellid, q_share_time)
+                q_i = Question(questionid, q_body, q_userid_no, q_user_name, sellid, q_color, q_last_update, q_share_time, q_anonymous)
                 qi_and_all_ans.append(q_i)
 
                 cursor.execute(sql_getAllAnsOfOneQuestion, {'questionid': questionid, 'sellid': sellid})
                 answers = cursor.fetchall()
 
                 ans_of_qi = []
-                for answerid, ans_body, ans_userid_no, ans_user_name, ans_share_time in answers:
-                    ans_i = Answer(answerid, questionid, ans_body, ans_userid_no, ans_user_name, sellid, ans_share_time)
+                for answerid, ans_body, ans_userid_no, ans_user_name, ans_color, ans_last_update, ans_share_time, ans_anonymous in answers:
+                    ans_i = Answer(answerid, questionid, ans_body, ans_userid_no, ans_user_name, sellid, ans_color, ans_last_update, ans_share_time, ans_anonymous)
                     ans_of_qi.append(ans_i)
 
                 ans_of_qi = tuple(ans_of_qi)

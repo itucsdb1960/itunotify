@@ -251,9 +251,12 @@ def storePost_page(sellid):
             q_body = request.form.get("q_body")
             userid_no = session["userid"]
             user_name = session["username"]
+            backcolor = request.form.get("color")
             share_time = getTimestampString()
+            last_update = share_time
+            anonymous = request.form.get("anonymous")
 
-            question = Question(-1, q_body, userid_no, user_name, sellid, share_time)
+            question = Question(-1, q_body, userid_no, user_name, sellid, backcolor, last_update, share_time, anonymous)
             store_db.add_question(question)
 
             return redirect('/store/{}'.format(sellid))
@@ -261,8 +264,9 @@ def storePost_page(sellid):
         elif request.form.get("form_key") == "q_update":  # logged in
             new_q_body = request.form.get("q_body")
             questionid = request.form.get("questionid")
+            update_time = getTimestampString()
 
-            store_db.update_question(questionid, sellid, new_q_body)
+            store_db.update_question(questionid, sellid, new_q_body, update_time)
 
             return redirect('/store/{}'.format(sellid))
 
@@ -279,9 +283,12 @@ def storePost_page(sellid):
             questionid = request.form.get("questionid")
             userid_no = session["userid"]
             user_name = session["username"]
+            backcolor = request.form.get("color")
             share_time = getTimestampString()
+            last_update = share_time
+            anonymous = request.form.get("anonymous")
 
-            answer = Answer(-1, questionid, ans_body, userid_no, user_name, sellid, share_time)
+            answer = Answer(-1, questionid, ans_body, userid_no, user_name, sellid, backcolor, last_update, share_time, anonymous)
             store_db.add_answer(answer)
             return redirect('/store/{}'.format(sellid))
 
@@ -289,8 +296,9 @@ def storePost_page(sellid):
             new_ans_body = request.form.get("ans_body")
             answerid = request.form.get("answerid")
             questionid = request.form.get("questionid")
+            update_time = getTimestampString()
 
-            store_db.update_answer(answerid, questionid, sellid, new_ans_body)
+            store_db.update_answer(answerid, questionid, sellid, new_ans_body, update_time)
             return redirect('/store/{}'.format(sellid))
 
         elif request.form.get("form_key") == "ans_delete":  # logged in
@@ -329,17 +337,17 @@ def register_page():
         user_password = request.form.get("password1")
         password_check = request.form.get("password2")
 
-        if  not (4 <= len(user_studentno) <= 10):
+        if not (4 <= len(user_studentno) <= 10):
             flash("ID must be between 4 and 10 characters long.", "error")
             return redirect(url_for('register_page'))
 
-        if user_name.lower() == "admin" :
+        if user_name.lower() == "admin":
             flash("This name is restricted. Please use your real name.", "error")
             return redirect(url_for('register_page'))
 
-        if  not (len(user_password) > 6):
+        if not (len(user_password) > 6):
             flash("Password must be at least 6 characters long.", "error")
-            return redirect(url_for('register_page'))    
+            return redirect(url_for('register_page'))
 
         if(password_check != user_password):
             # passwords dont match
