@@ -85,6 +85,7 @@
 				<th class="post_header"> Seller </th>
 				<th class="post_header"> Total # of Questions </th>
 				<th class="post_header"> Total # of Answers </th>
+				<th class="post_header"> Last Update </th>
 			</tr>
 
 			{% for sellid, sellItem in selling_items %}
@@ -96,6 +97,7 @@
         		<td class="items"> {{ sellItem.seller_name }} </td>
         		<td class="items"> {{ sellItem.n_questions }} </td>
         		<td class="items"> {{ sellItem.n_answers }} </td>
+        		<td class="items"> {{ sellItem.share_time }} </td>
 			</tr>
 			{% endfor %}
     	</table>

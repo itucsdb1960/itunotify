@@ -156,12 +156,11 @@ def lfpost_page(postid):
                 flash("You do not have authentication to do that!", "error")
                 return redirect("/lostfound/{}".format(postid))
 
-            #postid = request.form.get("postid")    # postid is already known
+            # postid = request.form.get("postid")    # postid is already known
             new_description = request.form.get("new_description")
             lf_db.update_post(new_description, postid)
             flash("Post description is updated successfully.", "info")
             return redirect("/lostfound/{}".format(postid))
-
 
     return render_template("lfpost.html", post=post, extra=extra, responses=responses)
 
@@ -186,10 +185,11 @@ def store_page():
             price = request.form.get("price")
             seller_name = session["username"]
             seller_no = session["userid"]
+            share_time = getTimestampString()
             shortD = request.form.get("shortD")  # handle empty case!
             image = request.form.get("image")  # handle empty case!
 
-            sellItem = SellItem(-1, item_name, price, seller_name, seller_no, 0, 0, shortD=shortD, image=image)
+            sellItem = SellItem(-1, item_name, price, seller_name, seller_no, 0, 0, share_time, shortD=shortD, image=image)
             store_db.add_selling_item(sellItem)
             selling_items = store_db.get_all_selling_items()
             filter_items = [('', '', '', '')]
@@ -227,23 +227,23 @@ def storePost_page(sellid):
     user_db = current_app.config["USER_DB"]
 
     if request.method == "POST":
-        if  request.form.get("form_key") == "login":
+        if request.form.get("form_key") == "login":
             return redirect(url_for('login_page'))
 
         elif request.form.get("form_key") == "item_delete":  # logged in
-            if request.form.get("delete"):
-                flash("Post has been deleted successfully.", "info")
+            flash("Post has been deleted successfully.", "info")
 
-                store_db.delete_selling_item(sellid)
-                return redirect(url_for('store_page'))
+            store_db.delete_selling_item(sellid)
+            return redirect(url_for('store_page'))
 
         elif request.form.get("form_key") == "item_update":  # logged in
             new_item_name = request.form.get("item_name")
             new_price = request.form.get("price")
             new_item_info = request.form.get("item_info")
             new_shortD = request.form.get("shortD")  # handle empty case!
+            update_time = getTimestampString()
 
-            store_db.update_selling_item(sellid, new_item_name, new_price, new_shortD, new_item_info)
+            store_db.update_selling_item(sellid, new_item_name, new_price, new_shortD, new_item_info, update_time)
 
             return redirect('/store/{}'.format(sellid))
 
@@ -258,6 +258,14 @@ def storePost_page(sellid):
 
             return redirect('/store/{}'.format(sellid))
 
+        elif request.form.get("form_key") == "q_delete":  # logged in
+            questionid = request.form.get("questionid")
+
+            store_db.delete_question(questionid, sellid)
+
+            flash("Question has been deleted successfully.", "info")
+            return redirect('/store/{}'.format(sellid))
+
         elif request.form.get("form_key") == "answer":  # logged in
             ans_body = request.form.get("ans_body")
             questionid = request.form.get("questionid")
@@ -269,14 +277,14 @@ def storePost_page(sellid):
             store_db.add_answer(answer)
             return redirect('/store/{}'.format(sellid))
 
-        elif request.form.get("form_key") == "q_change":  # logged in
+        elif request.form.get("form_key") == "ans_delete":  # logged in
+            answerid = request.form.get("answerid")
             questionid = request.form.get("questionid")
 
-            if request.form.get("delete"):
-                store_db.delete_question(questionid, sellid)
+            store_db.delete_answer(answerid, questionid, sellid)
 
-                flash("Question has been deleted successfully.", "info")
-                return redirect('/store/{}'.format(sellid))
+            flash("Answer has been deleted successfully.", "info")
+            return redirect('/store/{}'.format(sellid))
 
     sellItem = store_db.get_selling_item(sellid)
     questions = store_db.get_all_question_answer_pairs(sellid)
@@ -291,6 +299,8 @@ def courses():
 #
 # LOGIN - LOGOUT - REGISTER FUNCTIONS
 #
+
+
 @app.route("/register", methods=["POST", "GET"])
 def register_page():
     user_db = current_app.config["USER_DB"]

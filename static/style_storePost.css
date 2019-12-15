@@ -58,13 +58,9 @@ table.item_info td {
     overflow: auto;
 }
 
-form {
+form.question_form, form.item_update_form, form.item_delete_form {
     margin-top: 2em;
     margin-bottom: 2em;
-}
-
-form.q_change_form {
-    margin: 0em;
 }
 
 input[type=submit], button {

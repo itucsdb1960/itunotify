@@ -106,12 +106,11 @@
 
                                         {% if session.is_loggedin %}
                                         {% if session.userid == q_i.user_no %}
-                                        <form class="q_change_form" action="/store/{{sellItem.sellid}}" method="post">
-                                            <input type="hidden" name="form_key" value="q_change">
+                                        <form class="q_delete_form" action="/store/{{sellItem.sellid}}" method="post">
+                                            <input type="hidden" name="form_key" value="q_delete">
                                             <input type="hidden" name="questionid" value="{{ q_i.questionid }}">
 
-                                            <input class="q_change" type="submit" name="update" value="Update Question">
-                                            <input class="q_change" type="submit" name="delete" value="Delete Question">
+                                            <input class="q_delete" type="submit" name="delete" value="Delete Question">
                                         </form>
                                         {% endif %}
                                         {% endif %}
@@ -150,7 +149,19 @@
                                                 </tr>
                                                 <tr>
                                                     <td align="center"> {{ ans_j.user_name }} </td>
-                                                    <td align="center"> BUTTONS </td>
+                                                    <td align="center">
+                                                        {% if session.is_loggedin %}
+                                                        {% if session.userid == ans_j.user_no %}
+                                                        <form class="ans_delete_form" action="/store/{{sellItem.sellid}}" method="post">
+                                                            <input type="hidden" name="form_key" value="ans_delete">
+                                                            <input type="hidden" name="answerid" value="{{ ans_j.answerid }}">
+                                                            <input type="hidden" name="questionid" value="{{ q_i.questionid }}">
+
+                                                            <input class="ans_delete" type="submit" name="delete" value="Delete Answer">
+                                                        </form>
+                                                        {% endif %}
+                                                        {% endif %}
+                                                    </td>
                                                 </tr>
                                             </table>
 
@@ -167,6 +178,10 @@
                 {% endfor %}
             </ul>
 
+            {% else %}
+            <h2> No Questions </h2>
+            {% endif %}
+
             <script type="text/javascript">
 
                 function Update_Item_Info(){
@@ -181,9 +196,6 @@
 
             </script>
 
-            {% else %}
-            <h2> No Questions </h2>
-            {% endif %}
         </div>
 
     </div>

@@ -24,7 +24,7 @@ class StoreDatabase:
         if seller_name != "%":
             seller_name = "%" + seller_name + "%"
 
-        sql_getAllSellingInfo = """SELECT selling.sellid, selling.itemname, selling.shortD, selling.iteminfo, selling.price, users.name, users.studentno, image.image, count(question.questionid), count(answer.answerid)
+        sql_getAllSellingInfo = """SELECT selling.sellid, selling.itemname, selling.shortD, selling.iteminfo, selling.price, users.name, users.studentno, image.image, selling.sharetime, count(question.questionid), count(answer.answerid)
                                     FROM selling left join users ON selling.seller = users.studentno
                                                 left join image ON selling.imageid = image.imageid
                                                 left join question ON selling.sellid = question.sellid
@@ -34,7 +34,7 @@ class StoreDatabase:
                                         AND users.name LIKE %(seller)s
                                         AND selling.price >= %(price_lw)s
                                         AND selling.price <= %(price_hi)s)
-                                    GROUP BY selling.sellid, selling.itemname, selling.shortD, selling.iteminfo, selling.price, users.name, users.studentno, image.image
+                                    GROUP BY selling.sellid, selling.itemname, selling.shortD, selling.iteminfo, selling.price, users.name, users.studentno, image.image, selling.sharetime
                                     ORDER BY selling.sharetime DESC;"""
 
         sql_getMaxPrice = """SELECT max(price)
@@ -51,8 +51,8 @@ class StoreDatabase:
 
             cursor.execute(sql_getAllSellingInfo, {'item_name': item_name, 'seller': seller_name, 'price_lw': price_lw, 'price_hi': price_hi})
             for row in cursor:
-                sellid, item_name, shortD, item_info, price, seller_name, seller_no, image, n_ques, n_ans = row
-                self.selling[sellid] = SellItem(sellid, item_name, price, seller_name, seller_no, n_ques, n_ans, item_info=item_info, shortD=shortD, image=image)
+                sellid, item_name, shortD, item_info, price, seller_name, seller_no, image, share_time, n_ques, n_ans = row
+                self.selling[sellid] = SellItem(sellid, item_name, price, seller_name, seller_no, n_ques, n_ans, share_time, item_info=item_info, shortD=shortD, image=image)
 
             cursor.close()
 
@@ -60,12 +60,13 @@ class StoreDatabase:
 
         imageid = 0
 
-        sql_insertSelling = """INSERT INTO selling (itemname, imageid, seller, shortD, price) VALUES(
+        sql_insertSelling = """INSERT INTO selling (itemname, imageid, seller, shortD, price, sharetime) VALUES(
                                     %(item_name)s,
                                     %(imageid)s,
                                     %(seller_no)s,
                                     %(shortD)s,
-                                    %(price)s
+                                    %(price)s,
+                                    %(share_time)s
                                 );"""
 
         sql_imageExists = """SELECT image.imageid, image.image
@@ -92,7 +93,7 @@ class StoreDatabase:
 
             # set userid correctly!
 
-            cursor.execute(sql_insertSelling, {'item_name': sellItem.item_name, 'imageid': imageid, 'seller_no': sellItem.seller_no, 'shortD': sellItem.shortD, 'price': sellItem.price})
+            cursor.execute(sql_insertSelling, {'item_name': sellItem.item_name, 'imageid': imageid, 'seller_no': sellItem.seller_no, 'shortD': sellItem.shortD, 'price': sellItem.price, 'share_time': sellItem.share_time})
 
             cursor.close()
 
@@ -100,19 +101,20 @@ class StoreDatabase:
 
         # handle sql database!
 
-    def update_selling_item(self, sellid, new_item_name, new_price, new_shortD, new_item_info):
+    def update_selling_item(self, sellid, new_item_name, new_price, new_shortD, new_item_info, update_time):
 
         sql_updateSellingItem = """UPDATE selling
                                     SET itemname = %(new_item_name)s,
                                         price = %(new_price)s,
                                         shortD = %(new_shortD)s,
-                                        iteminfo = %(new_item_info)s
+                                        iteminfo = %(new_item_info)s,
+                                        sharetime = %(update_time)s
                                     WHERE (selling.sellid = %(sellid)s);"""
 
         with dbapi2.connect(self.dsn) as connection:
             cursor = connection.cursor()
 
-            cursor.execute(sql_updateSellingItem, {'sellid': sellid, 'new_item_name': new_item_name, 'new_price': new_price, 'new_shortD': new_shortD, 'new_item_info': new_item_info})
+            cursor.execute(sql_updateSellingItem, {'sellid': sellid, 'new_item_name': new_item_name, 'new_price': new_price, 'new_shortD': new_shortD, 'new_item_info': new_item_info, 'update_time': update_time})
 
             cursor.close()
 
@@ -137,7 +139,7 @@ class StoreDatabase:
         if sellItem is None:
             return None
 
-        sellItem_new = SellItem(sellItem.sellid, sellItem.item_name, sellItem.price, sellItem.seller_name, sellItem.seller_no, sellItem.n_questions, sellItem.n_answers, item_info=sellItem.item_info, shortD=sellItem.shortD, image=sellItem.image)
+        sellItem_new = SellItem(sellItem.sellid, sellItem.item_name, sellItem.price, sellItem.seller_name, sellItem.seller_no, sellItem.n_questions, sellItem.n_answers, sellItem.share_time, item_info=sellItem.item_info, shortD=sellItem.shortD, image=sellItem.image)
         return sellItem_new
 
     def add_question(self, question):
@@ -215,7 +217,7 @@ class StoreDatabase:
 
             cursor.close()
 
-    def delete_answer(self, answerid, questionid, sellid, new_ans_body):
+    def delete_answer(self, answerid, questionid, sellid):
 
         sql_deleteAnswer = """DELETE FROM answer
                                 WHERE (answer.sellid = %(sellid)s
@@ -225,7 +227,7 @@ class StoreDatabase:
         with dbapi2.connect(self.dsn) as connection:
             cursor = connection.cursor()
 
-            cursor.execute(sql_updateAnswer, {'sellid': sellid, 'questionid': questionid, 'answerid': answerid})
+            cursor.execute(sql_deleteAnswer, {'sellid': sellid, 'questionid': questionid, 'answerid': answerid})
 
             cursor.close()
 
@@ -289,6 +291,6 @@ class StoreDatabase:
 
         sellingItems = []
         for sellid, sellItem in self.selling.items():
-            sellItem_new = SellItem(sellItem.sellid, sellItem.item_name, sellItem.price, sellItem.seller_name, sellItem.seller_no, sellItem.n_questions, sellItem.n_answers, item_info=sellItem.item_info, shortD=sellItem.shortD, image=sellItem.image)
+            sellItem_new = SellItem(sellItem.sellid, sellItem.item_name, sellItem.price, sellItem.seller_name, sellItem.seller_no, sellItem.n_questions, sellItem.n_answers, sellItem.share_time, item_info=sellItem.item_info, shortD=sellItem.shortD, image=sellItem.image)
             sellingItems.append((sellid, sellItem_new))
         return sellingItems
