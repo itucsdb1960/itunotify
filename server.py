@@ -313,6 +313,18 @@ def register_page():
         user_password = request.form.get("password1")
         password_check = request.form.get("password2")
 
+        if  not (4 <= len(user_studentno) <= 10):
+            flash("ID must be between 4 and 10 characters long.", "error")
+            return redirect(url_for('register_page'))
+
+        if user_name.lower() == "admin" :
+            flash("This name is restricted. Please use your real name.", "error")
+            return redirect(url_for('register_page'))
+
+        if  not (len(user_password) > 6):
+            flash("Password must be at least 6 characters long.", "error")
+            return redirect(url_for('register_page'))    
+
         if(password_check != user_password):
             # passwords dont match
             flash("Entered passwords do not match", "error")
