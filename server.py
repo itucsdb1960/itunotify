@@ -348,7 +348,7 @@ def register_page():
             flash("This name is restricted. Please use your real name.", "error")
             return redirect(url_for('register_page'))
 
-        if not (len(user_password) > 6):
+        if not (len(user_password) >= 6):
             flash("Password must be at least 6 characters long.", "error")
             return redirect(url_for('register_page'))
 
