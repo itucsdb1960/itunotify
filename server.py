@@ -258,6 +258,14 @@ def storePost_page(sellid):
 
             return redirect('/store/{}'.format(sellid))
 
+        elif request.form.get("form_key") == "q_update":  # logged in
+            new_q_body = request.form.get("q_body")
+            questionid = request.form.get("questionid")
+
+            store_db.update_question(questionid, sellid, new_q_body)
+
+            return redirect('/store/{}'.format(sellid))
+
         elif request.form.get("form_key") == "q_delete":  # logged in
             questionid = request.form.get("questionid")
 
@@ -275,6 +283,14 @@ def storePost_page(sellid):
 
             answer = Answer(-1, questionid, ans_body, userid_no, user_name, sellid, share_time)
             store_db.add_answer(answer)
+            return redirect('/store/{}'.format(sellid))
+
+        elif request.form.get("form_key") == "ans_update":
+            new_ans_body = request.form.get("ans_body")
+            answerid = request.form.get("answerid")
+            questionid = request.form.get("questionid")
+
+            store_db.update_answer(answerid, questionid, sellid, new_ans_body)
             return redirect('/store/{}'.format(sellid))
 
         elif request.form.get("form_key") == "ans_delete":  # logged in

@@ -91,12 +91,21 @@ table.q_table {
 }
 
 table.q_table td {
-    width: 30em;
+    width: 50%;
     max-width: 30em;
     border-style: groove;
     padding: 0.8em;
     word-wrap: normal;
     overflow: auto;
+}
+/*
+td.message_body {
+    white-space: pre-wrap;
+}*/
+
+table.q_table td.last_column {
+    width: 20%;
+    max-width: 20em;
 }
 
 table.q_table tr.q_body {
@@ -132,6 +141,7 @@ div.questions {
 
 div.question_i {
     border-style: groove;
+    width: 90%;
     padding: 1em;
 }
 

@@ -21,7 +21,7 @@
             <div id="item_info_static">
                 {% if session.is_loggedin %}
                 {% if session.userid == sellItem.seller_no %}
-                <button class="item_change" onclick="Update_Item_Info();"> Update Item Information </button>
+                <button class="item_change" onclick="Update_Item();"> Update Item Information </button>
                 {% endif %}
                 {% endif %}
 
@@ -38,7 +38,7 @@
             </div>
 
             <div hidden id="item_info_change">
-                <button class="item_change" onclick="Renew_To_Static();"> Changed My Mind </button>
+                <button class="item_change" onclick="Item_Renew_To_Static();"> Changed My Mind </button>
 
                 <table class="item_info">
                     <form class="item_update_form" action="/store/{{sellItem.sellid}}" method="post">
@@ -97,15 +97,40 @@
 
                             <table class="q_table">
                                 <tr class="q_body">
-                                    <td> {{ q_i.q_body }} </td>
-                                    <td align="center"> {{ q_i.share_time }} </td>
+                                    <td class="message_body">
+                                        <div id="q_body_static_{{ q_i.questionid }}">
+                                            <p> {{ q_i.q_body }} </p>
+                                        </div>
+
+                                        <div hidden id="q_body_change_{{ q_i.questionid }}">
+
+                                            <form class="q_update_form" action="/store/{{sellItem.sellid}}" method="post">
+                                                <input type="hidden" name="form_key" value="q_update">
+                                                <input type="hidden" name="questionid" value="{{ q_i.questionid }}">
+
+                                                <textarea class="q_update" name="q_body" rows="5" cols="50" placeholder="Write Question Here" required>{{ q_i.q_body }}</textarea>
+                                                <br>
+
+                                                <input class="q_update" type="submit" name="update" value="Submit Update">
+                                            </form>
+                                        </div>
+                                    </td>
+                                    <td class="last_column" align="center"> {{ q_i.share_time }} </td>
                                 </tr>
                                 <tr>
                                     <td align="center"> {{ q_i.user_name }} </td>
-                                    <td align="center">
+                                    <td class="last_column" align="center">
 
                                         {% if session.is_loggedin %}
                                         {% if session.userid == q_i.user_no %}
+                                        <div id="q_body_static_button_{{ q_i.questionid }}">
+                                            <button onclick="Update_Question({{ q_i.questionid }});"> Update Question </button>
+                                        </div>
+
+                                        <div hidden id="q_body_change_button_{{ q_i.questionid }}">
+                                            <button onclick="Question_Renew_To_Static({{ q_i.questionid }});"> Changed My Mind </button>
+                                        </div>
+
                                         <form class="q_delete_form" action="/store/{{sellItem.sellid}}" method="post">
                                             <input type="hidden" name="form_key" value="q_delete">
                                             <input type="hidden" name="questionid" value="{{ q_i.questionid }}">
@@ -144,7 +169,27 @@
 
                                             <table class="ans_table">
                                                 <tr class="ans_body">
-                                                    <td> {{ ans_j.ans_body }} </td>
+                                                    <td>
+
+                                                        <div id="ans_body_static_{{q_i.questionid}}_{{ans_j.answerid}}">
+                                                            {{ ans_j.ans_body }}
+                                                        </div>
+
+                                                        <div hidden id="ans_body_change_{{q_i.questionid}}_{{ans_j.answerid}}">
+
+                                                            <form class="ans_update_form" action="/store/{{sellItem.sellid}}" method="post">
+                                                                <input type="hidden" name="form_key" value="ans_update">
+                                                                <input type="hidden" name="answerid" value="{{ ans_j.answerid }}">
+                                                                <input type="hidden" name="questionid" value="{{ q_i.questionid }}">
+
+                                                                <textarea class="ans_update" name="ans_body" rows="5" cols="50" placeholder="Write Answer Here" required>{{ ans_j.ans_body }}</textarea>
+                                                                <br>
+
+                                                                <input class="ans_update" type="submit" name="update" value="Submit Update">
+                                                            </form>
+                                                        </div>
+
+                                                    </td>
                                                     <td align="center"> {{ ans_j.share_time }} </td>
                                                 </tr>
                                                 <tr>
@@ -152,6 +197,14 @@
                                                     <td align="center">
                                                         {% if session.is_loggedin %}
                                                         {% if session.userid == ans_j.user_no %}
+                                                        <div id="ans_body_static_button_{{q_i.questionid}}_{{ans_j.answerid}}">
+                                                            <button onclick="Update_Answer({{q_i.questionid}}, {{ans_j.answerid}});"> Update Answer </button>
+                                                        </div>
+
+                                                        <div hidden id="ans_body_change_button_{{q_i.questionid}}_{{ans_j.answerid}}">
+                                                            <button onclick="Answer_Renew_To_Static({{q_i.questionid}}, {{ans_j.answerid}});"> Changed My Mind </button>
+                                                        </div>
+
                                                         <form class="ans_delete_form" action="/store/{{sellItem.sellid}}" method="post">
                                                             <input type="hidden" name="form_key" value="ans_delete">
                                                             <input type="hidden" name="answerid" value="{{ ans_j.answerid }}">
@@ -184,14 +237,42 @@
 
             <script type="text/javascript">
 
-                function Update_Item_Info(){
+                function Update_Item(){
                     document.getElementById("item_info_static").style.display = "none";
                     document.getElementById("item_info_change").style.display = "block";
                 }
 
-                function Renew_To_Static(){
+                function Item_Renew_To_Static(){
                     document.getElementById("item_info_static").style.display = "block";
                     document.getElementById("item_info_change").style.display = "none";
+                }
+
+                function Update_Question(questionid){
+                    document.getElementById("q_body_static_" + questionid).style.display = "none";
+                    document.getElementById("q_body_change_".concat(questionid)).style.display = "block";
+                    document.getElementById("q_body_static_button_".concat(questionid)).style.display = "none";
+                    document.getElementById("q_body_change_button_".concat(questionid)).style.display = "block";
+                }
+
+                function Question_Renew_To_Static(questionid){
+                    document.getElementById("q_body_static_".concat(questionid)).style.display = "block";
+                    document.getElementById("q_body_change_".concat(questionid)).style.display = "none";
+                    document.getElementById("q_body_static_button_".concat(questionid)).style.display = "block";
+                    document.getElementById("q_body_change_button_".concat(questionid)).style.display = "none";
+                }
+
+                function Update_Answer(questionid, answerid){
+                    document.getElementById("ans_body_static_" + questionid + '_' + answerid).style.display = "none";
+                    document.getElementById("ans_body_change_" + questionid + '_' + answerid).style.display = "block";
+                    document.getElementById("ans_body_static_button_" + questionid + '_' + answerid).style.display = "none";
+                    document.getElementById("ans_body_change_button_" + questionid + '_' + answerid).style.display = "block";
+                }
+
+                function Answer_Renew_To_Static(questionid, answerid){
+                    document.getElementById("ans_body_static_" + questionid + '_' + answerid).style.display = "block";
+                    document.getElementById("ans_body_change_" + questionid + '_' + answerid).style.display = "none";
+                    document.getElementById("ans_body_static_button_" + questionid + '_' + answerid).style.display = "block";
+                    document.getElementById("ans_body_change_button_" + questionid + '_' + answerid).style.display = "none";
                 }
 
             </script>

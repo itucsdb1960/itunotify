@@ -161,7 +161,7 @@ class StoreDatabase:
     def update_question(self, questionid, sellid, new_q_body):
 
         sql_updateQuestion = """UPDATE question
-                                SET question.q_body = %(new_q_body)s
+                                SET body = %(new_q_body)s
                                 WHERE (question.sellid = %(sellid)s
                                     AND question.questionid = %(questionid)s);"""
 
@@ -205,7 +205,7 @@ class StoreDatabase:
     def update_answer(self, answerid, questionid, sellid, new_ans_body):
 
         sql_updateAnswer = """UPDATE answer
-                                SET answer.ans_body = %(new_ans_body)s
+                                SET body = %(new_ans_body)s
                                 WHERE (answer.sellid = %(sellid)s
                                     AND answer.questionid = %(questionid)s
                                     AND answer.answerid = %(answerid)s);"""
