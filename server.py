@@ -227,7 +227,10 @@ def storePost_page(sellid):
     user_db = current_app.config["USER_DB"]
 
     if request.method == "POST":
-        if request.form.get("form_key") == "item_delete":  # logged in
+        if  request.form.get("form_key") == "login":
+            return redirect(url_for('login_page'))
+
+        elif request.form.get("form_key") == "item_delete":  # logged in
             if request.form.get("delete"):
                 flash("Post has been deleted successfully.", "info")
 
