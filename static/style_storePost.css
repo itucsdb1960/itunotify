@@ -36,7 +36,9 @@ h1.username {
 }
 
 div.item_info {
-    float: right;
+    /*float: right;*/
+    position: inherit;
+    left: 50%;
 }
 
 table.item_info {
@@ -65,7 +67,7 @@ form.q_change_form {
     margin: 0em;
 }
 
-input[type=submit], button[type=submit] {
+input[type=submit], button {
     width: auto;
     height: 2em;
     overflow: hidden;
@@ -75,7 +77,7 @@ input[type=submit], button[type=submit] {
     cursor: pointer;
 }
 
-input[type=submit]:hover, button[type=submit]:hover {
+input[type=submit]:hover, button:hover {
     background-color: #681769;
     color: #F7E75E;
 }
