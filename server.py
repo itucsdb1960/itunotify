@@ -327,8 +327,6 @@ def courses():
 #
 # LOGIN - LOGOUT - REGISTER FUNCTIONS
 #
-
-
 @app.route("/register", methods=["POST", "GET"])
 def register_page():
     user_db = current_app.config["USER_DB"]
@@ -349,13 +347,19 @@ def register_page():
             flash("This name is restricted. Please use your real name.", "error")
             return redirect(url_for('register_page'))
 
-        if not (len(user_password) > 6):
+        if not (len(user_password) >= 6):
             flash("Password must be at least 6 characters long.", "error")
             return redirect(url_for('register_page'))
 
         if(password_check != user_password):
             # passwords dont match
             flash("Entered passwords do not match", "error")
+            return redirect(url_for('register_page'))
+
+        try:
+            int(user_grade)
+        except Exception as e:
+            flash("Grade must be a number", "error")
             return redirect(url_for('register_page'))
 
         user_password_hash = sha256(user_password.encode()).hexdigest()
