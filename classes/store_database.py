@@ -164,7 +164,7 @@ class StoreDatabase:
     def update_question(self, questionid, sellid, new_q_body, update_time):
 
         sql_updateQuestion = """UPDATE question
-                                SET body = %(new_q_body)s
+                                SET body = %(new_q_body)s,
                                     lastupdate = %(update_time)s
                                 WHERE (question.sellid = %(sellid)s
                                     AND question.questionid = %(questionid)s);"""
