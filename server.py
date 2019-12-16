@@ -21,8 +21,6 @@ def getTimestampString():
     return " ~ ".join(str(datetime.now()).split(" ")).replace("-", "/")[:-7]    # might be a little complicated :)
 
 
-connection_string = "dbname='postgres' user='postgres' password='postgrepass' host='localhost' port=5432"
-
 app = Flask(__name__)
 app.secret_key = b'dsfghj+*/-8lo98k'
 
@@ -506,6 +504,4 @@ def profile(userid):
 
 
 if __name__ == "__main__":
-    # dbinit.initialize(connection_string)
-    # app = create_app(app)
     app.run(debug=True)
