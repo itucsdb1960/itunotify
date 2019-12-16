@@ -192,6 +192,12 @@ def store_page():
             shortD = request.form.get("shortD")  # handle empty case!
             image = request.form.get("image")  # handle empty case!
 
+            try:
+                int(price)
+            except Exception as e:
+                flash("Price must be an integer (TL)", "error")
+                return redirect(url_for('store_page'))
+
             sellItem = SellItem(-1, item_name, price, seller_name, seller_no, 0, 0, share_time, shortD=shortD, image=image)
             store_db.add_selling_item(sellItem)
             selling_items = store_db.get_all_selling_items()
@@ -211,9 +217,22 @@ def store_page():
             seller_name = request.form.get("seller_name")
 
             if request.form.get("drop_filter"):
-                selling_items = store_db.get_all_selling_items()
-                filter_items = [('', '', '', '')]
+                return redirect(url_for('store_page'))
             else:
+                if price_lw != "" and price_lw != None:
+                    try:
+                        int(price_lw)
+                    except Exception as e:
+                        flash("Price must be an integer (TL)", "error")
+                        return redirect(url_for('store_page'))
+
+                if price_hi != "" and price_hi != None:
+                    try:
+                        int(price_hi)
+                    except Exception as e:
+                        flash("Price must be an integer (TL)", "error")
+                        return redirect(url_for('store_page'))
+
                 selling_items = store_db.get_all_selling_items(item_name=item_name, seller_name=seller_name, price_lw=price_lw, price_hi=price_hi)
                 filter_items = [(item_name, seller_name, price_lw, price_hi)]
 
@@ -246,6 +265,12 @@ def storePost_page(sellid):
             new_item_info = request.form.get("item_info")
             new_shortD = request.form.get("shortD")  # handle empty case!
             update_time = getTimestampString()
+
+            try:
+                int(new_price)
+            except Exception as e:
+                flash("Price must be an integer (TL)", "error")
+                return redirect('/store/{}'.format(sellid))
 
             store_db.update_selling_item(sellid, new_item_name, new_price, new_shortD, new_item_info, update_time)
 
@@ -327,6 +352,8 @@ def courses():
 #
 # LOGIN - LOGOUT - REGISTER FUNCTIONS
 #
+
+
 @app.route("/register", methods=["POST", "GET"])
 def register_page():
     user_db = current_app.config["USER_DB"]
