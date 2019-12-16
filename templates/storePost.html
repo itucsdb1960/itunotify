@@ -7,7 +7,7 @@
 {% block body_content %}
     <div class="container">
         <h1> ITU Store - Item {{ sellItem.sellid }} </h1>
-        <h2> Sold By <a href="/profile/{{sellItem.sellid}}">{{ sellItem.seller_name }}</a> </h2>
+        <h2> Sold By <a href="/profile/{{sellItem.seller_no}}">{{ sellItem.seller_name }}</a> </h2>
 
         {% if session.userid == sellItem.seller_no %}
         <form class="item_delete_form" action="/store/{{sellItem.sellid}}" method="post">
