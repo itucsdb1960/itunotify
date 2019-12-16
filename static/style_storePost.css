@@ -8,17 +8,18 @@ div.container {
     margin: 7em;
     margin-top: 4em;
 }
-/*
+
 nav.main_nav {
     background-color: #EBEBEC;
     font-size: 120%;
     margin-top: 2.1em;
-    width: 35em;
+    width: 40em;
+    height: 5em;
     text-align: center;
     padding-top: 1em;
     padding-bottom: 1em;
 }
-*/
+
 h1, h2 {
     font-family: Georgia, Cabin, serif;
 }
