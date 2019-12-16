@@ -7,6 +7,7 @@
 {% block body_content %}
     <div class="container">
         <h1> ITU Store - Item {{ sellItem.sellid }} </h1>
+        <h2> Sold By <a href="/profile/{{sellItem.sellid}}">{{ sellItem.seller_name }}</a> </h2>
 
         {% if session.userid == sellItem.seller_no %}
         <form class="item_delete_form" action="/store/{{sellItem.sellid}}" method="post">
@@ -151,7 +152,7 @@
                                         {% if q_i.anonymous %}
                                         Anonymous
                                         {% else %}
-                                        {{ q_i.user_name }}
+                                        <a href="/profile/{{q_i.user_no}}">{{ q_i.user_name }}</a>
                                         {% endif %}
                                     </td>
                                     <td class="last_column" align="center">
@@ -237,7 +238,7 @@
                                                         {% if ans_j.anonymous %}
                                                         Anonymous
                                                         {% else %}
-                                                        {{ ans_j.user_name }}
+                                                        <a href="/profile/{{ans_j.user_no}}">{{ ans_j.user_name }}</a>
                                                         {% endif %}
                                                     </td>
                                                     <td align="center">

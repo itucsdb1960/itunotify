@@ -231,6 +231,7 @@ def storePost_page(sellid):
 
     if request.method == "POST":
         if request.form.get("form_key") == "login":
+            #session['url'] = url_for('storePost_page', sellid)
             return redirect(url_for('login_page'))
 
         elif request.form.get("form_key") == "item_delete":  # logged in
