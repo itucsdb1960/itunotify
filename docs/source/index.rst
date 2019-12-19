@@ -5,12 +5,9 @@ Welcome to itucsdbNN's documentation!
 
 :Members:
 
-   * Member 1
-   * Member 2
-   * Member 3
-   * Member 4
-   * Member 5
-
+   * Alp Eren Gençoğlu - 150170019
+   * Alperen Yılmaz - 150170003
+  
 **project description goes here (a few paragraphs)**
 
 Contents:
