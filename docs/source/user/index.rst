@@ -1,8 +1,7 @@
 User Guide
 ==========
 
-**explain how your application works from the user perspective, use
-screenshots whereever appropriate**
+A short introduction and a general overview on pages of İTÜ notify website.
 
 **to add a picture, use the following example**::
 
