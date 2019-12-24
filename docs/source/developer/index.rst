@@ -4,12 +4,19 @@ Developer Guide
 Database Design
 ---------------
 
-**explain the database design of your project**
+	.. figure:: images/db_diagram.png
+		:scale: 100 %
+		:alt: Database design
 
-**include the E/R diagram(s)**
+		Database Diagram 
 
 Code
 ----
+
+psycopg2 is used as Database api.
+	.. code-block:: python
+		import psycopg2 as dbapi2
+
 
 **explain the technical structure of your code**
 
@@ -18,7 +25,6 @@ Code
    .. code-block:: python
 
       class Foo:
-
          def __init__(self, x):
             self.x = x
 

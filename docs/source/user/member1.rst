@@ -24,7 +24,7 @@ In addition, you can change your password and any other information you provided
 You can also view other people's profile pages by clicking on their names on the posts.
 
 	.. figure:: images/appleren/profilelink2.PNG
-		  :scale: 100 %
+		  :scale: 50 %
 		  :alt: Other people's profile part 1
 
 		  Clickable Usernames
