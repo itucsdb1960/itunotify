@@ -131,7 +131,8 @@ Once a user's profile page is viewed, following method of UserDatabase class is 
 					else:
 						return User(user[0][0], user[0][1], user[0][2], user[0][3], user[0][4], user[0][5])
 
-(Note: From now on, only the sql statement will be provided since all of the python codes for executing sql statements are similar.)
+* (Note: From now on, only the sql statement will be provided since all of the python codes for executing sql statements are similar.)
+
 Then, the returned user object is passed to profile.html file and the user's data can be viewed.
 
 	.. code-block:: html
@@ -153,5 +154,17 @@ Example:
 		Viewing a profile page
 
 
-
+If a user is viewing their own profile page, they can modify their data or delete their account by using the forms in the page.
+SQL statement to modify name, department or grade (in the related method of UserDatabase class):
+	.. code-block:: sql
+		UPDATE users SET name=%s, department=%s, grade=%s WHERE studentno=%s;
+SQL statement to modify personal information (in the related method of UserDatabase class):
+	.. code-block:: sql
+		UPDATE users SET personal_info=%s WHERE studentno=%s;
+SQL statement to modify password (in the related method of UserDatabase class):
+	.. code-block:: sql
+		UPDATE users SET password_hash=%s WHERE studentno=%s;
+SQL statement to delete entire account from the database (in the related method of UserDatabase class):
+	.. code-block:: sql
+		DELETE FROM users WHERE studentno=%s;
 
