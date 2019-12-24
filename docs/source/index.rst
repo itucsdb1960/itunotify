@@ -1,7 +1,7 @@
-Welcome to itucsdbNN's documentation!
-=====================================
+Welcome to itucsdb1960's documentation!
+=======================================
 
-:Team: Team Name
+:Team: İTÜ notify
 
 :Members:
 

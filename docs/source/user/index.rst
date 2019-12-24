@@ -15,7 +15,4 @@ A short introduction and a general overview on pages of İTÜ notify website.
 
    member1
    member2
-   member3
-   member4
-   member5
    
