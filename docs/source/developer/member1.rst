@@ -4,7 +4,7 @@ Parts Implemented by Alp Eren Gençoğlu
 The database relations users, lostfound, and responses are implemented and handled by Alp Eren Gençoğlu.
 In order to easily handle insertion, deletion, read, and update statement concerning these relations, some classes are constructed.
 
-* To handle users:
+To handle users:
 	.. code-block:: python
 		class User():
 			def __init__(self, studentno, name, department, grade, password_hash, personal_info="..."):
@@ -24,7 +24,7 @@ In order to easily handle insertion, deletion, read, and update statement concer
 				file = open(r"heroku_db_url.txt", "r")
 				self.dsn = file.read()
 
-* To handle lostfound and responses:
+To handle lostfound and responses:
 	.. code-block:: python
 		class LFPost():
 			def __init__(self, title, description, userid, LF, location=None, imageid=1, sharetime=None):
@@ -59,6 +59,7 @@ In order to easily handle insertion, deletion, read, and update statement concer
 				self.dsn = file.read()
 
 Also related sql tables are created beforehand.
+
 	.. code-block:: sql
 		CREATE TABLE IF NOT EXISTS users (
 			studentno varchar(10) primary key,
@@ -97,20 +98,20 @@ After user has entered related information and entered values are checked for va
 	
 	.. code-block:: python
 		def register_user(self, user):
-        sql_insert_user = """INSERT INTO users (name, department, studentno, grade, password_hash, personal_info) VALUES (
-                                %(name)s,
-                                %(department)s,
-                                %(studentno)s,
-                                %(grade)s,
-                                %(password_hash)s,
-                                %(personal_info)s
-                            );"""
+			sql_insert_user = """INSERT INTO users (name, department, studentno, grade, password_hash, personal_info) VALUES (
+									%(name)s,
+									%(department)s,
+									%(studentno)s,
+									%(grade)s,
+									%(password_hash)s,
+									%(personal_info)s
+								);"""
 
-        args = {'name': user.name, 'department': user.department, 'studentno': user.studentno,
-                'grade': user.grade, 'password_hash': user.password_hash, 'personal_info': user.personal_info};
-        with dbapi2.connect(self.dsn) as connection:
-            with connection.cursor() as cursor:
-                cursor.execute(sql_insert_user, args)
+			args = {'name': user.name, 'department': user.department, 'studentno': user.studentno,
+					'grade': user.grade, 'password_hash': user.password_hash, 'personal_info': user.personal_info};
+			with dbapi2.connect(self.dsn) as connection:
+				with connection.cursor() as cursor:
+					cursor.execute(sql_insert_user, args)
 
 Profile Page
 ------------
@@ -142,6 +143,8 @@ Then, the returned user object is passed to profile.html file and the user's dat
 		<label> About {{userobj.name}}: </label> 
 		<br><br>
 		<p style="white-space: pre-wrap; word-wrap: break-word; margin: 1em;">{{userobj.personal_info}}</p>
+
+Example:		
 
 	.. figure:: images/appleren/profile_view.PNG
 		:scale: 70 %
