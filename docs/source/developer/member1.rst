@@ -58,7 +58,7 @@ To handle lostfound and responses:
 				file = open(r"heroku_db_url.txt", "r")
 				self.dsn = file.read()
 
-Also related sql tables are created beforehand.
+Also related sql tables are created beforehand:
 
 	.. code-block:: sql
 		CREATE TABLE IF NOT EXISTS users (
@@ -113,9 +113,10 @@ After user has entered related information and entered values are checked for va
 				with connection.cursor() as cursor:
 					cursor.execute(sql_insert_user, args)
 
+					
 Profile Page
 ------------
-Once a user's profile page is viewed, following method of UserDatabase class is run to get all data about that user.
+Once a user's profile page is viewed, following method of UserDatabase class is run to get all data about that user:
 
 	.. code-block:: python
 		def get_user_by_userid(self, userid):
@@ -148,7 +149,7 @@ Then, the returned user object is passed to profile.html file and the user's dat
 Example:		
 
 	.. figure:: images/appleren/profile_view.PNG
-		:scale: 70 %
+		:scale: 50 %
 		:alt: Viewing a profile page
 
 		Viewing a profile page
@@ -168,3 +169,22 @@ SQL statement to delete entire account from the database (in the related method 
 	.. code-block:: sql
 		DELETE FROM users WHERE studentno=%s;
 
+		
+Lost & Found Page
+-----------------
+In the Lost & Found page, when a user (if logged in) uses the form to share a post,
+
+.. code-block:: sql
+	INSERT INTO lostfound (title, description, userid, LF, location, imageid, sharetime)
+		VALUES (%s, %s, %s, %s, %s, %s, %s);
+
+
+
+
+
+
+
+
+
+
+		
