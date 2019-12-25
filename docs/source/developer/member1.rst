@@ -175,8 +175,7 @@ Lost & Found Page
 In the Lost & Found page, when a user (if logged in) uses the form to share a post,
 
 .. code-block:: sql
-	INSERT INTO lostfound (title, description, userid, LF, location, imageid, sharetime)
-		VALUES (%s, %s, %s, %s, %s, %s, %s);
+	INSERT INTO lostfound (title, description, userid, LF, location, imageid, sharetime) VALUES (%s, %s, %s, %s, %s, %s, %s);
 
 
 
