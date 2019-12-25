@@ -1,7 +1,18 @@
 Parts Implemented by Alp Eren Gençoğlu
 ======================================
 
-Profile, Lost & Found Items pages are designed by Alp Eren Gençoğlu.
+Register, Profile, Lost & Found Items pages are designed by Alp Eren Gençoğlu.
+
+Register
+--------
+notify uses a register & login system. Any user can view shared posts, responses, other people's profile pages etc. but in order to be able to share anything, users must first register to the system.
+In register page, a form will greet you. You can register by filling the form with necessary information. There are few constraints, for example password cannot be shorter than 6 characters. If you do not satisfy the requirements, an error message will pop up and you will need to try registering again.
+
+.. figure:: images/appleren/register.PNG
+	:scale: 70 %
+	:alt: Register page
+
+	Register page
 
 Profile
 -------
@@ -61,10 +72,10 @@ Lost & Found - Item Page
 Once you click on a post's title in the main table, website redirects you to that specific post's page, which includes all the information about that post, options such as editing and deleting the post (if you are the post owner) and responses for that post.
 
 	.. figure:: images/appleren/lfpost1.PNG
-      :scale: 100 %
-      :alt: Lost or Found Item's Page
+		:scale: 100 %
+		:alt: Lost or Found Item's Page
 
-      A lost item post page
+		A lost item post page
 
 
 	  

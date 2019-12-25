@@ -13,7 +13,7 @@ Welcome to itucsdb1960's documentation!
 Contents:
 
 .. toctree::
-   :maxdepth: 1
+   :maxdepth: 4
 
    user/index
    developer/index
