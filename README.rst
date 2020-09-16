@@ -1,3 +1,5 @@
+# http://itucsdb1960.herokuapp.com/
+
 This repository contains a template project for the Database Systems course
 of the Istanbul Technical University Computer Engineering Department.
 The project uses the Python language, the Flask web application framework,
