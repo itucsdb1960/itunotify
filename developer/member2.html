@@ -1,0 +1,805 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Parts Implemented by Alperen Y?lmaz &mdash; ITUCSDB1960  documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="prev" title="Parts Implemented by Alp Eren Gençoğlu" href="member1.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home" alt="Documentation Home"> ITUCSDB1960
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../user/index.html">User Guide</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Developer Guide</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="index.html#database-design">Database Design</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html#code">Code</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="member1.html">Parts Implemented by Alp Eren Gençoğlu</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Parts Implemented by Alperen Y?lmaz</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#login-and-logout">Login and Logout</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#store-selling-item">Store - Selling Item</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#store-question">Store - Question</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#store-answer">Store - Answer</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">ITUCSDB1960</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="index.html">Developer Guide</a> &raquo;</li>
+        
+      <li>Parts Implemented by Alperen Y?lmaz</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/developer/member2.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="parts-implemented-by-alperen-y-lmaz">
+<h1>Parts Implemented by Alperen Y?lmaz<a class="headerlink" href="#parts-implemented-by-alperen-y-lmaz" title="Permalink to this headline">¶</a></h1>
+<p>The selling, question, answer and image relations in the database are implemented and handled by Alperen Y?lmaz.</p>
+<p>Database relations:</p>
+<blockquote>
+<div><div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">CREATE</span> <span class="k">TABLE</span> <span class="k">IF</span> <span class="k">NOT</span> <span class="k">EXISTS</span> <span class="n">selling</span> <span class="p">(</span>
+        <span class="n">sellid</span> <span class="nb">serial</span> <span class="k">primary</span> <span class="k">key</span><span class="p">,</span>
+        <span class="n">itemname</span> <span class="nb">varchar</span><span class="p">(</span><span class="mi">100</span><span class="p">),</span>
+    <span class="n">imageid</span> <span class="nb">integer</span> <span class="k">references</span> <span class="n">image</span><span class="p">(</span><span class="n">imageid</span><span class="p">)</span> <span class="k">ON</span> <span class="k">DELETE</span> <span class="k">set</span> <span class="k">default</span> <span class="k">ON</span> <span class="k">UPDATE</span> <span class="k">CASCADE</span> <span class="k">DEFAULT</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="n">seller</span> <span class="nb">varchar</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span> <span class="k">references</span> <span class="n">users</span> <span class="k">ON</span> <span class="k">DELETE</span> <span class="k">CASCADE</span> <span class="k">ON</span> <span class="k">UPDATE</span> <span class="k">CASCADE</span><span class="p">,</span>
+    <span class="n">iteminfo</span> <span class="nb">varchar</span><span class="p">(</span><span class="mi">500</span><span class="p">),</span>
+        <span class="n">shortD</span> <span class="nb">varchar</span><span class="p">(</span><span class="mi">50</span><span class="p">)</span> <span class="k">DEFAULT</span> <span class="s1">&#39;No description.&#39;</span><span class="p">,</span>
+        <span class="n">price</span> <span class="nb">integer</span> <span class="k">NOT</span> <span class="k">NULL</span><span class="p">,</span>
+        <span class="n">sharetime</span> <span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">32</span><span class="p">)</span>
+    <span class="p">);</span>
+
+    <span class="k">CREATE</span> <span class="k">TABLE</span> <span class="k">IF</span> <span class="k">NOT</span> <span class="k">EXISTS</span> <span class="n">question</span> <span class="p">(</span>
+            <span class="n">questionid</span> <span class="nb">serial</span> <span class="k">primary</span> <span class="k">key</span><span class="p">,</span>
+        <span class="n">userid</span> <span class="nb">varchar</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span> <span class="k">references</span> <span class="n">users</span> <span class="k">ON</span> <span class="k">DELETE</span> <span class="k">CASCADE</span> <span class="k">ON</span> <span class="k">UPDATE</span> <span class="k">CASCADE</span><span class="p">,</span>
+        <span class="n">sellid</span> <span class="nb">integer</span> <span class="k">references</span> <span class="n">selling</span><span class="p">(</span><span class="n">sellid</span><span class="p">)</span> <span class="k">ON</span> <span class="k">DELETE</span> <span class="k">CASCADE</span> <span class="k">ON</span> <span class="k">UPDATE</span> <span class="k">CASCADE</span><span class="p">,</span>
+        <span class="n">body</span> <span class="nb">varchar</span><span class="p">(</span><span class="mi">500</span><span class="p">),</span>
+        <span class="n">sharetime</span> <span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">32</span><span class="p">),</span>
+        <span class="n">lastupdate</span> <span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">32</span><span class="p">),</span>
+            <span class="n">anonymous</span> <span class="nb">boolean</span> <span class="k">DEFAULT</span> <span class="k">FALSE</span><span class="p">,</span>
+            <span class="n">backcolor</span> <span class="nb">varchar</span><span class="p">(</span><span class="mi">16</span><span class="p">)</span>
+    <span class="p">);</span>
+
+    <span class="k">CREATE</span> <span class="k">TABLE</span> <span class="k">IF</span> <span class="k">NOT</span> <span class="k">EXISTS</span> <span class="n">answer</span> <span class="p">(</span>
+            <span class="n">answerid</span> <span class="nb">serial</span> <span class="k">primary</span> <span class="k">key</span><span class="p">,</span>
+            <span class="n">userid</span> <span class="nb">varchar</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span> <span class="k">references</span> <span class="n">users</span> <span class="k">ON</span> <span class="k">DELETE</span> <span class="k">CASCADE</span> <span class="k">ON</span> <span class="k">UPDATE</span> <span class="k">CASCADE</span><span class="p">,</span>
+        <span class="n">sellid</span> <span class="nb">integer</span> <span class="k">references</span> <span class="n">selling</span><span class="p">(</span><span class="n">sellid</span><span class="p">)</span> <span class="k">ON</span> <span class="k">DELETE</span> <span class="k">CASCADE</span> <span class="k">ON</span> <span class="k">UPDATE</span> <span class="k">CASCADE</span><span class="p">,</span>
+        <span class="n">questionid</span> <span class="nb">integer</span> <span class="k">references</span> <span class="n">question</span><span class="p">(</span><span class="n">questionid</span><span class="p">)</span> <span class="k">ON</span> <span class="k">DELETE</span> <span class="k">CASCADE</span> <span class="k">ON</span> <span class="k">UPDATE</span> <span class="k">CASCADE</span><span class="p">,</span>
+        <span class="n">body</span> <span class="nb">varchar</span><span class="p">(</span><span class="mi">500</span><span class="p">),</span>
+        <span class="n">sharetime</span> <span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">32</span><span class="p">),</span>
+        <span class="n">lastupdate</span> <span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">32</span><span class="p">),</span>
+            <span class="n">anonymous</span> <span class="nb">boolean</span> <span class="k">DEFAULT</span> <span class="k">FALSE</span><span class="p">,</span>
+            <span class="n">backcolor</span> <span class="nb">varchar</span><span class="p">(</span><span class="mi">16</span><span class="p">)</span>
+    <span class="p">);</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>Corresponding classes for handling data:</p>
+<ul>
+<li><p>Selling item:</p>
+<blockquote>
+<div><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">SellItem</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sellid</span><span class="p">,</span> <span class="n">item_name</span><span class="p">,</span> <span class="n">price</span><span class="p">,</span> <span class="n">seller_name</span><span class="p">,</span> <span class="n">seller_no</span><span class="p">,</span> <span class="n">n_questions</span><span class="p">,</span> <span class="n">n_answers</span><span class="p">,</span> <span class="n">share_time</span><span class="p">,</span> <span class="n">item_info</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">shortD</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">image</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="k">if</span><span class="p">(</span><span class="n">shortD</span> <span class="o">==</span> <span class="kc">None</span><span class="p">):</span>
+            <span class="n">shortD</span> <span class="o">=</span> <span class="s2">&quot;No description.&quot;</span>
+        <span class="k">if</span><span class="p">(</span><span class="n">image</span> <span class="o">==</span> <span class="kc">None</span><span class="p">):</span>
+            <span class="n">image</span> <span class="o">=</span> <span class="s2">&quot;no image available&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">sellid</span> <span class="o">=</span> <span class="n">sellid</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">item_name</span> <span class="o">=</span> <span class="n">item_name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">price</span> <span class="o">=</span> <span class="n">price</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">seller_name</span> <span class="o">=</span> <span class="n">seller_name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">seller_no</span> <span class="o">=</span> <span class="n">seller_no</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">n_questions</span> <span class="o">=</span> <span class="n">n_questions</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">n_answers</span> <span class="o">=</span> <span class="n">n_answers</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">share_time</span> <span class="o">=</span> <span class="n">share_time</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">item_info</span> <span class="o">=</span> <span class="n">item_info</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">shortD</span> <span class="o">=</span> <span class="n">shortD</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">image</span> <span class="o">=</span> <span class="n">image</span>
+
+    <span class="k">def</span> <span class="nf">set_nq</span><span class="p">(</span><span class="n">n_questions</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">n_questions</span> <span class="o">=</span> <span class="n">n_questions</span>
+
+    <span class="k">def</span> <span class="nf">set_na</span><span class="p">(</span><span class="n">n_answers</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">n_answers</span> <span class="o">=</span> <span class="n">n_answers</span>
+</pre></div>
+</div>
+</div></blockquote>
+</li>
+<li><p>Question:</p>
+<blockquote>
+<div><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Question</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">questionid</span><span class="p">,</span> <span class="n">q_body</span><span class="p">,</span> <span class="n">user_no</span><span class="p">,</span> <span class="n">user_name</span><span class="p">,</span> <span class="n">sellid</span><span class="p">,</span> <span class="n">color</span><span class="p">,</span> <span class="n">last_update</span><span class="p">,</span> <span class="n">share_time</span><span class="p">,</span> <span class="n">anonymous</span><span class="p">):</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">questionid</span> <span class="o">=</span> <span class="n">questionid</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">q_body</span> <span class="o">=</span> <span class="n">q_body</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">user_no</span> <span class="o">=</span> <span class="n">user_no</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">user_name</span> <span class="o">=</span> <span class="n">user_name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sellid</span> <span class="o">=</span> <span class="n">sellid</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">color</span> <span class="o">=</span> <span class="n">color</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">last_update</span> <span class="o">=</span> <span class="n">last_update</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">share_time</span> <span class="o">=</span> <span class="n">share_time</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">anonymous</span> <span class="o">=</span> <span class="n">anonymous</span>
+</pre></div>
+</div>
+</div></blockquote>
+</li>
+<li><p>Answer:</p>
+<blockquote>
+<div><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Answer</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">answerid</span><span class="p">,</span> <span class="n">questionid</span><span class="p">,</span> <span class="n">ans_body</span><span class="p">,</span> <span class="n">user_no</span><span class="p">,</span> <span class="n">user_name</span><span class="p">,</span> <span class="n">sellid</span><span class="p">,</span> <span class="n">color</span><span class="p">,</span> <span class="n">last_update</span><span class="p">,</span> <span class="n">share_time</span><span class="p">,</span> <span class="n">anonymous</span><span class="p">):</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">answerid</span> <span class="o">=</span> <span class="n">answerid</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">questionid</span> <span class="o">=</span> <span class="n">questionid</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ans_body</span> <span class="o">=</span> <span class="n">ans_body</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">user_no</span> <span class="o">=</span> <span class="n">user_no</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">user_name</span> <span class="o">=</span> <span class="n">user_name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sellid</span> <span class="o">=</span> <span class="n">sellid</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">color</span> <span class="o">=</span> <span class="n">color</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">last_update</span> <span class="o">=</span> <span class="n">last_update</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">share_time</span> <span class="o">=</span> <span class="n">share_time</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">anonymous</span> <span class="o">=</span> <span class="n">anonymous</span>
+</pre></div>
+</div>
+</div></blockquote>
+</li>
+</ul>
+<div class="section" id="login-and-logout">
+<h2>Login and Logout<a class="headerlink" href="#login-and-logout" title="Permalink to this headline">¶</a></h2>
+<p>The login process is handled in the “login_page()” function. After getting a post request that includes the login information, the function hashes the acquired password and checks for validity of the user. If the login information is valid, a session for that user is created.
+The logout process is handled in the “logout_page()” function. All this function does is to clear the session.</p>
+<blockquote>
+<div><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nd">@app</span><span class="o">.</span><span class="n">route</span><span class="p">(</span><span class="s2">&quot;/login&quot;</span><span class="p">,</span> <span class="n">methods</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;POST&quot;</span><span class="p">,</span> <span class="s2">&quot;GET&quot;</span><span class="p">])</span>
+<span class="k">def</span> <span class="nf">login_page</span><span class="p">():</span>
+    <span class="k">if</span> <span class="n">session</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;is_loggedin&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">):</span>
+        <span class="n">flash</span><span class="p">(</span><span class="s2">&quot;You are already logged in as </span><span class="si">{}</span><span class="s2">.&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">session</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;username&quot;</span><span class="p">)),</span> <span class="s2">&quot;warning&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">redirect</span><span class="p">(</span><span class="s2">&quot;/&quot;</span><span class="p">)</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n\n\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">session</span><span class="p">,</span> <span class="s2">&quot;</span><span class="se">\n\n\n</span><span class="s2">&quot;</span><span class="p">)</span>    <span class="c1"># DEBUG</span>
+    <span class="n">user_db</span> <span class="o">=</span> <span class="n">current_app</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">&quot;USER_DB&quot;</span><span class="p">]</span>
+
+    <span class="k">if</span> <span class="n">request</span><span class="o">.</span><span class="n">method</span> <span class="o">==</span> <span class="s2">&quot;POST&quot;</span><span class="p">:</span>
+        <span class="n">userid</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">form</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;userid&quot;</span><span class="p">)</span>
+        <span class="n">user</span> <span class="o">=</span> <span class="n">user_db</span><span class="o">.</span><span class="n">get_user_by_userid</span><span class="p">(</span><span class="n">userid</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">user</span> <span class="o">==</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;NO USER&quot;</span><span class="p">)</span>
+            <span class="n">flash</span><span class="p">(</span><span class="s2">&quot;Invalid ID. Are you registered?&quot;</span><span class="p">,</span> <span class="s2">&quot;error&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">redirect</span><span class="p">(</span><span class="s2">&quot;/login&quot;</span><span class="p">)</span>
+
+        <span class="n">password</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">form</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;password&quot;</span><span class="p">)</span>
+
+        <span class="n">hashed_password</span> <span class="o">=</span> <span class="n">sha256</span><span class="p">(</span><span class="n">password</span><span class="o">.</span><span class="n">encode</span><span class="p">())</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">()</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n\n\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">password</span><span class="p">,</span> <span class="n">hashed_password</span><span class="p">,</span> <span class="n">user</span><span class="o">.</span><span class="n">password_hash</span><span class="p">,</span> <span class="s2">&quot;</span><span class="se">\n\n\n</span><span class="s2">&quot;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">hashed_password</span> <span class="o">!=</span> <span class="n">user</span><span class="o">.</span><span class="n">password_hash</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;WRONG PASS&quot;</span><span class="p">)</span>
+            <span class="n">flash</span><span class="p">(</span><span class="s2">&quot;Incorrect password. Try again or Register.&quot;</span><span class="p">,</span> <span class="s2">&quot;error&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">redirect</span><span class="p">(</span><span class="s2">&quot;/login&quot;</span><span class="p">)</span>
+
+        <span class="n">flash</span><span class="p">(</span><span class="s2">&quot;Successfully logged in as </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">user</span><span class="o">.</span><span class="n">name</span><span class="p">),</span> <span class="s2">&quot;info&quot;</span><span class="p">)</span>
+        <span class="n">session</span><span class="p">[</span><span class="s2">&quot;username&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">user</span><span class="o">.</span><span class="n">name</span>
+        <span class="n">session</span><span class="p">[</span><span class="s2">&quot;is_loggedin&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="n">session</span><span class="p">[</span><span class="s2">&quot;userid&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">userid</span>
+
+        <span class="k">return</span> <span class="n">redirect</span><span class="p">(</span><span class="s2">&quot;/&quot;</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">render_template</span><span class="p">(</span><span class="s2">&quot;login.html&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nd">@app</span><span class="o">.</span><span class="n">route</span><span class="p">(</span><span class="s2">&quot;/logout&quot;</span><span class="p">,</span> <span class="n">methods</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;POST&quot;</span><span class="p">,</span> <span class="s2">&quot;GET&quot;</span><span class="p">])</span>
+<span class="k">def</span> <span class="nf">logout_page</span><span class="p">():</span>
+    <span class="n">session</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+    <span class="n">flash</span><span class="p">(</span><span class="s2">&quot;Successfully logged out.&quot;</span><span class="p">,</span> <span class="s2">&quot;info&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">redirect</span><span class="p">(</span><span class="n">url_for</span><span class="p">(</span><span class="s1">&#39;home_page&#39;</span><span class="p">))</span>
+</pre></div>
+</div>
+</div></blockquote>
+</div>
+<div class="section" id="store-selling-item">
+<h2>Store - Selling Item<a class="headerlink" href="#store-selling-item" title="Permalink to this headline">¶</a></h2>
+<p>The table in the main page of the store gets the information from the database. All of the store related tasks are handled in store_database class.</p>
+<p>Fetch all selling items:</p>
+<ul>
+<li><p>sql_getAllSellingInfo:</p>
+<blockquote>
+<div><div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">SELECT</span> <span class="n">selling</span><span class="p">.</span><span class="n">sellid</span><span class="p">,</span> <span class="n">selling</span><span class="p">.</span><span class="n">itemname</span><span class="p">,</span> <span class="n">selling</span><span class="p">.</span><span class="n">shortD</span><span class="p">,</span> <span class="n">selling</span><span class="p">.</span><span class="n">iteminfo</span><span class="p">,</span> <span class="n">selling</span><span class="p">.</span><span class="n">price</span><span class="p">,</span> <span class="n">users</span><span class="p">.</span><span class="n">name</span><span class="p">,</span> <span class="n">users</span><span class="p">.</span><span class="n">studentno</span><span class="p">,</span> <span class="n">image</span><span class="p">.</span><span class="n">image</span><span class="p">,</span> <span class="n">selling</span><span class="p">.</span><span class="n">sharetime</span><span class="p">,</span> <span class="k">count</span><span class="p">(</span><span class="n">question</span><span class="p">.</span><span class="n">questionid</span><span class="p">),</span> <span class="k">count</span><span class="p">(</span><span class="n">answer</span><span class="p">.</span><span class="n">answerid</span><span class="p">)</span>
+<span class="k">FROM</span> <span class="n">selling</span> <span class="k">left</span> <span class="k">join</span> <span class="n">users</span> <span class="k">ON</span> <span class="n">selling</span><span class="p">.</span><span class="n">seller</span> <span class="o">=</span> <span class="n">users</span><span class="p">.</span><span class="n">studentno</span>
+            <span class="k">left</span> <span class="k">join</span> <span class="n">image</span> <span class="k">ON</span> <span class="n">selling</span><span class="p">.</span><span class="n">imageid</span> <span class="o">=</span> <span class="n">image</span><span class="p">.</span><span class="n">imageid</span>
+            <span class="k">left</span> <span class="k">join</span> <span class="n">question</span> <span class="k">ON</span> <span class="n">selling</span><span class="p">.</span><span class="n">sellid</span> <span class="o">=</span> <span class="n">question</span><span class="p">.</span><span class="n">sellid</span>
+            <span class="k">left</span> <span class="k">join</span> <span class="n">answer</span> <span class="k">ON</span> <span class="n">question</span><span class="p">.</span><span class="n">questionid</span> <span class="o">=</span> <span class="n">answer</span><span class="p">.</span><span class="n">questionid</span>
+                            <span class="k">AND</span> <span class="n">selling</span><span class="p">.</span><span class="n">sellid</span> <span class="o">=</span> <span class="n">answer</span><span class="p">.</span><span class="n">sellid</span>
+<span class="k">WHERE</span> <span class="p">(</span><span class="n">selling</span><span class="p">.</span><span class="n">itemname</span> <span class="k">LIKE</span> <span class="o">%</span><span class="p">(</span><span class="n">item_name</span><span class="p">)</span><span class="n">s</span>
+    <span class="k">AND</span> <span class="n">users</span><span class="p">.</span><span class="n">name</span> <span class="k">LIKE</span> <span class="o">%</span><span class="p">(</span><span class="n">seller</span><span class="p">)</span><span class="n">s</span>
+    <span class="k">AND</span> <span class="n">selling</span><span class="p">.</span><span class="n">price</span> <span class="o">&gt;=</span> <span class="o">%</span><span class="p">(</span><span class="n">price_lw</span><span class="p">)</span><span class="n">s</span>
+    <span class="k">AND</span> <span class="n">selling</span><span class="p">.</span><span class="n">price</span> <span class="o">&lt;=</span> <span class="o">%</span><span class="p">(</span><span class="n">price_hi</span><span class="p">)</span><span class="n">s</span><span class="p">)</span>
+<span class="k">GROUP</span> <span class="k">BY</span> <span class="n">selling</span><span class="p">.</span><span class="n">sellid</span><span class="p">,</span> <span class="n">selling</span><span class="p">.</span><span class="n">itemname</span><span class="p">,</span> <span class="n">selling</span><span class="p">.</span><span class="n">shortD</span><span class="p">,</span> <span class="n">selling</span><span class="p">.</span><span class="n">iteminfo</span><span class="p">,</span> <span class="n">selling</span><span class="p">.</span><span class="n">price</span><span class="p">,</span> <span class="n">users</span><span class="p">.</span><span class="n">name</span><span class="p">,</span> <span class="n">users</span><span class="p">.</span><span class="n">studentno</span><span class="p">,</span> <span class="n">image</span><span class="p">.</span><span class="n">image</span><span class="p">,</span> <span class="n">selling</span><span class="p">.</span><span class="n">sharetime</span>
+<span class="k">ORDER</span> <span class="k">BY</span> <span class="n">selling</span><span class="p">.</span><span class="n">sharetime</span> <span class="k">DESC</span><span class="p">;</span>
+</pre></div>
+</div>
+</div></blockquote>
+</li>
+<li><p>sql_getMaxPrice:</p>
+<blockquote>
+<div><div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">SELECT</span> <span class="k">max</span><span class="p">(</span><span class="n">price</span><span class="p">)</span>
+<span class="k">FROM</span> <span class="n">selling</span><span class="p">;</span>
+</pre></div>
+</div>
+</div></blockquote>
+</li>
+</ul>
+<p>If one of the parts of the filter form is left blank, the corresponding part in the sql statement is filled to have no effect on filtering.</p>
+<blockquote>
+<div><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">get_all_from_db</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item_name</span><span class="o">=</span><span class="s2">&quot;%&quot;</span><span class="p">,</span> <span class="n">seller_name</span><span class="o">=</span><span class="s2">&quot;%&quot;</span><span class="p">,</span> <span class="n">price_lw</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">price_hi</span><span class="o">=-</span><span class="mi">1</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">selling</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+
+    <span class="k">if</span> <span class="n">item_name</span> <span class="o">!=</span> <span class="s2">&quot;%&quot;</span><span class="p">:</span>
+        <span class="n">item_name</span> <span class="o">=</span> <span class="s2">&quot;%&quot;</span> <span class="o">+</span> <span class="n">item_name</span> <span class="o">+</span> <span class="s2">&quot;%&quot;</span>
+
+    <span class="k">if</span> <span class="n">seller_name</span> <span class="o">!=</span> <span class="s2">&quot;%&quot;</span><span class="p">:</span>
+        <span class="n">seller_name</span> <span class="o">=</span> <span class="s2">&quot;%&quot;</span> <span class="o">+</span> <span class="n">seller_name</span> <span class="o">+</span> <span class="s2">&quot;%&quot;</span>
+
+    <span class="k">with</span> <span class="n">dbapi2</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dsn</span><span class="p">)</span> <span class="k">as</span> <span class="n">connection</span><span class="p">:</span>
+        <span class="n">cursor</span> <span class="o">=</span> <span class="n">connection</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="n">price_hi</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+            <span class="n">cursor</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">sql_getMaxPrice</span><span class="p">)</span>
+            <span class="n">maxPrice</span> <span class="o">=</span> <span class="n">cursor</span><span class="o">.</span><span class="n">fetchall</span><span class="p">()</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">maxPrice</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">price_hi</span> <span class="o">=</span> <span class="n">maxPrice</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+
+        <span class="n">cursor</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">sql_getAllSellingInfo</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;item_name&#39;</span><span class="p">:</span> <span class="n">item_name</span><span class="p">,</span> <span class="s1">&#39;seller&#39;</span><span class="p">:</span> <span class="n">seller_name</span><span class="p">,</span> <span class="s1">&#39;price_lw&#39;</span><span class="p">:</span> <span class="n">price_lw</span><span class="p">,</span> <span class="s1">&#39;price_hi&#39;</span><span class="p">:</span> <span class="n">price_hi</span><span class="p">})</span>
+        <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">cursor</span><span class="p">:</span>
+            <span class="n">sellid</span><span class="p">,</span> <span class="n">item_name</span><span class="p">,</span> <span class="n">shortD</span><span class="p">,</span> <span class="n">item_info</span><span class="p">,</span> <span class="n">price</span><span class="p">,</span> <span class="n">seller_name</span><span class="p">,</span> <span class="n">seller_no</span><span class="p">,</span> <span class="n">image</span><span class="p">,</span> <span class="n">share_time</span><span class="p">,</span> <span class="n">n_ques</span><span class="p">,</span> <span class="n">n_ans</span> <span class="o">=</span> <span class="n">row</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">selling</span><span class="p">[</span><span class="n">sellid</span><span class="p">]</span> <span class="o">=</span> <span class="n">SellItem</span><span class="p">(</span><span class="n">sellid</span><span class="p">,</span> <span class="n">item_name</span><span class="p">,</span> <span class="n">price</span><span class="p">,</span> <span class="n">seller_name</span><span class="p">,</span> <span class="n">seller_no</span><span class="p">,</span> <span class="n">n_ques</span><span class="p">,</span> <span class="n">n_ans</span><span class="p">,</span> <span class="n">share_time</span><span class="p">,</span> <span class="n">item_info</span><span class="o">=</span><span class="n">item_info</span><span class="p">,</span> <span class="n">shortD</span><span class="o">=</span><span class="n">shortD</span><span class="p">,</span> <span class="n">image</span><span class="o">=</span><span class="n">image</span><span class="p">)</span>
+
+        <span class="n">cursor</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>Update item:</p>
+<p>Updating is done via the item page. After the html form to submit the update of item information, the corresponding python statements are used to handle this task.</p>
+<blockquote>
+<div><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">elif</span> <span class="n">request</span><span class="o">.</span><span class="n">form</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;form_key&quot;</span><span class="p">)</span> <span class="o">==</span> <span class="s2">&quot;item_update&quot;</span><span class="p">:</span>  <span class="c1"># logged in</span>
+    <span class="n">new_item_name</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">form</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;item_name&quot;</span><span class="p">)</span>
+    <span class="n">new_price</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">form</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;price&quot;</span><span class="p">)</span>
+    <span class="n">new_item_info</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">form</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;item_info&quot;</span><span class="p">)</span>
+    <span class="n">new_shortD</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">form</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;shortD&quot;</span><span class="p">)</span>  <span class="c1"># handle empty case!</span>
+    <span class="n">update_time</span> <span class="o">=</span> <span class="n">getTimestampString</span><span class="p">()</span>
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="nb">int</span><span class="p">(</span><span class="n">new_price</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="n">flash</span><span class="p">(</span><span class="s2">&quot;Price must be an integer (TL)&quot;</span><span class="p">,</span> <span class="s2">&quot;error&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">redirect</span><span class="p">(</span><span class="s1">&#39;/store/</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">sellid</span><span class="p">))</span>
+
+    <span class="n">store_db</span><span class="o">.</span><span class="n">update_selling_item</span><span class="p">(</span><span class="n">sellid</span><span class="p">,</span> <span class="n">new_item_name</span><span class="p">,</span> <span class="n">new_price</span><span class="p">,</span> <span class="n">new_shortD</span><span class="p">,</span> <span class="n">new_item_info</span><span class="p">,</span> <span class="n">update_time</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">redirect</span><span class="p">(</span><span class="s1">&#39;/store/</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">sellid</span><span class="p">))</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>This piece of code uses the update_selling_item function of the store_db object of type store_database</p>
+<ul>
+<li><p>sql_updateSellingItem:</p>
+<blockquote>
+<div><div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">UPDATE</span> <span class="n">selling</span>
+<span class="k">SET</span> <span class="n">itemname</span> <span class="o">=</span> <span class="o">%</span><span class="p">(</span><span class="n">new_item_name</span><span class="p">)</span><span class="n">s</span><span class="p">,</span>
+    <span class="n">price</span> <span class="o">=</span> <span class="o">%</span><span class="p">(</span><span class="n">new_price</span><span class="p">)</span><span class="n">s</span><span class="p">,</span>
+    <span class="n">shortD</span> <span class="o">=</span> <span class="o">%</span><span class="p">(</span><span class="n">new_shortD</span><span class="p">)</span><span class="n">s</span><span class="p">,</span>
+    <span class="n">iteminfo</span> <span class="o">=</span> <span class="o">%</span><span class="p">(</span><span class="n">new_item_info</span><span class="p">)</span><span class="n">s</span><span class="p">,</span>
+    <span class="n">sharetime</span> <span class="o">=</span> <span class="o">%</span><span class="p">(</span><span class="n">update_time</span><span class="p">)</span><span class="n">s</span>
+<span class="k">WHERE</span> <span class="p">(</span><span class="n">selling</span><span class="p">.</span><span class="n">sellid</span> <span class="o">=</span> <span class="o">%</span><span class="p">(</span><span class="n">sellid</span><span class="p">)</span><span class="n">s</span><span class="p">);</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">update_selling_item</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sellid</span><span class="p">,</span> <span class="n">new_item_name</span><span class="p">,</span> <span class="n">new_price</span><span class="p">,</span> <span class="n">new_shortD</span><span class="p">,</span> <span class="n">new_item_info</span><span class="p">,</span> <span class="n">update_time</span><span class="p">):</span>
+
+<span class="k">with</span> <span class="n">dbapi2</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dsn</span><span class="p">)</span> <span class="k">as</span> <span class="n">connection</span><span class="p">:</span>
+    <span class="n">cursor</span> <span class="o">=</span> <span class="n">connection</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span>
+
+    <span class="n">cursor</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">sql_updateSellingItem</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;sellid&#39;</span><span class="p">:</span> <span class="n">sellid</span><span class="p">,</span> <span class="s1">&#39;new_item_name&#39;</span><span class="p">:</span> <span class="n">new_item_name</span><span class="p">,</span> <span class="s1">&#39;new_price&#39;</span><span class="p">:</span> <span class="n">new_price</span><span class="p">,</span> <span class="s1">&#39;new_shortD&#39;</span><span class="p">:</span> <span class="n">new_shortD</span><span class="p">,</span> <span class="s1">&#39;new_item_info&#39;</span><span class="p">:</span> <span class="n">new_item_info</span><span class="p">,</span> <span class="s1">&#39;update_time&#39;</span><span class="p">:</span> <span class="n">update_time</span><span class="p">})</span>
+
+    <span class="n">cursor</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</pre></div>
+</div>
+</div></blockquote>
+</li>
+</ul>
+<p>Delete item:</p>
+<p>Deleting is done via the item page. After the html form to submit the delete command, the corresponding python statements are used to handle this task.</p>
+<blockquote>
+<div><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">elif</span> <span class="n">request</span><span class="o">.</span><span class="n">form</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;form_key&quot;</span><span class="p">)</span> <span class="o">==</span> <span class="s2">&quot;item_delete&quot;</span><span class="p">:</span>  <span class="c1"># logged in</span>
+    <span class="n">flash</span><span class="p">(</span><span class="s2">&quot;Post has been deleted successfully.&quot;</span><span class="p">,</span> <span class="s2">&quot;info&quot;</span><span class="p">)</span>
+
+    <span class="n">store_db</span><span class="o">.</span><span class="n">delete_selling_item</span><span class="p">(</span><span class="n">sellid</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">redirect</span><span class="p">(</span><span class="n">url_for</span><span class="p">(</span><span class="s1">&#39;store_page&#39;</span><span class="p">))</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>This piece of code uses the delete_selling_item function of the store_db object of type store_database</p>
+<ul>
+<li><p>sql_deleteSellingItem:</p>
+<blockquote>
+<div><div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">DELETE</span> <span class="k">FROM</span> <span class="n">selling</span>
+<span class="k">WHERE</span> <span class="p">(</span><span class="n">selling</span><span class="p">.</span><span class="n">sellid</span> <span class="o">=</span> <span class="o">%</span><span class="p">(</span><span class="n">sellid</span><span class="p">)</span><span class="n">s</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">delete_selling_item</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sellid</span><span class="p">):</span>
+
+    <span class="k">with</span> <span class="n">dbapi2</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dsn</span><span class="p">)</span> <span class="k">as</span> <span class="n">connection</span><span class="p">:</span>
+        <span class="n">cursor</span> <span class="o">=</span> <span class="n">connection</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span>
+
+        <span class="n">cursor</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">sql_deleteSellingItem</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;sellid&#39;</span><span class="p">:</span> <span class="n">sellid</span><span class="p">})</span>
+
+        <span class="n">cursor</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</pre></div>
+</div>
+</div></blockquote>
+</li>
+</ul>
+</div>
+<div class="section" id="store-question">
+<h2>Store - Question<a class="headerlink" href="#store-question" title="Permalink to this headline">¶</a></h2>
+<p>All of the question related tasks are done via item page.</p>
+<p>Fetch all of the questions and their corresponding answers:</p>
+<ul>
+<li><p>sql_getAllQuestions:</p>
+<blockquote>
+<div><div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">SELECT</span> <span class="n">question</span><span class="p">.</span><span class="n">questionid</span><span class="p">,</span> <span class="n">question</span><span class="p">.</span><span class="n">body</span><span class="p">,</span> <span class="n">question</span><span class="p">.</span><span class="n">userid</span><span class="p">,</span> <span class="n">users</span><span class="p">.</span><span class="n">name</span><span class="p">,</span> <span class="n">question</span><span class="p">.</span><span class="n">backcolor</span><span class="p">,</span> <span class="n">question</span><span class="p">.</span><span class="n">lastupdate</span><span class="p">,</span> <span class="n">question</span><span class="p">.</span><span class="n">sharetime</span><span class="p">,</span> <span class="n">question</span><span class="p">.</span><span class="n">anonymous</span>
+<span class="k">FROM</span> <span class="n">question</span><span class="p">,</span> <span class="n">users</span>
+<span class="k">WHERE</span> <span class="p">(</span><span class="n">question</span><span class="p">.</span><span class="n">userid</span> <span class="o">=</span> <span class="n">users</span><span class="p">.</span><span class="n">studentno</span>
+    <span class="k">AND</span> <span class="n">question</span><span class="p">.</span><span class="n">sellid</span> <span class="o">=</span> <span class="o">%</span><span class="p">(</span><span class="n">sellid</span><span class="p">)</span><span class="n">s</span><span class="p">)</span>
+<span class="k">ORDER</span> <span class="k">BY</span> <span class="n">question</span><span class="p">.</span><span class="n">sharetime</span> <span class="k">DESC</span><span class="p">;</span>
+</pre></div>
+</div>
+</div></blockquote>
+</li>
+<li><p>sql_getAllAnsOfOneQuestion:</p>
+<blockquote>
+<div><div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">SELECT</span> <span class="n">answer</span><span class="p">.</span><span class="n">answerid</span><span class="p">,</span> <span class="n">answer</span><span class="p">.</span><span class="n">body</span><span class="p">,</span> <span class="n">answer</span><span class="p">.</span><span class="n">userid</span><span class="p">,</span> <span class="n">users</span><span class="p">.</span><span class="n">name</span><span class="p">,</span> <span class="n">answer</span><span class="p">.</span><span class="n">backcolor</span><span class="p">,</span> <span class="n">answer</span><span class="p">.</span><span class="n">lastupdate</span><span class="p">,</span> <span class="n">answer</span><span class="p">.</span><span class="n">sharetime</span><span class="p">,</span> <span class="n">answer</span><span class="p">.</span><span class="n">anonymous</span>
+<span class="k">FROM</span> <span class="n">answer</span><span class="p">,</span> <span class="n">users</span>
+<span class="k">WHERE</span> <span class="p">(</span><span class="n">answer</span><span class="p">.</span><span class="n">userid</span> <span class="o">=</span> <span class="n">users</span><span class="p">.</span><span class="n">studentno</span>
+    <span class="k">AND</span> <span class="n">answer</span><span class="p">.</span><span class="n">questionid</span> <span class="o">=</span> <span class="o">%</span><span class="p">(</span><span class="n">questionid</span><span class="p">)</span><span class="n">s</span>
+    <span class="k">AND</span> <span class="n">answer</span><span class="p">.</span><span class="n">sellid</span> <span class="o">=</span> <span class="o">%</span><span class="p">(</span><span class="n">sellid</span><span class="p">)</span><span class="n">s</span><span class="p">)</span>
+<span class="k">ORDER</span> <span class="k">BY</span> <span class="n">answer</span><span class="p">.</span><span class="n">sharetime</span> <span class="k">DESC</span><span class="p">;</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">get_all_question_answer_pairs</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sellid</span><span class="p">):</span>
+
+        <span class="n">all_questions</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">with</span> <span class="n">dbapi2</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dsn</span><span class="p">)</span> <span class="k">as</span> <span class="n">connection</span><span class="p">:</span>
+
+                <span class="n">cursor</span> <span class="o">=</span> <span class="n">connection</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span>
+
+                <span class="n">cursor</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">sql_getAllQuestions</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;sellid&#39;</span><span class="p">:</span> <span class="n">sellid</span><span class="p">})</span>
+                <span class="n">questions</span> <span class="o">=</span> <span class="n">cursor</span><span class="o">.</span><span class="n">fetchall</span><span class="p">()</span>
+                <span class="k">for</span> <span class="n">questionid</span><span class="p">,</span> <span class="n">q_body</span><span class="p">,</span> <span class="n">q_userid_no</span><span class="p">,</span> <span class="n">q_user_name</span><span class="p">,</span> <span class="n">q_color</span><span class="p">,</span> <span class="n">q_last_update</span><span class="p">,</span> <span class="n">q_share_time</span><span class="p">,</span> <span class="n">q_anonymous</span> <span class="ow">in</span> <span class="n">questions</span><span class="p">:</span>
+
+                        <span class="n">qi_and_all_ans</span> <span class="o">=</span> <span class="p">[]</span>
+
+                        <span class="n">q_i</span> <span class="o">=</span> <span class="n">Question</span><span class="p">(</span><span class="n">questionid</span><span class="p">,</span> <span class="n">q_body</span><span class="p">,</span> <span class="n">q_userid_no</span><span class="p">,</span> <span class="n">q_user_name</span><span class="p">,</span> <span class="n">sellid</span><span class="p">,</span> <span class="n">q_color</span><span class="p">,</span> <span class="n">q_last_update</span><span class="p">,</span> <span class="n">q_share_time</span><span class="p">,</span> <span class="n">q_anonymous</span><span class="p">)</span>
+                        <span class="n">qi_and_all_ans</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">q_i</span><span class="p">)</span>
+
+                        <span class="n">cursor</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">sql_getAllAnsOfOneQuestion</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;questionid&#39;</span><span class="p">:</span> <span class="n">questionid</span><span class="p">,</span> <span class="s1">&#39;sellid&#39;</span><span class="p">:</span> <span class="n">sellid</span><span class="p">})</span>
+                        <span class="n">answers</span> <span class="o">=</span> <span class="n">cursor</span><span class="o">.</span><span class="n">fetchall</span><span class="p">()</span>
+
+                        <span class="n">ans_of_qi</span> <span class="o">=</span> <span class="p">[]</span>
+                        <span class="k">for</span> <span class="n">answerid</span><span class="p">,</span> <span class="n">ans_body</span><span class="p">,</span> <span class="n">ans_userid_no</span><span class="p">,</span> <span class="n">ans_user_name</span><span class="p">,</span> <span class="n">ans_color</span><span class="p">,</span> <span class="n">ans_last_update</span><span class="p">,</span> <span class="n">ans_share_time</span><span class="p">,</span> <span class="n">ans_anonymous</span> <span class="ow">in</span> <span class="n">answers</span><span class="p">:</span>
+
+                                <span class="n">ans_i</span> <span class="o">=</span> <span class="n">Answer</span><span class="p">(</span><span class="n">answerid</span><span class="p">,</span> <span class="n">questionid</span><span class="p">,</span> <span class="n">ans_body</span><span class="p">,</span> <span class="n">ans_userid_no</span><span class="p">,</span> <span class="n">ans_user_name</span><span class="p">,</span> <span class="n">sellid</span><span class="p">,</span> <span class="n">ans_color</span><span class="p">,</span> <span class="n">ans_last_update</span><span class="p">,</span> <span class="n">ans_share_time</span><span class="p">,</span> <span class="n">ans_anonymous</span><span class="p">)</span>
+                                <span class="n">ans_of_qi</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ans_i</span><span class="p">)</span>
+
+                        <span class="n">ans_of_qi</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">ans_of_qi</span><span class="p">)</span>
+                        <span class="n">qi_and_all_ans</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ans_of_qi</span><span class="p">)</span>
+                        <span class="n">qi_and_all_ans</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">qi_and_all_ans</span><span class="p">)</span>
+                        <span class="n">all_questions</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">qi_and_all_ans</span><span class="p">)</span>
+
+                <span class="n">cursor</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+        <span class="k">return</span> <span class="n">all_questions</span>
+</pre></div>
+</div>
+</div></blockquote>
+</li>
+</ul>
+<p>Inserting a question to the database:</p>
+<ul>
+<li><p>sql_insertQuestion:</p>
+<blockquote>
+<div><div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">question</span> <span class="p">(</span><span class="n">userid</span><span class="p">,</span> <span class="n">sellid</span><span class="p">,</span> <span class="n">body</span><span class="p">,</span> <span class="n">backcolor</span><span class="p">,</span> <span class="n">lastupdate</span><span class="p">,</span> <span class="n">sharetime</span><span class="p">,</span> <span class="n">anonymous</span><span class="p">)</span> <span class="k">VALUES</span> <span class="p">(</span>
+    <span class="o">%</span><span class="p">(</span><span class="n">userid_no</span><span class="p">)</span><span class="n">s</span><span class="p">,</span>
+    <span class="o">%</span><span class="p">(</span><span class="n">sellid</span><span class="p">)</span><span class="n">s</span><span class="p">,</span>
+    <span class="o">%</span><span class="p">(</span><span class="n">q_body</span><span class="p">)</span><span class="n">s</span><span class="p">,</span>
+    <span class="o">%</span><span class="p">(</span><span class="n">color</span><span class="p">)</span><span class="n">s</span><span class="p">,</span>
+    <span class="o">%</span><span class="p">(</span><span class="n">last_update</span><span class="p">)</span><span class="n">s</span><span class="p">,</span>
+    <span class="o">%</span><span class="p">(</span><span class="n">share_time</span><span class="p">)</span><span class="n">s</span><span class="p">,</span>
+    <span class="o">%</span><span class="p">(</span><span class="n">anonymous</span><span class="p">)</span><span class="n">s</span>
+<span class="p">);</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">add_question</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">question</span><span class="p">):</span>
+
+<span class="k">with</span> <span class="n">dbapi2</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dsn</span><span class="p">)</span> <span class="k">as</span> <span class="n">connection</span><span class="p">:</span>
+    <span class="n">cursor</span> <span class="o">=</span> <span class="n">connection</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span>
+
+    <span class="n">cursor</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">sql_insertQuestion</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;userid_no&#39;</span><span class="p">:</span> <span class="n">question</span><span class="o">.</span><span class="n">user_no</span><span class="p">,</span> <span class="s1">&#39;sellid&#39;</span><span class="p">:</span> <span class="n">question</span><span class="o">.</span><span class="n">sellid</span><span class="p">,</span> <span class="s1">&#39;q_body&#39;</span><span class="p">:</span> <span class="n">question</span><span class="o">.</span><span class="n">q_body</span><span class="p">,</span> <span class="s1">&#39;color&#39;</span><span class="p">:</span> <span class="n">question</span><span class="o">.</span><span class="n">color</span><span class="p">,</span> <span class="s1">&#39;last_update&#39;</span><span class="p">:</span> <span class="n">question</span><span class="o">.</span><span class="n">last_update</span><span class="p">,</span> <span class="s1">&#39;share_time&#39;</span><span class="p">:</span> <span class="n">question</span><span class="o">.</span><span class="n">share_time</span><span class="p">,</span> <span class="s1">&#39;anonymous&#39;</span><span class="p">:</span> <span class="n">question</span><span class="o">.</span><span class="n">anonymous</span><span class="p">})</span>
+
+    <span class="n">cursor</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</pre></div>
+</div>
+</div></blockquote>
+</li>
+</ul>
+<p>Update question:</p>
+<p>After a question update form is submitted, the following python codeblock is run. The form includes the questionid to identify which question is going to be updated.</p>
+<blockquote>
+<div><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">elif</span> <span class="n">request</span><span class="o">.</span><span class="n">form</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;form_key&quot;</span><span class="p">)</span> <span class="o">==</span> <span class="s2">&quot;q_update&quot;</span><span class="p">:</span>  <span class="c1"># logged in</span>
+    <span class="n">new_q_body</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">form</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;q_body&quot;</span><span class="p">)</span>
+    <span class="n">questionid</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">form</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;questionid&quot;</span><span class="p">)</span>
+    <span class="n">update_time</span> <span class="o">=</span> <span class="n">getTimestampString</span><span class="p">()</span>
+
+    <span class="n">store_db</span><span class="o">.</span><span class="n">update_question</span><span class="p">(</span><span class="n">questionid</span><span class="p">,</span> <span class="n">sellid</span><span class="p">,</span> <span class="n">new_q_body</span><span class="p">,</span> <span class="n">update_time</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">redirect</span><span class="p">(</span><span class="s1">&#39;/store/</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">sellid</span><span class="p">))</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>This portion of the code uses the update_question function of the store_db object of type store_database</p>
+<ul>
+<li><p>sql_updateQuestion:</p>
+<blockquote>
+<div><div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">UPDATE</span> <span class="n">question</span>
+<span class="k">SET</span> <span class="n">body</span> <span class="o">=</span> <span class="o">%</span><span class="p">(</span><span class="n">new_q_body</span><span class="p">)</span><span class="n">s</span><span class="p">,</span>
+    <span class="n">lastupdate</span> <span class="o">=</span> <span class="o">%</span><span class="p">(</span><span class="n">update_time</span><span class="p">)</span><span class="n">s</span>
+<span class="k">WHERE</span> <span class="p">(</span><span class="n">question</span><span class="p">.</span><span class="n">sellid</span> <span class="o">=</span> <span class="o">%</span><span class="p">(</span><span class="n">sellid</span><span class="p">)</span><span class="n">s</span>
+    <span class="k">AND</span> <span class="n">question</span><span class="p">.</span><span class="n">questionid</span> <span class="o">=</span> <span class="o">%</span><span class="p">(</span><span class="n">questionid</span><span class="p">)</span><span class="n">s</span><span class="p">);</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">update_question</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">questionid</span><span class="p">,</span> <span class="n">sellid</span><span class="p">,</span> <span class="n">new_q_body</span><span class="p">,</span> <span class="n">update_time</span><span class="p">):</span>
+
+<span class="k">with</span> <span class="n">dbapi2</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dsn</span><span class="p">)</span> <span class="k">as</span> <span class="n">connection</span><span class="p">:</span>
+    <span class="n">cursor</span> <span class="o">=</span> <span class="n">connection</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span>
+
+    <span class="n">cursor</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">sql_updateQuestion</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;new_q_body&#39;</span><span class="p">:</span> <span class="n">new_q_body</span><span class="p">,</span> <span class="s1">&#39;update_time&#39;</span><span class="p">:</span> <span class="n">update_time</span><span class="p">,</span> <span class="s1">&#39;sellid&#39;</span><span class="p">:</span> <span class="n">sellid</span><span class="p">,</span> <span class="s1">&#39;questionid&#39;</span><span class="p">:</span> <span class="n">questionid</span><span class="p">})</span>
+
+    <span class="n">cursor</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</pre></div>
+</div>
+</div></blockquote>
+</li>
+</ul>
+<p>Delete question:</p>
+<p>After a question delete form is submitted, the following python codeblock is run. The form includes the questionid to identify which question is going to be deleted.</p>
+<blockquote>
+<div><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">elif</span> <span class="n">request</span><span class="o">.</span><span class="n">form</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;form_key&quot;</span><span class="p">)</span> <span class="o">==</span> <span class="s2">&quot;q_delete&quot;</span><span class="p">:</span>  <span class="c1"># logged in</span>
+    <span class="n">questionid</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">form</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;questionid&quot;</span><span class="p">)</span>
+
+    <span class="n">store_db</span><span class="o">.</span><span class="n">delete_question</span><span class="p">(</span><span class="n">questionid</span><span class="p">,</span> <span class="n">sellid</span><span class="p">)</span>
+
+    <span class="n">flash</span><span class="p">(</span><span class="s2">&quot;Question has been deleted successfully.&quot;</span><span class="p">,</span> <span class="s2">&quot;info&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">redirect</span><span class="p">(</span><span class="s1">&#39;/store/</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">sellid</span><span class="p">))</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>This portion of the code uses the delete_question function of the store_db object of type store_database</p>
+<ul>
+<li><p>sql_deleteQuestion:</p>
+<blockquote>
+<div><div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">DELETE</span> <span class="k">FROM</span> <span class="n">question</span>
+<span class="k">WHERE</span> <span class="p">(</span><span class="n">question</span><span class="p">.</span><span class="n">sellid</span> <span class="o">=</span> <span class="o">%</span><span class="p">(</span><span class="n">sellid</span><span class="p">)</span><span class="n">s</span>
+    <span class="k">AND</span> <span class="n">question</span><span class="p">.</span><span class="n">questionid</span> <span class="o">=</span> <span class="o">%</span><span class="p">(</span><span class="n">questionid</span><span class="p">)</span><span class="n">s</span><span class="p">);</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">delete_question</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">questionid</span><span class="p">,</span> <span class="n">sellid</span><span class="p">):</span>
+
+<span class="k">with</span> <span class="n">dbapi2</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dsn</span><span class="p">)</span> <span class="k">as</span> <span class="n">connection</span><span class="p">:</span>
+    <span class="n">cursor</span> <span class="o">=</span> <span class="n">connection</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span>
+
+    <span class="n">cursor</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">sql_deleteQuestion</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;sellid&#39;</span><span class="p">:</span> <span class="n">sellid</span><span class="p">,</span> <span class="s1">&#39;questionid&#39;</span><span class="p">:</span> <span class="n">questionid</span><span class="p">})</span>
+
+    <span class="n">cursor</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</pre></div>
+</div>
+</div></blockquote>
+</li>
+</ul>
+</div>
+<div class="section" id="store-answer">
+<h2>Store - Answer<a class="headerlink" href="#store-answer" title="Permalink to this headline">¶</a></h2>
+<p>All of the answer related tasks are done via item page.</p>
+<p>The fetch process of the answers are done together with the questions as stated above.</p>
+<p>Inserting an answer to the database:</p>
+<ul>
+<li><p>sql_insertAnswer:</p>
+<blockquote>
+<div><div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">answer</span> <span class="p">(</span><span class="n">userid</span><span class="p">,</span> <span class="n">sellid</span><span class="p">,</span> <span class="n">questionid</span><span class="p">,</span> <span class="n">body</span><span class="p">,</span> <span class="n">backcolor</span><span class="p">,</span> <span class="n">lastupdate</span><span class="p">,</span> <span class="n">sharetime</span><span class="p">,</span> <span class="n">anonymous</span><span class="p">)</span> <span class="k">VALUES</span> <span class="p">(</span>
+    <span class="o">%</span><span class="p">(</span><span class="n">userid_no</span><span class="p">)</span><span class="n">s</span><span class="p">,</span>
+    <span class="o">%</span><span class="p">(</span><span class="n">sellid</span><span class="p">)</span><span class="n">s</span><span class="p">,</span>
+    <span class="o">%</span><span class="p">(</span><span class="n">questionid</span><span class="p">)</span><span class="n">s</span><span class="p">,</span>
+    <span class="o">%</span><span class="p">(</span><span class="n">ans_body</span><span class="p">)</span><span class="n">s</span><span class="p">,</span>
+    <span class="o">%</span><span class="p">(</span><span class="n">color</span><span class="p">)</span><span class="n">s</span><span class="p">,</span>
+    <span class="o">%</span><span class="p">(</span><span class="n">last_update</span><span class="p">)</span><span class="n">s</span><span class="p">,</span>
+    <span class="o">%</span><span class="p">(</span><span class="n">share_time</span><span class="p">)</span><span class="n">s</span><span class="p">,</span>
+    <span class="o">%</span><span class="p">(</span><span class="n">anonymous</span><span class="p">)</span><span class="n">s</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">add_answer</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">answer</span><span class="p">):</span>
+
+<span class="k">with</span> <span class="n">dbapi2</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dsn</span><span class="p">)</span> <span class="k">as</span> <span class="n">connection</span><span class="p">:</span>
+    <span class="n">cursor</span> <span class="o">=</span> <span class="n">connection</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span>
+
+    <span class="n">cursor</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">sql_insertAnswer</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;userid_no&#39;</span><span class="p">:</span> <span class="n">answer</span><span class="o">.</span><span class="n">user_no</span><span class="p">,</span> <span class="s1">&#39;sellid&#39;</span><span class="p">:</span> <span class="n">answer</span><span class="o">.</span><span class="n">sellid</span><span class="p">,</span> <span class="s1">&#39;questionid&#39;</span><span class="p">:</span> <span class="n">answer</span><span class="o">.</span><span class="n">questionid</span><span class="p">,</span> <span class="s1">&#39;ans_body&#39;</span><span class="p">:</span> <span class="n">answer</span><span class="o">.</span><span class="n">ans_body</span><span class="p">,</span> <span class="s1">&#39;color&#39;</span><span class="p">:</span> <span class="n">answer</span><span class="o">.</span><span class="n">color</span><span class="p">,</span> <span class="s1">&#39;last_update&#39;</span><span class="p">:</span> <span class="n">answer</span><span class="o">.</span><span class="n">last_update</span><span class="p">,</span> <span class="s1">&#39;share_time&#39;</span><span class="p">:</span> <span class="n">answer</span><span class="o">.</span><span class="n">share_time</span><span class="p">,</span> <span class="s1">&#39;anonymous&#39;</span><span class="p">:</span> <span class="n">answer</span><span class="o">.</span><span class="n">anonymous</span><span class="p">})</span>
+
+    <span class="n">cursor</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</pre></div>
+</div>
+</div></blockquote>
+</li>
+</ul>
+<p>Update answer:</p>
+<p>After a answer update form is submitted, the following python codeblock is run. The form includes the questionid and answerid to identify which answer is going to be updated.</p>
+<blockquote>
+<div><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">elif</span> <span class="n">request</span><span class="o">.</span><span class="n">form</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;form_key&quot;</span><span class="p">)</span> <span class="o">==</span> <span class="s2">&quot;ans_update&quot;</span><span class="p">:</span>
+    <span class="n">new_ans_body</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">form</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;ans_body&quot;</span><span class="p">)</span>
+    <span class="n">answerid</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">form</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;answerid&quot;</span><span class="p">)</span>
+    <span class="n">questionid</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">form</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;questionid&quot;</span><span class="p">)</span>
+    <span class="n">update_time</span> <span class="o">=</span> <span class="n">getTimestampString</span><span class="p">()</span>
+
+    <span class="n">store_db</span><span class="o">.</span><span class="n">update_answer</span><span class="p">(</span><span class="n">answerid</span><span class="p">,</span> <span class="n">questionid</span><span class="p">,</span> <span class="n">sellid</span><span class="p">,</span> <span class="n">new_ans_body</span><span class="p">,</span> <span class="n">update_time</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">redirect</span><span class="p">(</span><span class="s1">&#39;/store/</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">sellid</span><span class="p">))</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>This portion of the code uses the update_answer function of the store_db object of type store_database</p>
+<ul>
+<li><p>sql_updateAnswer:</p>
+<blockquote>
+<div><div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">UPDATE</span> <span class="n">answer</span>
+<span class="k">SET</span> <span class="n">body</span> <span class="o">=</span> <span class="o">%</span><span class="p">(</span><span class="n">new_ans_body</span><span class="p">)</span><span class="n">s</span><span class="p">,</span>
+    <span class="n">lastupdate</span> <span class="o">=</span> <span class="o">%</span><span class="p">(</span><span class="n">update_time</span><span class="p">)</span><span class="n">s</span>
+<span class="k">WHERE</span> <span class="p">(</span><span class="n">answer</span><span class="p">.</span><span class="n">sellid</span> <span class="o">=</span> <span class="o">%</span><span class="p">(</span><span class="n">sellid</span><span class="p">)</span><span class="n">s</span>
+    <span class="k">AND</span> <span class="n">answer</span><span class="p">.</span><span class="n">questionid</span> <span class="o">=</span> <span class="o">%</span><span class="p">(</span><span class="n">questionid</span><span class="p">)</span><span class="n">s</span>
+    <span class="k">AND</span> <span class="n">answer</span><span class="p">.</span><span class="n">answerid</span> <span class="o">=</span> <span class="o">%</span><span class="p">(</span><span class="n">answerid</span><span class="p">)</span><span class="n">s</span><span class="p">);</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">update_answer</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">answerid</span><span class="p">,</span> <span class="n">questionid</span><span class="p">,</span> <span class="n">sellid</span><span class="p">,</span> <span class="n">new_ans_body</span><span class="p">,</span> <span class="n">update_time</span><span class="p">):</span>
+
+<span class="k">with</span> <span class="n">dbapi2</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dsn</span><span class="p">)</span> <span class="k">as</span> <span class="n">connection</span><span class="p">:</span>
+    <span class="n">cursor</span> <span class="o">=</span> <span class="n">connection</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span>
+
+    <span class="n">cursor</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">sql_updateAnswer</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;new_ans_body&#39;</span><span class="p">:</span> <span class="n">new_ans_body</span><span class="p">,</span> <span class="s1">&#39;sellid&#39;</span><span class="p">:</span> <span class="n">sellid</span><span class="p">,</span> <span class="s1">&#39;questionid&#39;</span><span class="p">:</span> <span class="n">questionid</span><span class="p">,</span> <span class="s1">&#39;answerid&#39;</span><span class="p">:</span> <span class="n">answerid</span><span class="p">})</span>
+
+    <span class="n">cursor</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</pre></div>
+</div>
+</div></blockquote>
+</li>
+</ul>
+<p>Delete question:</p>
+<p>After a answer delete form is submitted, the following python codeblock is run. The form includes the questionid and answerid to identify which answer is going to be deleted.</p>
+<blockquote>
+<div><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">elif</span> <span class="n">request</span><span class="o">.</span><span class="n">form</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;form_key&quot;</span><span class="p">)</span> <span class="o">==</span> <span class="s2">&quot;ans_delete&quot;</span><span class="p">:</span>  <span class="c1"># logged in</span>
+    <span class="n">answerid</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">form</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;answerid&quot;</span><span class="p">)</span>
+    <span class="n">questionid</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">form</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;questionid&quot;</span><span class="p">)</span>
+
+    <span class="n">store_db</span><span class="o">.</span><span class="n">delete_answer</span><span class="p">(</span><span class="n">answerid</span><span class="p">,</span> <span class="n">questionid</span><span class="p">,</span> <span class="n">sellid</span><span class="p">)</span>
+
+    <span class="n">flash</span><span class="p">(</span><span class="s2">&quot;Answer has been deleted successfully.&quot;</span><span class="p">,</span> <span class="s2">&quot;info&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">redirect</span><span class="p">(</span><span class="s1">&#39;/store/</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">sellid</span><span class="p">))</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>This portion of the code uses the delete_answer function of the store_db object of type store_database</p>
+<ul>
+<li><p>sql_deleteAnswer:</p>
+<blockquote>
+<div><div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">DELETE</span> <span class="k">FROM</span> <span class="n">answer</span>
+<span class="k">WHERE</span> <span class="p">(</span><span class="n">answer</span><span class="p">.</span><span class="n">sellid</span> <span class="o">=</span> <span class="o">%</span><span class="p">(</span><span class="n">sellid</span><span class="p">)</span><span class="n">s</span>
+    <span class="k">AND</span> <span class="n">answer</span><span class="p">.</span><span class="n">questionid</span> <span class="o">=</span> <span class="o">%</span><span class="p">(</span><span class="n">questionid</span><span class="p">)</span><span class="n">s</span>
+    <span class="k">AND</span> <span class="n">answer</span><span class="p">.</span><span class="n">answerid</span> <span class="o">=</span> <span class="o">%</span><span class="p">(</span><span class="n">answerid</span><span class="p">)</span><span class="n">s</span><span class="p">);</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">delete_answer</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">answerid</span><span class="p">,</span> <span class="n">questionid</span><span class="p">,</span> <span class="n">sellid</span><span class="p">):</span>
+
+<span class="k">with</span> <span class="n">dbapi2</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dsn</span><span class="p">)</span> <span class="k">as</span> <span class="n">connection</span><span class="p">:</span>
+    <span class="n">cursor</span> <span class="o">=</span> <span class="n">connection</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span>
+
+    <span class="n">cursor</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">sql_deleteAnswer</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;sellid&#39;</span><span class="p">:</span> <span class="n">sellid</span><span class="p">,</span> <span class="s1">&#39;questionid&#39;</span><span class="p">:</span> <span class="n">questionid</span><span class="p">,</span> <span class="s1">&#39;answerid&#39;</span><span class="p">:</span> <span class="n">answerid</span><span class="p">})</span>
+
+    <span class="n">cursor</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</pre></div>
+</div>
+</div></blockquote>
+</li>
+</ul>
+<p>the end</p>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+      
+        <a href="member1.html" class="btn btn-neutral float-left" title="Parts Implemented by Alp Eren Gençoğlu" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2019, ITUCSDB1960
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

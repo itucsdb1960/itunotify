@@ -1,0 +1,558 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Parts Implemented by Alp Eren Gençoğlu &mdash; ITUCSDB1960  documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Parts Implemented by Alperen Y?lmaz" href="member2.html" />
+    <link rel="prev" title="Developer Guide" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home" alt="Documentation Home"> ITUCSDB1960
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../user/index.html">User Guide</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Developer Guide</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="index.html#database-design">Database Design</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html#code">Code</a><ul class="current">
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Parts Implemented by Alp Eren Gençoğlu</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#register-system">Register System</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#profile-page">Profile Page</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#lost-found-page">Lost &amp; Found Page</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#additionals">Additionals</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="member2.html">Parts Implemented by Alperen Y?lmaz</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">ITUCSDB1960</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="index.html">Developer Guide</a> &raquo;</li>
+        
+      <li>Parts Implemented by Alp Eren Gençoğlu</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/developer/member1.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="parts-implemented-by-alp-eren-gencoglu">
+<h1>Parts Implemented by Alp Eren Gençoğlu<a class="headerlink" href="#parts-implemented-by-alp-eren-gencoglu" title="Permalink to this headline">¶</a></h1>
+<p>The database relations users, lostfound, and responses are implemented and handled by Alp Eren Gençoğlu.
+In order to easily handle insertion, deletion, read, and update statement concerning these relations, some classes are constructed.</p>
+<ul>
+<li><p>To handle users:</p>
+<blockquote>
+<div><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">User</span><span class="p">():</span>
+        <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">studentno</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">department</span><span class="p">,</span> <span class="n">grade</span><span class="p">,</span> <span class="n">password_hash</span><span class="p">,</span> <span class="n">personal_info</span><span class="o">=</span><span class="s2">&quot;...&quot;</span><span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">studentno</span> <span class="o">=</span> <span class="n">studentno</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">department</span> <span class="o">=</span> <span class="n">department</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">grade</span> <span class="o">=</span> <span class="n">grade</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">password_hash</span> <span class="o">=</span> <span class="n">password_hash</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">personal_info</span> <span class="o">=</span> <span class="n">personal_info</span>
+
+
+<span class="k">class</span> <span class="nc">UserDatabase</span><span class="p">():</span>
+        <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">users</span> <span class="o">=</span> <span class="p">{}</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">last_userid</span> <span class="o">=</span> <span class="mi">0</span>
+
+                <span class="n">file</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;heroku_db_url.txt&quot;</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">dsn</span> <span class="o">=</span> <span class="n">file</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+</pre></div>
+</div>
+</div></blockquote>
+</li>
+<li><p>To handle lostfound and responses:</p>
+<blockquote>
+<div><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">LFPost</span><span class="p">():</span>
+        <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">title</span><span class="p">,</span> <span class="n">description</span><span class="p">,</span> <span class="n">userid</span><span class="p">,</span> <span class="n">LF</span><span class="p">,</span> <span class="n">location</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">imageid</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">sharetime</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">title</span> <span class="o">=</span> <span class="n">title</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">description</span> <span class="o">=</span> <span class="n">description</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">userid</span> <span class="o">=</span> <span class="n">userid</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">LF</span> <span class="o">=</span> <span class="n">LF</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">location</span> <span class="o">=</span> <span class="n">location</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">imageid</span> <span class="o">=</span> <span class="n">imageid</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">sharetime</span> <span class="o">=</span> <span class="n">sharetime</span>
+
+<span class="k">class</span> <span class="nc">LFResponse</span><span class="p">():</span>
+        <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">postid</span><span class="p">,</span> <span class="n">response</span><span class="p">,</span> <span class="n">userid</span><span class="p">,</span> <span class="n">sharetime</span><span class="p">,</span> <span class="n">lastupdate</span><span class="p">,</span> <span class="n">anonymous</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">textcolor</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">postid</span> <span class="o">=</span> <span class="n">postid</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">response</span> <span class="o">=</span> <span class="n">response</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">userid</span> <span class="o">=</span> <span class="n">userid</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">sharetime</span> <span class="o">=</span> <span class="n">sharetime</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">lastupdate</span> <span class="o">=</span> <span class="n">lastupdate</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">anonymous</span> <span class="o">=</span> <span class="n">anonymous</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">textcolor</span> <span class="o">=</span> <span class="n">textcolor</span>
+
+<span class="k">class</span> <span class="nc">LFDatabase</span><span class="p">():</span>
+        <span class="c1"># Constructor</span>
+        <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">postlist</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">posts</span> <span class="o">=</span> <span class="p">{}</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">last_postid</span> <span class="o">=</span> <span class="mi">0</span>
+
+                <span class="bp">self</span><span class="o">.</span><span class="n">responses</span> <span class="o">=</span> <span class="p">{}</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">last_responseid</span> <span class="o">=</span> <span class="mi">0</span>
+
+                <span class="n">file</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;heroku_db_url.txt&quot;</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">dsn</span> <span class="o">=</span> <span class="n">file</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+</pre></div>
+</div>
+</div></blockquote>
+</li>
+</ul>
+<p>Also related sql tables are created beforehand:</p>
+<blockquote>
+<div><div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">CREATE</span> <span class="k">TABLE</span> <span class="k">IF</span> <span class="k">NOT</span> <span class="k">EXISTS</span> <span class="n">users</span> <span class="p">(</span>
+        <span class="n">studentno</span> <span class="nb">varchar</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span> <span class="k">primary</span> <span class="k">key</span><span class="p">,</span>
+        <span class="n">name</span> <span class="nb">varchar</span><span class="p">(</span><span class="mi">40</span><span class="p">)</span> <span class="k">NOT</span> <span class="k">NULL</span><span class="p">,</span>
+        <span class="n">department</span> <span class="nb">varchar</span><span class="p">(</span><span class="mi">80</span><span class="p">),</span>
+        <span class="n">grade</span> <span class="nb">integer</span><span class="p">,</span>
+        <span class="n">password_hash</span> <span class="nb">varchar</span><span class="p">(</span><span class="mi">256</span><span class="p">)</span> <span class="k">NOT</span> <span class="k">NULL</span><span class="p">,</span>
+        <span class="n">personal_info</span> <span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">512</span><span class="p">)</span>
+<span class="p">);</span>
+<span class="k">CREATE</span> <span class="k">TABLE</span> <span class="k">IF</span> <span class="k">NOT</span> <span class="k">EXISTS</span> <span class="n">lostfound</span> <span class="p">(</span>
+        <span class="n">postid</span> <span class="nb">SERIAL</span> <span class="k">primary</span> <span class="k">key</span><span class="p">,</span>
+        <span class="n">title</span> <span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">32</span><span class="p">)</span> <span class="k">NOT</span> <span class="k">NULL</span><span class="p">,</span>
+        <span class="n">description</span> <span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">512</span><span class="p">)</span> <span class="k">NOT</span> <span class="k">NULL</span><span class="p">,</span>
+        <span class="n">userid</span> <span class="nb">varchar</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span> <span class="k">references</span> <span class="n">users</span> <span class="k">ON</span> <span class="k">DELETE</span> <span class="k">CASCADE</span> <span class="k">ON</span> <span class="k">UPDATE</span> <span class="k">CASCADE</span><span class="p">,</span>
+        <span class="n">LF</span> <span class="nb">boolean</span> <span class="k">NOT</span> <span class="k">NULL</span><span class="p">,</span>
+        <span class="k">location</span> <span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">32</span><span class="p">),</span>
+        <span class="n">imageid</span> <span class="nb">INTEGER</span> <span class="k">references</span> <span class="n">image</span><span class="p">(</span><span class="n">imageid</span><span class="p">)</span> <span class="k">ON</span> <span class="k">DELETE</span> <span class="k">set</span> <span class="k">default</span> <span class="k">ON</span> <span class="k">UPDATE</span> <span class="k">CASCADE</span> <span class="k">DEFAULT</span> <span class="mi">1</span><span class="p">,</span>
+        <span class="n">sharetime</span> <span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">32</span><span class="p">)</span>
+<span class="p">);</span>
+<span class="k">CREATE</span> <span class="k">TABLE</span> <span class="k">IF</span> <span class="k">NOT</span> <span class="k">EXISTS</span> <span class="n">responses</span> <span class="p">(</span>
+        <span class="n">respid</span> <span class="nb">SERIAL</span> <span class="k">primary</span> <span class="k">key</span><span class="p">,</span>
+        <span class="n">postid</span> <span class="nb">INTEGER</span> <span class="k">references</span> <span class="n">lostfound</span><span class="p">(</span><span class="n">postid</span><span class="p">)</span> <span class="k">ON</span> <span class="k">DELETE</span> <span class="k">CASCADE</span> <span class="k">ON</span> <span class="k">UPDATE</span> <span class="k">CASCADE</span><span class="p">,</span>
+        <span class="n">response</span> <span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">512</span><span class="p">)</span> <span class="k">NOT</span> <span class="k">NULL</span><span class="p">,</span>
+        <span class="n">userid</span> <span class="nb">varchar</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span> <span class="k">references</span> <span class="n">users</span> <span class="k">ON</span> <span class="k">DELETE</span> <span class="k">CASCADE</span> <span class="k">ON</span> <span class="k">UPDATE</span> <span class="k">CASCADE</span><span class="p">,</span>
+        <span class="n">sharetime</span> <span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">32</span><span class="p">),</span>
+        <span class="n">lastupdate</span> <span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">32</span><span class="p">),</span>
+        <span class="n">anonymous</span> <span class="nb">boolean</span> <span class="k">DEFAULT</span> <span class="k">FALSE</span><span class="p">,</span>
+        <span class="n">textcolor</span> <span class="nb">varchar</span><span class="p">(</span><span class="mi">16</span><span class="p">)</span>
+<span class="p">);</span>
+</pre></div>
+</div>
+</div></blockquote>
+<div class="section" id="register-system">
+<h2>Register System<a class="headerlink" href="#register-system" title="Permalink to this headline">¶</a></h2>
+<p>In order to register a new user to the database, user’s required information is obtained in the register page.
+After user has entered related information and entered values are checked for validity (e.g password length), UserDatabase class’ register method is called:</p>
+<blockquote>
+<div><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">register_user</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">user</span><span class="p">):</span>
+        <span class="n">sql_insert_user</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;INSERT INTO users (name, department, studentno, grade, password_hash, personal_info) VALUES (</span>
+<span class="s2">                                                        </span><span class="si">%(name)s</span><span class="s2">,</span>
+<span class="s2">                                                        </span><span class="si">%(department)s</span><span class="s2">,</span>
+<span class="s2">                                                        </span><span class="si">%(studentno)s</span><span class="s2">,</span>
+<span class="s2">                                                        </span><span class="si">%(grade)s</span><span class="s2">,</span>
+<span class="s2">                                                        </span><span class="si">%(password_hash)s</span><span class="s2">,</span>
+<span class="s2">                                                        </span><span class="si">%(personal_info)s</span><span class="s2"></span>
+<span class="s2">                                                );&quot;&quot;&quot;</span>
+
+        <span class="n">args</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="n">user</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="s1">&#39;department&#39;</span><span class="p">:</span> <span class="n">user</span><span class="o">.</span><span class="n">department</span><span class="p">,</span> <span class="s1">&#39;studentno&#39;</span><span class="p">:</span> <span class="n">user</span><span class="o">.</span><span class="n">studentno</span><span class="p">,</span>
+                        <span class="s1">&#39;grade&#39;</span><span class="p">:</span> <span class="n">user</span><span class="o">.</span><span class="n">grade</span><span class="p">,</span> <span class="s1">&#39;password_hash&#39;</span><span class="p">:</span> <span class="n">user</span><span class="o">.</span><span class="n">password_hash</span><span class="p">,</span> <span class="s1">&#39;personal_info&#39;</span><span class="p">:</span> <span class="n">user</span><span class="o">.</span><span class="n">personal_info</span><span class="p">};</span>
+        <span class="k">with</span> <span class="n">dbapi2</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dsn</span><span class="p">)</span> <span class="k">as</span> <span class="n">connection</span><span class="p">:</span>
+                <span class="k">with</span> <span class="n">connection</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span> <span class="k">as</span> <span class="n">cursor</span><span class="p">:</span>
+                        <span class="n">cursor</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">sql_insert_user</span><span class="p">,</span> <span class="n">args</span><span class="p">)</span>
+</pre></div>
+</div>
+</div></blockquote>
+</div>
+<div class="section" id="profile-page">
+<h2>Profile Page<a class="headerlink" href="#profile-page" title="Permalink to this headline">¶</a></h2>
+<p>Once a user’s profile page is viewed, following method of UserDatabase class is run to get all data about that user:</p>
+<blockquote>
+<div><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">get_user_by_userid</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">userid</span><span class="p">):</span>
+        <span class="n">user_query</span> <span class="o">=</span> <span class="s2">&quot;SELECT * FROM users WHERE users.studentno=</span><span class="si">%s</span><span class="s2">&quot;</span>
+        <span class="n">args</span> <span class="o">=</span> <span class="p">(</span><span class="n">userid</span><span class="p">,)</span>
+
+        <span class="k">with</span> <span class="n">dbapi2</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dsn</span><span class="p">)</span> <span class="k">as</span> <span class="n">connection</span><span class="p">:</span>
+                <span class="k">with</span> <span class="n">connection</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span> <span class="k">as</span> <span class="n">cursor</span><span class="p">:</span>
+                        <span class="n">cursor</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">user_query</span><span class="p">,</span> <span class="n">args</span><span class="p">)</span>
+                        <span class="n">user</span> <span class="o">=</span> <span class="n">cursor</span><span class="o">.</span><span class="n">fetchall</span><span class="p">()</span>
+                        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">user</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="p">:</span>  <span class="c1"># user with _userid_ could not be found</span>
+                                <span class="k">return</span> <span class="kc">None</span>
+                        <span class="k">else</span><span class="p">:</span>
+                                <span class="k">return</span> <span class="n">User</span><span class="p">(</span><span class="n">user</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="n">user</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">],</span> <span class="n">user</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">2</span><span class="p">],</span> <span class="n">user</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">3</span><span class="p">],</span> <span class="n">user</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">4</span><span class="p">],</span> <span class="n">user</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">5</span><span class="p">])</span>
+</pre></div>
+</div>
+</div></blockquote>
+<ul class="simple">
+<li><p>(Note: From this point on, only the sql statement will be provided since all of the python codes for executing sql statements are similar.)</p></li>
+</ul>
+<p>Then, the returned user object is passed to profile.html file and the user’s data can be viewed.</p>
+<blockquote>
+<div><div class="highlight-html notranslate"><div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">h2</span><span class="p">&gt;</span>Viewing {{userobj.name}}&#39;s profile<span class="p">&lt;/</span><span class="nt">h2</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">label</span><span class="p">&gt;</span> ID: <span class="p">&lt;/</span><span class="nt">label</span><span class="p">&gt;</span> <span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>{{userobj.studentno}}<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">label</span><span class="p">&gt;</span> Name: <span class="p">&lt;/</span><span class="nt">label</span><span class="p">&gt;</span> <span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>{{userobj.name}}<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">label</span><span class="p">&gt;</span> Department: <span class="p">&lt;/</span><span class="nt">label</span><span class="p">&gt;</span> <span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>{{userobj.department}}<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">label</span><span class="p">&gt;</span> Grade: <span class="p">&lt;/</span><span class="nt">label</span><span class="p">&gt;</span> <span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>{{userobj.grade}}<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">label</span><span class="p">&gt;</span> About {{userobj.name}}: <span class="p">&lt;/</span><span class="nt">label</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">br</span><span class="p">&gt;&lt;</span><span class="nt">br</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">p</span> <span class="na">style</span><span class="o">=</span><span class="s">&quot;white-space: pre-wrap; word-wrap: break-word; margin: 1em;&quot;</span><span class="p">&gt;</span>{{userobj.personal_info}}<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>Example:</p>
+<blockquote>
+<div><div class="figure align-default" id="id1">
+<a class="reference internal image-reference" href="../_images/profile_view.PNG"><img alt="Viewing a profile page" src="../_images/profile_view.PNG" style="width: 456.5px; height: 258.5px;" /></a>
+<p class="caption"><span class="caption-text">Viewing a profile page</span><a class="headerlink" href="#id1" title="Permalink to this image">¶</a></p>
+</div>
+</div></blockquote>
+<p>If a user is viewing their own profile page, they can modify their data or delete their account by using the forms in the page.
+SQL statement to modify name, department or grade (in the related method of UserDatabase class):</p>
+<blockquote>
+<div><div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">UPDATE</span> <span class="n">users</span> <span class="k">SET</span> <span class="n">name</span><span class="o">=%</span><span class="n">s</span><span class="p">,</span> <span class="n">department</span><span class="o">=%</span><span class="n">s</span><span class="p">,</span> <span class="n">grade</span><span class="o">=%</span><span class="n">s</span> <span class="k">WHERE</span> <span class="n">studentno</span><span class="o">=%</span><span class="n">s</span><span class="p">;</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>SQL statement to modify personal information (in the related method of UserDatabase class):</p>
+<blockquote>
+<div><div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">UPDATE</span> <span class="n">users</span> <span class="k">SET</span> <span class="n">personal_info</span><span class="o">=%</span><span class="n">s</span> <span class="k">WHERE</span> <span class="n">studentno</span><span class="o">=%</span><span class="n">s</span><span class="p">;</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>SQL statement to modify password (in the related method of UserDatabase class):</p>
+<blockquote>
+<div><div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">UPDATE</span> <span class="n">users</span> <span class="k">SET</span> <span class="n">password_hash</span><span class="o">=%</span><span class="n">s</span> <span class="k">WHERE</span> <span class="n">studentno</span><span class="o">=%</span><span class="n">s</span><span class="p">;</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>SQL statement to delete entire account from the database (in the related method of UserDatabase class):</p>
+<blockquote>
+<div><div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">DELETE</span> <span class="k">FROM</span> <span class="n">users</span> <span class="k">WHERE</span> <span class="n">studentno</span><span class="o">=%</span><span class="n">s</span><span class="p">;</span>
+</pre></div>
+</div>
+</div></blockquote>
+</div>
+<div class="section" id="lost-found-page">
+<h2>Lost &amp; Found Page<a class="headerlink" href="#lost-found-page" title="Permalink to this headline">¶</a></h2>
+<p>In the Lost &amp; Found page, when a user (if logged in) uses the form to share a post, following sql statement is executed by using LFDatabase class’ related method.</p>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">lostfound</span> <span class="p">(</span><span class="n">title</span><span class="p">,</span> <span class="n">description</span><span class="p">,</span> <span class="n">userid</span><span class="p">,</span> <span class="n">LF</span><span class="p">,</span> <span class="k">location</span><span class="p">,</span> <span class="n">imageid</span><span class="p">,</span> <span class="n">sharetime</span><span class="p">)</span> <span class="k">VALUES</span> <span class="p">(</span><span class="o">%</span><span class="n">s</span><span class="p">,</span> <span class="o">%</span><span class="n">s</span><span class="p">,</span> <span class="o">%</span><span class="n">s</span><span class="p">,</span> <span class="o">%</span><span class="n">s</span><span class="p">,</span> <span class="o">%</span><span class="n">s</span><span class="p">,</span> <span class="o">%</span><span class="n">s</span><span class="p">,</span> <span class="o">%</span><span class="n">s</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>Python code that calls the method mentioned above:</p>
+<blockquote>
+<div><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># new post created from /lostfound</span>
+<span class="k">if</span> <span class="n">form_name</span> <span class="o">==</span> <span class="s2">&quot;new_post&quot;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">session</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;is_loggedin&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">):</span>   <span class="c1"># if not logged in, log in :)</span>
+                <span class="n">flash</span><span class="p">(</span><span class="s2">&quot;You must login first to do that!&quot;</span><span class="p">,</span> <span class="s2">&quot;error&quot;</span><span class="p">)</span>
+                <span class="k">return</span> <span class="n">redirect</span><span class="p">(</span><span class="s2">&quot;/login&quot;</span><span class="p">)</span>
+
+        <span class="n">title</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">form</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;title&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">title</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">32</span><span class="p">:</span>
+                <span class="n">title</span> <span class="o">=</span> <span class="n">title</span><span class="p">[:</span><span class="mi">29</span><span class="p">]</span> <span class="o">+</span> <span class="s2">&quot;...&quot;</span>
+        <span class="n">description</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">form</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;description&quot;</span><span class="p">)</span>
+        <span class="n">userid</span> <span class="o">=</span> <span class="n">session</span><span class="p">[</span><span class="s2">&quot;userid&quot;</span><span class="p">]</span>
+        <span class="n">LF</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">form</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;LF&quot;</span><span class="p">)</span>
+        <span class="n">location</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">form</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;location&quot;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">title</span> <span class="o">==</span> <span class="s2">&quot;&quot;</span> <span class="ow">or</span> <span class="n">description</span> <span class="o">==</span> <span class="s2">&quot;&quot;</span> <span class="ow">or</span> <span class="n">LF</span> <span class="o">==</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">render_template</span><span class="p">(</span><span class="s2">&quot;lost_and_found.html&quot;</span><span class="p">,</span> <span class="n">posts</span><span class="o">=</span><span class="n">posts</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+                <span class="n">timestamp</span> <span class="o">=</span> <span class="n">getTimestampString</span><span class="p">()</span>
+                <span class="n">lfpost</span> <span class="o">=</span> <span class="n">LFPost</span><span class="p">(</span><span class="n">title</span><span class="p">,</span> <span class="n">description</span><span class="p">,</span> <span class="n">userid</span><span class="p">,</span> <span class="n">LF</span><span class="p">,</span> <span class="n">location</span><span class="o">=</span><span class="n">location</span><span class="p">,</span> <span class="n">sharetime</span><span class="o">=</span><span class="n">timestamp</span><span class="p">)</span>
+                <span class="n">lf_db</span><span class="o">.</span><span class="n">add_post</span><span class="p">(</span><span class="n">lfpost</span><span class="p">)</span>
+                <span class="n">posts</span> <span class="o">=</span> <span class="n">lf_db</span><span class="o">.</span><span class="n">get_all_posts</span><span class="p">()</span>
+                <span class="n">current_app</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">&quot;LF_DB&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">lf_db</span>
+                <span class="k">return</span> <span class="n">redirect</span><span class="p">(</span><span class="s2">&quot;/lostfound&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>In the main page, below the form to submit posts, there is a table which shows the recent posts’ titles and some other data. This table’s content is generated by the following method of LFDatabase class:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">get_all_posts</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">select_all_posts_statement</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">                SELECT users.studentno, lostfound.postid, lostfound.sharetime, lostfound.title, users.name, lostfound.LF, lostfound.location</span>
+<span class="s2">                FROM lostfound, users</span>
+<span class="s2">                WHERE (lostfound.userid=users.studentno)</span>
+<span class="s2">                ORDER BY lostfound.postid DESC;</span>
+<span class="s2">                &quot;&quot;&quot;</span>
+
+        <span class="n">posts</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">()</span>
+        <span class="k">with</span> <span class="n">dbapi2</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dsn</span><span class="p">)</span> <span class="k">as</span> <span class="n">connection</span><span class="p">:</span>
+                <span class="k">with</span> <span class="n">connection</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span> <span class="k">as</span> <span class="n">cursor</span><span class="p">:</span>
+                        <span class="n">cursor</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">select_all_posts_statement</span><span class="p">)</span>
+                        <span class="n">posts</span> <span class="o">=</span> <span class="n">cursor</span><span class="o">.</span><span class="n">fetchall</span><span class="p">()</span>
+
+        <span class="k">return</span> <span class="n">posts</span>
+</pre></div>
+</div>
+<p>And the table is created with the following html (Since location is optional, it may be null when passed to the html file. If null “—” is written on the table):</p>
+<div class="highlight-html notranslate"><div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">table</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;lfposts&quot;</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;lfposts_table&quot;</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">tr</span><span class="p">&gt;</span>
+                <span class="p">&lt;</span><span class="nt">th</span> <span class="na">onclick</span><span class="o">=</span><span class="s">&quot;sortTable(&#39;sharetime&#39;)&quot;</span><span class="p">&gt;</span> Share Time <span class="p">&lt;/</span><span class="nt">th</span><span class="p">&gt;</span>
+                <span class="p">&lt;</span><span class="nt">th</span> <span class="na">onclick</span><span class="o">=</span><span class="s">&quot;sortTable(&#39;title&#39;)&quot;</span><span class="p">&gt;</span> Title <span class="p">&lt;/</span><span class="nt">th</span><span class="p">&gt;</span>
+                <span class="p">&lt;</span><span class="nt">th</span> <span class="na">onclick</span><span class="o">=</span><span class="s">&quot;sortTable(&#39;username&#39;)&quot;</span><span class="p">&gt;</span> Shared by <span class="p">&lt;/</span><span class="nt">th</span><span class="p">&gt;</span>
+                <span class="p">&lt;</span><span class="nt">th</span> <span class="na">onclick</span><span class="o">=</span><span class="s">&quot;sortTable(&#39;category&#39;)&quot;</span><span class="p">&gt;</span> Category <span class="p">&lt;/</span><span class="nt">th</span><span class="p">&gt;</span>
+                <span class="p">&lt;</span><span class="nt">th</span> <span class="na">onclick</span><span class="o">=</span><span class="s">&quot;sortTable(&#39;location&#39;)&quot;</span><span class="p">&gt;</span> Location <span class="p">&lt;/</span><span class="nt">th</span><span class="p">&gt;</span>
+        <span class="p">&lt;/</span><span class="nt">tr</span><span class="p">&gt;</span>
+        {% for userid, postid, sharetime, title, username, LF, location in posts %}
+        <span class="p">&lt;</span><span class="nt">tr</span><span class="p">&gt;</span>
+                <span class="p">&lt;</span><span class="nt">td</span><span class="p">&gt;</span> {{sharetime}} <span class="p">&lt;/</span><span class="nt">td</span><span class="p">&gt;</span>
+                <span class="p">&lt;</span><span class="nt">td</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;title&quot;</span><span class="p">&gt;</span> <span class="p">&lt;</span><span class="nt">a</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;lfpost_link&quot;</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;/lostfound/{{postid}}&quot;</span><span class="p">&gt;</span>{{ title }}<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span> <span class="p">&lt;/</span><span class="nt">td</span><span class="p">&gt;</span>
+                <span class="p">&lt;</span><span class="nt">td</span><span class="p">&gt;</span> <span class="p">&lt;</span><span class="nt">a</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;profile_link&quot;</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;/profile/{{userid}}&quot;</span><span class="p">&gt;</span>{{ username }}<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span> <span class="p">&lt;/</span><span class="nt">td</span><span class="p">&gt;</span>
+                <span class="p">&lt;</span><span class="nt">td</span><span class="p">&gt;</span> {% if LF %} Found {% else %} Lost {% endif %} <span class="p">&lt;/</span><span class="nt">td</span><span class="p">&gt;</span>
+                <span class="p">&lt;</span><span class="nt">td</span><span class="p">&gt;</span> {% if location %} {{ location }} {% else %} --- {% endif %} <span class="p">&lt;/</span><span class="nt">td</span><span class="p">&gt;</span>
+        <span class="p">&lt;/</span><span class="nt">tr</span><span class="p">&gt;</span>
+        {% endfor %}
+<span class="p">&lt;/</span><span class="nt">table</span><span class="p">&gt;</span>
+</pre></div>
+</div>
+<p>As it can be seen from the code above, the table can be sorted by clicking on the column headers. Script for sorting the table can be found in the lost_and_found.html file.</p>
+<p>When a post’s title is clicked, the server redirects user to that specific post’s page. In this page, the post’s data is obtained by using the following sql statement of the related method of LFDatabase class:</p>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">lostfound</span> <span class="k">WHERE</span> <span class="n">lostfound</span><span class="p">.</span><span class="n">postid</span><span class="o">=%</span><span class="n">s</span><span class="p">;</span>
+</pre></div>
+</div>
+<dl>
+<dt>Example:</dt><dd><div class="figure align-default" id="id2">
+<a class="reference internal image-reference" href="../_images/lfpost_view.png"><img alt="Viewing a Lost &amp; Found post" src="../_images/lfpost_view.png" style="width: 822.5px; height: 325.5px;" /></a>
+<p class="caption"><span class="caption-text">Viewing a Lost &amp; Found post</span><a class="headerlink" href="#id2" title="Permalink to this image">¶</a></p>
+</div>
+</dd>
+</dl>
+<p>The posts’ and responses’ description part can be edited by the original posters. Once the Edit button is clicked, a new form will appear and once Update button is clicked, following codes are executed for post and response respectively:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">elif</span> <span class="n">form_name</span> <span class="o">==</span> <span class="s2">&quot;update_post&quot;</span><span class="p">:</span>
+        <span class="n">postowner_userid</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">form</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;userid&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">session</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;userid&quot;</span><span class="p">)</span> <span class="o">==</span> <span class="n">postowner_userid</span><span class="p">:</span>
+                <span class="n">flash</span><span class="p">(</span><span class="s2">&quot;You do not have authentication to do that!&quot;</span><span class="p">,</span> <span class="s2">&quot;error&quot;</span><span class="p">)</span>
+                <span class="k">return</span> <span class="n">redirect</span><span class="p">(</span><span class="s2">&quot;/lostfound/</span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">postid</span><span class="p">))</span>
+
+        <span class="n">new_description</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">form</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;new_description&quot;</span><span class="p">)</span>
+        <span class="n">lf_db</span><span class="o">.</span><span class="n">update_post</span><span class="p">(</span><span class="n">new_description</span><span class="p">,</span> <span class="n">postid</span><span class="p">)</span>
+        <span class="n">flash</span><span class="p">(</span><span class="s2">&quot;Post description is updated successfully.&quot;</span><span class="p">,</span> <span class="s2">&quot;info&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">redirect</span><span class="p">(</span><span class="s2">&quot;/lostfound/</span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">postid</span><span class="p">))</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">update_post</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new_description</span><span class="p">,</span> <span class="n">postid</span><span class="p">):</span>
+        <span class="n">update_statement</span> <span class="o">=</span> <span class="s2">&quot;UPDATE lostfound SET description=</span><span class="si">%s</span><span class="s2"> WHERE postid=</span><span class="si">%s</span><span class="s2">;&quot;</span>
+        <span class="n">args</span> <span class="o">=</span> <span class="p">(</span><span class="n">new_description</span><span class="p">,</span> <span class="n">postid</span><span class="p">)</span>
+
+        <span class="k">with</span> <span class="n">dbapi2</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dsn</span><span class="p">)</span> <span class="k">as</span> <span class="n">connection</span><span class="p">:</span>
+                <span class="k">with</span> <span class="n">connection</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span> <span class="k">as</span> <span class="n">cursor</span><span class="p">:</span>
+                        <span class="n">cursor</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">update_statement</span><span class="p">,</span> <span class="n">args</span><span class="p">)</span>
+
+        <span class="k">return</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">elif</span> <span class="n">form_name</span> <span class="o">==</span> <span class="s2">&quot;update_response&quot;</span><span class="p">:</span>
+    <span class="n">respowner_userid</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">form</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;userid&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">session</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;userid&quot;</span><span class="p">)</span> <span class="o">==</span> <span class="n">respowner_userid</span><span class="p">:</span>
+        <span class="n">flash</span><span class="p">(</span><span class="s2">&quot;You do not have authentication to do that!&quot;</span><span class="p">,</span> <span class="s2">&quot;error&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">redirect</span><span class="p">(</span><span class="s2">&quot;/lostfound/</span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">postid</span><span class="p">))</span>
+
+    <span class="n">respid</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">form</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;respid&quot;</span><span class="p">)</span>
+    <span class="n">new_message</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">form</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;new_response&quot;</span><span class="p">)</span>
+    <span class="n">timestamp</span> <span class="o">=</span> <span class="n">getTimestampString</span><span class="p">()</span>
+
+    <span class="n">lf_db</span><span class="o">.</span><span class="n">update_response</span><span class="p">(</span><span class="n">new_message</span><span class="p">,</span> <span class="n">timestamp</span><span class="p">,</span> <span class="n">respid</span><span class="p">)</span>
+    <span class="n">flash</span><span class="p">(</span><span class="s2">&quot;Response is updated successfully.&quot;</span><span class="p">,</span> <span class="s2">&quot;info&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">redirect</span><span class="p">(</span><span class="s2">&quot;/lostfound/</span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">postid</span><span class="p">))</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">update_response</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new_message</span><span class="p">,</span> <span class="n">update_time</span><span class="p">,</span> <span class="n">respid</span><span class="p">):</span>
+        <span class="n">update_statement</span> <span class="o">=</span> <span class="s2">&quot;UPDATE responses SET response=</span><span class="si">%s</span><span class="s2">, lastupdate=</span><span class="si">%s</span><span class="s2"> WHERE respid=</span><span class="si">%s</span><span class="s2">;&quot;</span>
+        <span class="n">args</span> <span class="o">=</span> <span class="p">(</span><span class="n">new_message</span><span class="p">,</span> <span class="n">update_time</span><span class="p">,</span> <span class="n">respid</span><span class="p">)</span>
+
+        <span class="k">with</span> <span class="n">dbapi2</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dsn</span><span class="p">)</span> <span class="k">as</span> <span class="n">connection</span><span class="p">:</span>
+                <span class="k">with</span> <span class="n">connection</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span> <span class="k">as</span> <span class="n">cursor</span><span class="p">:</span>
+                        <span class="n">cursor</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">update_statement</span><span class="p">,</span> <span class="n">args</span><span class="p">)</span>
+
+        <span class="k">return</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="additionals">
+<h2>Additionals<a class="headerlink" href="#additionals" title="Permalink to this headline">¶</a></h2>
+<p>Since it is impossible to explain whole code here, some of the functions are shortened. For further analysis; <em>user_database.py, lostfound_database.py</em> files <strong>and</strong> <em>lostfound_page, lfpost_page, register_page, profile</em> functions from server.py can be examined.</p>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="member2.html" class="btn btn-neutral float-right" title="Parts Implemented by Alperen Y?lmaz" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="index.html" class="btn btn-neutral float-left" title="Developer Guide" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2019, ITUCSDB1960
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
