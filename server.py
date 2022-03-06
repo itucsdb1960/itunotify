@@ -39,15 +39,14 @@ app.config["USER_DB"] = user_db
 #
 
 
-# # @app.route("/")
-# def home_page():
-#     return render_template("index.html")
+@app.route("/")
+def home_page():
+    return render_template("index.html")
 
 
 #
 # LOST ITEM PAGES VIEW FUNCTIONS
 #
-@app.route("/")
 @app.route("/lostfound", methods=["POST", "GET"])
 def lostfound_page():
     lf_db = current_app.config["LF_DB"]
