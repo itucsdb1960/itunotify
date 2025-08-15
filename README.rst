@@ -1,4 +1,8 @@
+İTÜ Notify - Flask WebApp
+=================================
 http://itucsdb1960.herokuapp.com/
+
+
 =================================
 
 This repository contains a template project for the Database Systems course
